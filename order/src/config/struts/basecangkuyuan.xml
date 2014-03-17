@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	
+	<package name="basecangkuyuan" extends="sysdefault">
+		<action name="cangkuyuan" class="cangkuYuanAction">
+			<result name="daifahuo">/inc/cangkuyuan/daifahuo.jsp</result>
+			<result name="upyunshudanhao">/inc/cangkuyuan/upyunshudanhao.jsp</result>
+			<result name="daifangqu">/inc/cangkuyuan/daifangqu.jsp</result>
+			<result name="exportOrder">/inc/cangkuyuan/exportOrder.jsp</result>
+			<result name="guoneiweikong">/inc/cangkuyuan/guoneiweikong.jsp</result>
+			<result name="upweikong">/inc/cangkuyuan/upweikong.jsp</result>
+			<result name="getYeWuTuiHui">/inc/cangkuyuan/getYeWuTuiHui.jsp</result>
+			<result name="updaochu">/inc/cangkuyuan/updaochu.jsp</result>
+			<result name="chaozhongqu">/inc/cangkuyuan/chaozhongqu.jsp</result>
+			<result name="getyijing">/inc/cangkuyuan/getYiJingOrder.jsp</result>
+			<result name="upremark">/inc/cangkuyuan/upremark.jsp</result>
+			<result name="getstock">/inc/cangkuyuan/getStock.jsp</result>
+			<result name="getReturnofgoods">/inc/cangkuyuan/getReturnofgoods.jsp</result>
+			
+			 <result name="success" type="stream"> 
+                <param name="contentType">application/vnd.ms-excel</param> 
+                <param name="contentDisposition">attachment;filename="AllUsers.xls"</param> 
+                <param name="inputName">excelFile</param> 
+            </result> 
+		</action>
+		<action name="ceshi" class="ceShiAction">
+			<result name="ceshi">/inc/test.jsp</result>
+			<result name="exportOrder">/inc/cangkuyuan/exportOrder.jsp</result>
+			 <result name="success" type="stream"> 
+                <param name="contentType">application/vnd.ms-excel</param> 
+                <param name="contentDisposition">attachment;filename="AllUsers.xls"</param> 
+                <param name="inputName">excelFile</param> 
+            </result> 
+		</action>
+		<action name="ceshi1" class="ceShiAction1">
+		<result name="success">/inc/test.jsp</result>
+		</action>
+	</package>
+</struts>
+

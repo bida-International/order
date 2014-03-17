@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	
+	<package name="basecgadmin" extends="sysdefault">
+		<action name="caigouadmin" class="caiGouAdminAction">
+			<result name="wentiorder">/inc/caigou/cgadmin/wentiorder.jsp</result>
+			<result name="cgadmindedaoorder">/inc/caigou/cgadmin/cgadmindedaoorders.jsp</result>
+			<result name="cguporder">/inc/caigou/cgadmin/cguporder.jsp</result>
+			<result name="cgadminorder">/inc/caigou/cgadmin/cgadminorder.jsp</result>
+			<result name="upcgadminorder">/inc/caigou/cgadmin/upcgadminorder.jsp</result>
+			<result name="addcporder">/inc/caigou/cgadmin/addcporder.jsp</result>
+			<result name="ceshi">/inc/test.jsp</result>
+			<result name="caigouadmindedaoorder">/inc/caigou/cgadmin/caigouadmindedaoorder.jsp</result>
+			<result name="caigouadmindaifahuo">/inc/caigou/cgadmin/caigouadmindaifahuo.jsp</result>
+			<result name="exportOrder">/inc/caigou/exportOrder.jsp</result>
+			<result name="cgadminupdaifahuo">/inc/caigou/cgadmin/cgadminupdaifahuoorder.jsp</result>
+			<result name="caigouadminjiufen">/inc/caigou/cgadmin/caigouadminjiufen.jsp</result>
+			<result name="lirunadminzero">/inc/caigou/cgadmin/lirunadminzero.jsp</result>
+			<result name="thadminzero">/inc/caigou/cgadmin/thadminzero.jsp</result>
+			<result name="kucun">/inc/caigou/cgadmin/kucun.jsp</result>
+			<result name="upnumber">/inc/caigou/cgadmin/upnumber.jsp</result>
+			<result name="upzhanghao">/inc/caigou/cgadmin/upzhanghao.jsp</result>
+			<result name="cgadminexportOrder">/inc/caigou/cgadminexportOrder.jsp</result>
+		</action>
+	</package>
+</struts>
+

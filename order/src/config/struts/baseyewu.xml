@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	
+	<package name="baseyewu" extends="sysdefault">
+		<action name="yewu" class="yewuAction">
+			<result name="yewuallorder">/inc/yewu/yewuallorder.jsp</result>
+			<result name="updateorders">/inc/yewu/updateorders.jsp</result>
+			<result name="yunshunull">/inc/yewu/yunshunull.jsp</result>
+			<result name="yunfei">/inc/yewu/yunfeinull.jsp</result>
+			<result name="upyworder">/inc/yewu/upyworder.jsp</result>
+			<result name="upywyunfei">/inc/yewu/upywyunfei.jsp</result>
+			<result name="sumaitong">/inc/yewu/sumaitong.jsp</result>
+			<result name="upsumaitong">/inc/yewu/upsumaitong.jsp</result>
+			<result name="weirudang">/inc/yewu/weirudang.jsp</result>
+			<result name="upweirudang">/inc/yewu/upweirudang.jsp</result>
+			<result name="daifa">/inc/yewu/daifa.jsp</result>
+			<result name="updaifa">/inc/yewu/updaifa.jsp</result>
+			<result name="upruzhang">/inc/yewu/upruzhang.jsp</result>
+			<result name="weiruzhang">/inc/yewu/weiruzhang.jsp</result>
+			 <result name="test">/inc/yewu/test.jsp</result>
+			 <result name="ModifyCategory">/inc/yewu/ModifyCategory.jsp</result>
+			
+			 <result name="success" type="stream"> 
+                <param name="contentType">application/vnd.ms-excel</param> 
+                <param name="contentDisposition">attachment;filename="AllUsers.xls"</param> 
+                <param name="inputName">excelFile</param> 
+            </result> 
+		</action>
+	</package>
+</struts>
+

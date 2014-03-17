@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	
+	<package name="clipart" extends="sysdefault">
+		<action name="clipart" class="clipArtAction">
+			<result name="getorders">/inc/ClipArt/getorders.jsp</result>
+			<result name="Disposed">/inc/ClipArt/Disposed.jsp</result>
+			<result name="cannothandle">/inc/ClipArt/CanNotHandle.jsp</result>
+		</action>
+	</package>
+	
+</struts>
+

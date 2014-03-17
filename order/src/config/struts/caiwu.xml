@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	<!-- 登录的配置 -->
+	<package name="caiwu" extends="sysdefault">
+		<action name="caiwu" class="caiWuAction">
+			
+			<result name="importkehu">/inc/caiwu/importkehu.jsp</result>
+			<result name="getruzhang">/inc/caiwu/getruzhang.jsp</result>
+			<result name="yewuallorder">/inc/caiwu/yewuallorder.jsp</result>
+			<result name="daochuyunfei">/inc/caiwu/daochuyunfei.jsp</result>
+			<result name="exportKeHuOrder">/inc/caiwu/exportKeHuOrder.jsp</result>
+			<result name="dairudan">/inc/caiwu/dairudan.jsp</result>
+			<result name="updairudan">/inc/caiwu/updatedairudan.jsp</result>
+			<result name="updanhao">/inc/caiwu/updanhao.jsp</result>
+			<result name="chaozhong">/inc/caiwu/chaozhong.jsp</result>
+			<result name="czupdairudan">/inc/caiwu/czupdairudan.jsp</result>
+			<result name="updatedanhao">/inc/caiwu/updatedanhao.jsp</result>
+			<result name="getPayMent">/inc/caiwu/getPayment.jsp</result>
+			<result name="updateorders">/inc/caiwu/updateorders.jsp</result>
+			<result name="ceshi">/inc/caiwu/test.jsp</result>
+			 <result name="success" type="stream"> 
+                <param name="contentType">application/vnd.ms-excel</param> 
+                <param name="contentDisposition">attachment;filename="AllUsers.xls"</param> 
+                <param name="inputName">excelFile</param> 
+            </result> 
+		</action>
+	</package>
+</struts>
+

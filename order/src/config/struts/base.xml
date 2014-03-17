@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	<!-- 登录的配置 -->
+	<package name="base" extends="sysdefault">
+		<action name="system" class="systemAction">
+		 
+			<result name="main">/inc/main.jsp</result>
+			<result name="login">/index.jsp</result>
+			<result name="registered">/registered.jsp</result>
+		</action>
+		<!-- 管理员配置 -->
+		<action name="admin" class="adminAction">
+			<result name="updateyunfei">/inc/admin/updateyunfei.jsp</result>
+			<result name="yunfei">/inc/admin/yunfei.jsp</result>
+			<result name="addzh">/inc/admin/addzh.jsp</result>
+			<result name="addorder">/inc/admin/addorder.jsp</result>
+			<result name="addguojia">/inc/admin/addguojia.jsp</result>
+			<result name="addadminuser">/inc/admin/addadminuser.jsp</result>
+			<result name="updateuser">/inc/admin/updateuser.jsp</result>
+			<result name="uporder">/inc/admin/uporder.jsp</result>
+			<result name="updateorder">/inc/admin/updateorder.jsp</result>
+			<result name="fenpeiorder">/inc/admin/fenpeiorder.jsp</result>
+			<result name="getall">/inc/admin/getallorder.jsp</result>
+			<result name="dedaoorder">/inc/admin/dedaoorder.jsp</result>
+			<result name="upuser">/inc/admin/updateuser.jsp</result>
+			<result name="updatehuokuan">/inc/admin/updatehuokuan.jsp</result>
+			<result name="uphuokuan">/inc/admin/uphuokuan.jsp</result>
+			<result name="upadminhuokuan">/inc/admin/upadminhuokuan.jsp</result>
+			<result name="updatehuokuans">/inc/admin/updatehuokuans.jsp</result>
+		    <result name="jiufen">/inc/admin/jiufen.jsp</result>
+		    <result name="danhao">/inc/admin/yunshu.jsp</result>
+		    <result name="zhanghao">/inc/admin/getzhanghao.jsp</result>
+		    <result name="dhgate">/inc/admin/getdhgate.jsp</result>
+		    <result name="updhgate">/inc/admin/updhgate.jsp</result>
+		    <result name="yunfeinull">/inc/admin/yunfeinull.jsp</result>
+		    <result name="huokuannull">/inc/admin/huokuannull.jsp</result>
+		    <result name="lirun">/inc/admin/lirun.jsp</result>
+		    <result name="liruninterval">/inc/admin/liruninterval.jsp</result>
+		    <result name="chakansumaitong">/inc/admin/chakansumaitong.jsp</result>
+		    <result name="tuikuan">/inc/admin/tuikuan.jsp</result>
+		    <result name="wentiorder">/inc/admin/wentiorder.jsp</result>
+		    <result name="weiwancheng">/inc/admin/caigouweiwancheng.jsp</result>
+		    <result name="getcaigou">/inc/admin/getcaigou.jsp</result>
+		    <result name="upsumaitong">/inc/admin/upsumaitong.jsp</result>
+		    <result name="uporders">/inc/admin/uporders.jsp</result>
+		    <result name="sumaitong">/inc/admin/sumaitong.jsp</result>
+		    <result name="wcorder">/inc/admin/wcorder.jsp</result>
+		     <result name="leimu">/inc/admin/leimu.jsp</result>
+		     <result name="importkehu">/inc/admin/importkehu.jsp</result>
+		     <result name="export">/inc/admin/exportKeHuOrder.jsp</result>
+		     <result name="test">/inc/test.jsp</result>
+		      <result name="huilv">/inc/admin/huilv.jsp</result>
+		      <result name="xiexin">/inc/admin/xiexin.jsp</result>
+		      <result name="weiruzhang">/inc/admin/weiruzhang.jsp</result>
+		      <result name="upremark">/inc/admin/upremark.jsp</result>
+		      <result name="uphuilv">/inc/admin/uphuilv.jsp</result>
+		       <result name="getyunfeinull">/inc/admin/getyunfeinull.jsp</result>
+		        <result name="gethuokuannull">/inc/admin/gethuokuannull.jsp</result>
+		        <result name="getcairutime">/inc/admin/getCaiRuTime.jsp</result>
+		        <result name="cgjiufen">/inc/admin/cgjiufen.jsp</result>
+		         <result name="upadminremark">/inc/admin/updateremark.jsp</result>
+		          <result name="getyucun">/inc/admin/getyucun.jsp</result>
+		          <result name="addmoney">/inc/admin/addmoney.jsp</result>
+		          <result name="upmoney">/inc/admin/upmoney.jsp</result>
+		           <result name="getYcDetail">/inc/admin/getYcDetail.jsp</result>
+		           <result name="getfpzhanghao">/inc/admin/getfpzhanghao.jsp</result>
+		           <result name="addfq">/inc/admin/addfq.jsp</result>
+		           <result name="addmysqlorder">/inc/admin/test.jsp</result>
+		           <result name="sdryhzk">/inc/admin/sdryhzk.jsp</result>
+		           <result name="getallorders">/inc/admin/getallorders.jsp</result>
+		           <result name="getcaigous">/inc/admin/getcaigous.jsp</result>
+		           <result name="getAssignedAccount">/inc/admin/getAssignedAccount.jsp</result>
+		            <result name="getunfinished">/inc/admin/getUnfinished.jsp</result>
+		            <result name="getAudit">/inc/admin/getAudit.jsp</result>
+		            <result name="getCompleted">/inc/admin/getCompleted.jsp</result>
+		</action>
+		<action name="test" class="testAction">
+		<result name="addorder">/inc/admin/addorder.jsp</result>
+		<result name="error">/inc/error.jsp</result>
+		<result name="kanxin">/inc/test1/kanxin.jsp</result>
+		<result name="getkanxin">/inc/test1/getkanxin.jsp</result>
+		<result name="weidu">/inc/test1/weidu.jsp</result>
+		<result name="allXieXin">/inc/test1/allXieXin.jsp</result>
+		<result name="caigouadmindedaoorder">/inc/caigou/caigouadmindedaoorder.jsp</result>
+		<result name="cgadminorder">/inc/caigou/cgadminorder.jsp</result>
+		<result name="jsyf">/inc/caigou/jsyf.jsp</result>
+		<result name="xsyf">/inc/caigou/xsyf.jsp</result>
+		<result name="fjjl">/inc/test1/fjjl.jsp</result>
+		<result name="getfjkanxin">/inc/test1/getfjkanxin.jsp</result>
+		<result name="kehuxiexin">/inc/test1/kehuxiexin.jsp</result>
+		</action>
+		<action name="exportOrder" class="exportUserAction">
+			<result name="exp">/inc/yewu/importOrder.jsp</result>
+			<result name="export">/inc/yewu/exportOrder.jsp</result>
+			<result name="daochu">/inc/yewu/daochu.jsp</result>
+			<result name="danhao">/inc/yewu/danhao.jsp</result>
+			
+		</action>
+		<!-- 2014-03-03 新增 -->
+		<action name="aliAuth" class="aliAuthAction"></action>
+	</package>
+</struts>
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.i18n.encoding" value="utf-8" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.action.extension" value="do" />	
+	<constant name="struts.multipart.saveDir" value="\tmp" />
+	<!-- 最大1000兆 -->
+	<constant name="struts.multipart.maxSize" value="1000000000"></constant>
+	<package name="basecaigou" extends="sysdefault">
+		<action name="caigou" class="caiGouAction">
+			<result name="cgadmindedaoorder">/inc/caigou/cgadmindedaoorders.jsp</result>
+			<result name="dedaoorders">/inc/caigou/cg/dedaoorders.jsp</result>
+			<result name="updatehuokuan">/inc/caigou/cg/updatehuokuan.jsp</result>
+			<result name="cgdedaoorder">/inc/caigou/cg/cgdedaoorder.jsp</result>
+			<result name="sumaitong">/inc/caigou/cg/sumaitong.jsp</result>
+			<result name="updatehuokuans">/inc/caigou/cg/updatehuokuans.jsp</result>
+			<result name="getcaigou">/inc/caigou/cg/getcaigou.jsp</result>
+			<result name="upsumaitong">/inc/caigou/cg/upsumaitong.jsp</result>
+			<result name="huokuannull">/inc/caigou/cg/huokuannull.jsp</result>
+			<result name="caigouuphuokuan">/inc/caigou/cg/caigouuphuokuan.jsp</result>
+			<result name="daifahuo">/inc/caigou/cg/daifahuo.jsp</result>
+			<result name="exportOrder">/inc/caigou/exportOrder.jsp</result>
+			<result name="updaifahuo">/inc/caigou/cg/updaifahuo.jsp</result>
+			<result name="caigoujiufen">/inc/caigou/cg/caigoujiufen.jsp</result>
+			<result name="lirunzero">/inc/caigou/cg/lirunzero.jsp</result>
+			<result name="thzero">/inc/caigou/cg/thzero.jsp</result>
+			<result name="kucuns">/inc/caigou/cg/kucuns.jsp</result>
+			<result name="upnumbers">/inc/caigou/cg/upnumbers.jsp</result>
+			<result name="tuihuo">/inc/caigou/cg/tuihuo.jsp</result>
+			<result name="zhupdate">/inc/caigou/cg/zhupdate.jsp</result>
+			<result name="daifa">/inc/caigou/cg/daifa.jsp</result>
+			<result name="upShipment">/inc/caigou/cg/upShipment.jsp</result>
+		</action>
+	</package>
+</struts>
+

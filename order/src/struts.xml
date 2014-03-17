@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	<constant name="struts.objectFactory" value="spring" />
+
+	<constant name="struts.i18n.encoding" value="utf-8" />
+	<constant name="struts.ui.theme" value="simple" />	
+	<constant name="struts.multipart.saveDir" value="\tmp" />
+	<!-- 最大1000兆 -->
+	<constant name="struts.multipart.maxSize" value="1000000000"></constant>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.action.extension" value="do" />
+	<package name="sysdefault" extends="struts-default" abstract="true">
+		
+	</package>
+	
+	<include file="config/struts/base.xml"></include>
+	<include file="config/struts/baseyewu.xml"></include>
+	<include file="config/struts/baseyewu1.xml"></include>
+	<include file="config/struts/basecaigou.xml"></include>
+	<include file="config/struts/basecgadmin.xml"></include>
+	<include file="config/struts/strut.xml"></include>
+	<include file="config/struts/basecangkuyuan.xml"></include>
+	<include file="config/struts/guke.xml"></include>
+	<include file="config/struts/caiwu.xml"></include>
+	<include file="config/struts/msg.xml"></include>
+	<include file="config/struts/order.xml"></include>
+	<include file="config/struts/account.xml"></include>
+	<include file="config/struts/ClipArt.xml"></include>
+	<include file="config/struts/technician.xml"></include>
+	
+</struts>
+

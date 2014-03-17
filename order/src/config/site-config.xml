@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<site-config>
+
+	<!-- 敦煌网 -->
+	<dhgateAppKey>NJkPGfFsLCchu4HEC7do</dhgateAppKey>
+	<dhgateAppSecret>ePTEbmRmts6CYNUSxCrob6D8n4Jjk0pG</dhgateAppSecret>
+	<dhgateGetTokenUrl>https://secure.dhgate.com/dop/oauth2/access_token</dhgateGetTokenUrl>
+	<dhgateApiUrl>http://api.dhgate.com/dop/router</dhgateApiUrl>
+	
+	<!-- 速卖通 -->
+	<aliAppKey>6299707</aliAppKey>
+	<aliAppSecret>3DmPuGqwnh</aliAppSecret>
+	<aliRedirectUri>http://qiantingdi.gicp.net:14189/order/aliAuth.do</aliRedirectUri>
+	<aliApiUrl>https://gw.api.alibaba.com/openapi/</aliApiUrl>
+
+</site-config>

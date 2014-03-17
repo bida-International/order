@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	<!-- 登录的配置 -->
+	<package name="guke" extends="sysdefault">
+		<action name="guke" class="guKeAction">
+			<result name="addorder">/inc/guke/addOrder.jsp</result>
+			<result name="daifahuo">/inc/guke/daifahuo.jsp</result>
+			<result name="yijingfahuo">/inc/guke/yijingfahuo.jsp</result>
+			<result name="updaifahuo">/inc/guke/updaifahuo.jsp</result>
+			<result name="upyijingfahuo">/inc/guke/upyijingfahuo.jsp</result>
+			<result name="chuhuo">/inc/guke/chuhuoorder.jsp</result>
+			<result name="UpdateZiLiao">/inc/guke/UpdateZiLiao.jsp</result>
+			<result name="tuihuo">/inc/guke/tuihuo.jsp</result>
+			<result name="getxqYuCun">/inc/guke/getxqYuCun.jsp</result>
+			<result name="zxzx">/inc/guke/zxzx.jsp</result>
+		</action>
+	</package>
+</struts>
+

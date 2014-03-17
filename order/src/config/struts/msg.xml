@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	
+	<package name="msg" extends="sysdefault" namespace="/msg">
+		<action name="dhgateMsg" class="msg.dhgateMsgAction">
+			<result name="success">/inc/msg/dhgateMsg.jsp</result>
+		</action>
+		<action name="dhgateMsgDetail" class="msg.dhgateMsgDetailAction">
+			<result name="success">/inc/msg/dhgateMsgDetail.jsp</result>
+		</action>
+		<action name="dhgateApi" class="msg.dhgateApiAction">
+			<result name="success">/inc/msg/dhgateApi.jsp</result>
+		</action>
+		<action name="fenpeiConfig" class="msg.fenpeiConfigAction">
+			<result name="success">/inc/msg/fenpeiConfig.jsp</result>
+			<result name="reload" type="redirect">/msg/fenpeiConfig.do</result>
+		</action>
+	</package>
+	
+</struts>
+

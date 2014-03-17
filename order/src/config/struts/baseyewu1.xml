@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	
+	<package name="baseyewu1" extends="sysdefault">
+		<action name="yewu1" class="yewu1Action">
+			<result name="fenpei">/inc/yewu1/fenpeiorder.jsp</result>
+			<result name="wenti">/inc/yewu1/wentiorder.jsp</result>
+			<result name="upadminremark">/inc/yewu1/updateremark.jsp</result>
+			<result name="upremark">/inc/yewu1/upremark.jsp</result>
+			<result name="getallorder">/inc/yewu1/getallorder.jsp</result>
+			<result name="updateorder">/inc/yewu1/updateorder.jsp</result>
+			<result name="getDispute">/inc/yewu1/getDispute.jsp</result>
+			<result name="tuihuoAll">/inc/yewu1/tuihuoAll.jsp</result>
+			<result name="tuihuo">/inc/yewu1/tuihuo.jsp</result>
+		</action>
+	</package>
+</struts>
+
