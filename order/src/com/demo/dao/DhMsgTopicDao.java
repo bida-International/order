@@ -22,7 +22,8 @@ public interface DhMsgTopicDao   extends BaseDao<DhMsgTopic,Long>{
 	 * @param userId
 	 * @return
 	 */
-	public PageBean getAllByPage(int pageSize, int page, Long userId,String dhAccount, Integer msgType, Integer readStatus);
+	public PageBean getAllByPage(int pageSize, int page, Long userId,String dhAccount, 
+			Integer msgType, Integer readStatus, Integer marked);
 	
 	/**
 	 * 获取未分配的(订单种类)站内信列表

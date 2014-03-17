@@ -35,6 +35,8 @@ public class DhMsgTopic implements Serializable {
 	private String bdUserName;
 	private String dhAccount; // 所属的敦煌账号
 	private Integer readStatus; // 0.未读; 1.已读
+	private Integer marked; // 0.未标记; 1.标记
+	
 	public Integer getReadStatus() {
 		return readStatus;
 	}
@@ -160,6 +162,12 @@ public class DhMsgTopic implements Serializable {
 	}
 	public void setDhAccount(String dhAccount) {
 		this.dhAccount = dhAccount;
+	}
+	public Integer getMarked() {
+		return marked;
+	}
+	public void setMarked(Integer marked) {
+		this.marked = marked;
 	}
 	
 }

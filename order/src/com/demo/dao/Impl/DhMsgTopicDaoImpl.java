@@ -33,7 +33,7 @@ public class DhMsgTopicDaoImpl extends BaseDaoImpl<DhMsgTopic, Long> implements 
 	 * @return
 	 */
 	public PageBean getAllByPage(int pageSize, int page, Long userId,
-			String dhAccount, Integer msgType, Integer readStatus) {
+			String dhAccount, Integer msgType, Integer readStatus, Integer marked) {
 		PageBean pageBean = new PageBean(pageDao);
         String queryPart = "";
         if (userId != null) {
@@ -56,7 +56,12 @@ public class DhMsgTopicDaoImpl extends BaseDaoImpl<DhMsgTopic, Long> implements 
         		queryPart += "and ";
         	}
         	queryPart += " readStatus = '" + readStatus + "' ";
-        	
+        }
+        if (marked != null) {
+        	if (!queryPart.equals("")) {
+        		queryPart += "and ";
+        	}
+        	queryPart += " marked = '" + marked + "' ";
         }
         if (!queryPart.equals("")) {
         	queryPart = "where " + queryPart;

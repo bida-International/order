@@ -9,10 +9,10 @@
 	<s:form action="./msg/dhgateMsg.do">
 		<table border="1" cellspacing="0" style="width: 90%; float: left">
 			<tr>
-				<th colspan="7" align="center">敦煌站内信</th>
+				<th colspan="8" align="center">敦煌站内信</th>
 			</tr>
 			<tr>
-				<td colspan="7">
+				<td colspan="8">
 					<span>敦煌账号：</span>
 					<s:select name="dhAccount" list="dhAccounts" listKey="account"
 						listValue="account" headerKey="0" headerValue="全部"
@@ -50,12 +50,22 @@
 							<s:if test="readStatus ==  1">selected="selected"</s:if>>已读</option>
 					</select>
 					<span>&nbsp;&nbsp;</span>
+					<span>标记：</span> <select name="marked">
+						<option value="-1"
+							<s:if test="marked ==  -1">selected="selected"</s:if>>全部</option>
+						<option value="0"
+							<s:if test="marked ==  0">selected="selected"</s:if>>未标记</option>
+						<option value="1"
+							<s:if test="marked ==  1">selected="selected"</s:if>>已标记</option>
+					</select>
+					<span>&nbsp;&nbsp;</span>
 					<input type="submit" value="查 询" />
 				</td>
 			</tr>
 			<tr align="center" style="font-weight: bold;">
 				<td width="5%">状态</td>
-				<td width="45%">标题</td>
+				<td width="5%">标记</td>
+				<td width="40%">标题</td>
 				<td width="5%">种类</td>
 				<td width="10%">敦煌账号</td>
 				<td width="5%">回复数</td>
@@ -69,6 +79,14 @@
 						</s:if> <s:else>
 							<span style="color: #ff0000;">未读</span>
 						</s:else></td>
+					<td>
+						<s:if test="marked == 0">
+							<img src="./images/star1.png"/>
+						</s:if>
+						<s:elseif test="marked == 1">
+							<img src="./images/star2.png"/>
+						</s:elseif>
+					</td>
 					<td
 						style="text-align: left; padding-left: 5px; padding-right: 5px;">
 						<a href="./msg/dhgateMsgDetail.do?topicId=${i.topicId}"
@@ -97,10 +115,11 @@
 					style="margin-left: 50px;">&nbsp;</span> 
 					<pg:pager
 						url="./msg/dhgateMsg.do" items="${pageBean.allRow}"
-						export="currentPageNumber=pageNumber" maxPageItems="12">
+						export="currentPageNumber=pageNumber" maxPageItems="10">
 						<pg:param name="dhAccount" value="${dhAccount }"/>
 						<pg:param name="msgType" value="${msgType }"/>
 						<pg:param name="readStatus" value="${readStatus }"/>
+						<pg:param name="marked" value="${marked }"/>
 						<pg:first>
 							<a href="${pageUrl}&pageNumber=1">首页</a>
 						</pg:first>
