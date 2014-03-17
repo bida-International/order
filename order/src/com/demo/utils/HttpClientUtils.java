@@ -8,6 +8,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 public class HttpClientUtils {
@@ -28,12 +29,13 @@ public class HttpClientUtils {
 	
 	/**
 	 * 发送post请求
-	 * @param requestXmlStr
+	 * @param url 请求地址
+	 * @param paramMap 请求参数 
 	 * @return
 	 */
-	public static JSONObject doPost(String postUrl, Map<String, String> paramMap) {
+	public static JSONObject doPost(String url, Map<String, String> paramMap) {
 		HttpClient client = getHttpClient();
-		PostMethod ps = new PostMethod(postUrl);
+		PostMethod httpMethod = new PostMethod(url);
 		NameValuePair[] param = new NameValuePair[paramMap.size()];
 		int i = 0;
 		Iterator<String> it = paramMap.keySet().iterator();
@@ -42,16 +44,37 @@ public class HttpClientUtils {
 			param[i] = new NameValuePair(key, paramMap.get(key));
 			i++;
 		}
-		ps.setRequestBody(param);
+		httpMethod.setRequestBody(param);
 		JSONObject returnJson = null;
 		try {
-			client.executeMethod(ps);
-			String responseStr = ps.getResponseBodyAsString();
+			client.executeMethod(httpMethod);
+			String responseStr = httpMethod.getResponseBodyAsString();
 			returnJson = JSONObject.fromObject(responseStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			ps.releaseConnection();
+			httpMethod.releaseConnection();
+		}
+		return returnJson;
+	}
+	
+	/**
+	 * 发送get请求
+	 * @param url 请求地址
+	 * @return
+	 */
+	public static JSONObject doGet(String url) {
+		HttpClient client = getHttpClient();
+		GetMethod httpMethod = new GetMethod(url);
+		JSONObject returnJson = null;
+		try {
+			client.executeMethod(httpMethod);
+			String responseStr = httpMethod.getResponseBodyAsString();
+			returnJson = JSONObject.fromObject(responseStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			httpMethod.releaseConnection();
 		}
 		return returnJson;
 	}
