@@ -242,7 +242,7 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
 	        	 
             	row = sheet.createRow(j);
                 row.setHeight((short)2750);
-                if(orders.get(j).getZhanghaoId() != null && !"".equals(orders.get(j).getZhanghaoId())){
+                if(orders.get(j).getZhanghaoId() != null && !"".equals(orders.get(j).getZhanghaoId()) && orders.get(j).getZhanghaoId() != 15){
                 	cteateCell(workbook, row, 0, getZhangHaoId(orders.get(j).getZhanghaoId().toString()));
                 }else{
                 	cteateCell(workbook, row, 0, "");
@@ -541,7 +541,7 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
 		}
 		return "";
     }
-    //把导出订单传给业务
+    //把导出订单传给财务
     public String daochuyewu(){
     	try
         {
@@ -553,7 +553,7 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
                 if(ls.get(0).getDaochu()==0){
                 	str[i] = i +".订单"+ls.get(0).getOrderId()+".还没导出、操作失败！";
                 }
-                else{
+                else{  
 	                if(ls.size() != 0)
 	                {
 	                    ls.get(0).setId(Long.parseLong(ch[i]));

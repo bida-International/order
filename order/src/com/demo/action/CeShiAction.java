@@ -37,6 +37,7 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
 
     public InputStream getExcelFile()
     {
+    	System.out.println("+++µ¼³ö+++");
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("sheet1");
         HSSFRow row = sheet.createRow(0);
@@ -54,7 +55,9 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
         {
             orders = orderTableDao.getDaoChu(dc);
             if (dc == 2) {
+            
 				for (int i = 0; i < orders.size(); i++) {
+					
 					  row = sheet.createRow(i);
 		                row.setHeight((short)2750);
 		                if (orders.get(i).getGuoneiwangzhanId() != null && !"".equals(orders.get(i).getGuoneiwangzhanId())){
@@ -66,11 +69,12 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
 		                cteateCell(workbook, row, 4, orders.get(i).getOrderId());
 				}
 			}else{
+			
 	            for(int i = 0; i < orders.size(); i++)
 	            {
 	                row = sheet.createRow(i);
 	                row.setHeight((short)2750);
-	                if(orders.get(i).getZhanghaoId() != null && !"".equals(orders.get(i).getZhanghaoId())){
+	                if(orders.get(i).getZhanghaoId() != null && !"".equals(orders.get(i).getZhanghaoId()) && orders.get(i).getZhanghaoId() != 15){
 	                	cteateCell(workbook, row, 0, getZhangHaoId(orders.get(i).getZhanghaoId().toString()));
 	                }else{
 	                	cteateCell(workbook, row, 0, "");
@@ -108,6 +112,7 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
         }
         byte ba[] = baos.toByteArray();
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+        
         try
         {
         	java.util.Date d = new java.util.Date();
