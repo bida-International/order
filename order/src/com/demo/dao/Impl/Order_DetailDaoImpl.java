@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.demo.dao.GuoJiaDao;
 import com.demo.dao.Order_DetailDao;
-import com.demo.entity.Express.YunFeiTable;
+import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 import com.demo.entity.order.Order_Detail;
 import com.demo.entity.user.CaiGou;

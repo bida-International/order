@@ -3,7 +3,7 @@ package com.demo.dao;
 import java.util.List;
 
 import com.demo.entity.DocumentTable;
-import com.demo.entity.Express.YunFeiTable;
+import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 
 public interface DocumentDao  extends BaseDao<DocumentTable,Long>{

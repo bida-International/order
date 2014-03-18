@@ -3,8 +3,9 @@ package com.demo.dao.Impl;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import com.demo.dao.Express.YunFeiTableDao;
-import com.demo.entity.Express.YunFeiTable;
+
+import com.demo.dao.Courier.YunFeiTableDao;
+import com.demo.entity.Courier.YunFeiTable;
 @Repository
 public class YunFeiTableDaoImpl extends BaseDaoImpl<YunFeiTable, Long> implements YunFeiTableDao{
 	public YunFeiTableDaoImpl() {

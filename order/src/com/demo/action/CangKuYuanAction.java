@@ -5,7 +5,7 @@ import com.demo.dao.GuoNeiKuaiDiDao;
 import com.demo.dao.OrderDao;
 import com.demo.dao.OrderTableDao;
 import com.demo.entity.GuoNeiKuaiDi;
-import com.demo.entity.Express.YunFeiTable;
+import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 import com.demo.list.PageModel;
 import com.demo.page.PageBean;
@@ -227,7 +227,7 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
         sheet.setColumnWidth(4, 3500);
         sheet.setColumnWidth(5, 8500);
         sheet.setColumnWidth(6, 3000);
- 
+        sheet.setColumnWidth(7, 3000);
         try
         {
         	orders = new ArrayList(); 
@@ -263,6 +263,7 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
                 }
                 cteateCell(workbook, row, 5, orders.get(j).getGuowaidizhi());    
                 cteateCell(workbook, row, 6, orders.get(j).getOrderId());
+                cteateCell(workbook, row, 7, orders.get(j).getCountry());
             }
             }
 

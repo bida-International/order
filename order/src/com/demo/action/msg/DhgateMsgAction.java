@@ -58,12 +58,14 @@ public class DhgateMsgAction extends BaseAction {
 		if (readStatus != -1) {
 			queryReadStatus = readStatus;
 		}
+
 		if (marked != -1) {
 			queryMarked = marked;
 		}
 		
 		pageBean = dhMsgBiz.getAllByPage(pageSize, pageNumber, queryUserId,
 				queryDhAccount, queryMsgType, queryReadStatus, queryMarked);
+
 		return SUCCESS;
 	}
 	

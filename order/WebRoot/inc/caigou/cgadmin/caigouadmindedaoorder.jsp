@@ -204,13 +204,7 @@
 	         <font color="#00cc00">${sd.orderId}</font> 
 	         </s:if>
 	         <td>
-	        	<s:if test="getCoding(#sd.bianma) != null">
-          			<font color="#ff33ff">${sd.bianma}</font>
-          		</s:if>
-          	
-          		<s:if test="getCoding(#sd.bianma) == null">
           			${sd.bianma}
-          		</s:if>
 			</td>
 	   		<td><s:property value="#sd.country"/></td>
 	   		<td>

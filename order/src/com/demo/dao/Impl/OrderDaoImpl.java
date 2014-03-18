@@ -1,7 +1,7 @@
 package com.demo.dao.Impl;
 
 import com.demo.dao.OrderDao;
-import com.demo.entity.Express.YunFeiTable;
+import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = "from OrderTable where fenpei != 3  and sjc is null order by zhanghaoId desc";
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))&& (chuli == null || "".equals(chuli))){
-            	stu="from OrderTable where fenpei != 3  and sjc is null and bianma = '"+bianma+"' order by zhanghaoId desc";
+            	stu="from OrderTable where fenpei != 3  and sjc is null and bianma like '%"+bianma+"%' order by zhanghaoId desc";
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu))&& (chuli == null || "".equals(chuli)))
             {
@@ -89,7 +89,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
-            	stu="from OrderTable where fenpei != 3  and sjc is null and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"' order by zhanghaoId desc";
+            	stu="from OrderTable where fenpei != 3  and sjc is null and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%' order by zhanghaoId desc";
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
@@ -105,7 +105,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
-            	stu="from OrderTable where fenpei != 3  and sjc is null and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"' order by zhanghaoId desc";
+            	stu="from OrderTable where fenpei != 3  and sjc is null and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' order by zhanghaoId desc";
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
@@ -117,7 +117,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
-            	stu="from OrderTable where fenpei != 3  and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')  and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"' order by zhanghaoId desc";
+            	stu="from OrderTable where fenpei != 3  and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')  and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' order by zhanghaoId desc";
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
@@ -129,15 +129,15 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
-            	stu="from OrderTable where fenpei != 3  and sjc is null and bianma='"+bianma+"' and leimuid = '"+leimu+"' order by zhanghaoId desc";
+            	stu="from OrderTable where fenpei != 3  and sjc is null and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"' order by zhanghaoId desc";
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
-            	stu="from OrderTable where fenpei != 3  and sjc is null and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"' order by zhanghaoId desc";
+            	stu="from OrderTable where fenpei != 3  and sjc is null and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"' order by zhanghaoId desc";
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
-            	stu="from OrderTable where fenpei != 3 and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"' order by zhanghaoId desc";
+            	stu="from OrderTable where fenpei != 3 and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"' order by zhanghaoId desc";
             }        
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))&& (chuli == null || "".equals(chuli))){
             	
@@ -314,7 +314,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                   stu = ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3");
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and bianma = '"+bianma+"'");
+              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and bianma like '%"+bianma+"%'");
               }
               else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
               {
@@ -339,11 +339,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
               }
               else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
               	
-              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
               }
               else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
               	
-              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%' ");
               }
               else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
               	
@@ -359,7 +359,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
               }
               else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
               	
-              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3  and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" and bianma = '"+bianma+"'");
+              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3  and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%'");
               }
               else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
               	
@@ -371,7 +371,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
               }
               else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
               	
-              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
               }
               else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
               	
@@ -383,15 +383,15 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
               	
-              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
               	
-              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
               	
-              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and zhanghaoId = "+dhgatezhanghao+" and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+              	stu=ht.find("select round(sum(money),3) from OrderTable where sjc is null and fenpei != 3 and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
               	
@@ -443,7 +443,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and fenpei != 3 and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and fenpei != 3 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
@@ -468,11 +468,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -488,7 +488,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and  fenpei != 3 and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and  fenpei != 3 and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -500,7 +500,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where  (jiufen=0 or jiufen is null) and sjc is null  and fenpei != 3  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = "+dhgatezhanghao+" and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where  (jiufen=0 or jiufen is null) and sjc is null  and fenpei != 3  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -516,11 +516,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and  fenpei != 3 and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and  fenpei != 3 and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and  fenpei != 3  and zhanghaoId = "+dhgatezhanghao+" and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(yunfei),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and  fenpei != 3  and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -572,7 +572,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {	
@@ -596,11 +596,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -616,7 +616,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where  (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where  (jiufen=0 or jiufen is null) and sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -628,7 +628,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null)  and sjc is null and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = "+dhgatezhanghao+" and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null)  and sjc is null and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -640,15 +640,15 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and  fenpei != 3  and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null and  fenpei != 3  and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and  fenpei != 3 and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and  fenpei != 3 and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and  fenpei != 3 and zhanghaoId = "+dhgatezhanghao+" and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(huokuan),3) from OrderTable where (jiufen=0 or jiufen is null) and sjc is null  and  fenpei != 3 and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -700,7 +700,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3 and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
@@ -725,11 +725,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -745,7 +745,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where  sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where  sjc is null and fenpei != 3 and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -757,7 +757,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = "+dhgatezhanghao+" and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where sjc is null and  fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -769,7 +769,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where  sjc is null and fenpei != 3 and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where  sjc is null and fenpei != 3 and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -777,7 +777,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where  sjc is null and fenpei != 3  and zhanghaoId = "+dhgatezhanghao+" and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(tuikuan),3) from OrderTable where  sjc is null and fenpei != 3  and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -829,7 +829,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3 and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
@@ -854,11 +854,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where  jiufen = 1 and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where  jiufen = 1 and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and  fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and  fenpei != 3 and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -878,7 +878,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and  fenpei != 3 and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and  fenpei != 3 and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu))){
             	
@@ -886,7 +886,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -898,15 +898,15 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3 and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3 and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3  and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3  and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3 and zhanghaoId = "+dhgatezhanghao+" and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select count(*) from OrderTable where jiufen = 1 and fenpei != 3 and zhanghaoId = "+dhgatezhanghao+" and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1029,7 +1029,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and (fenpei != 3 or fenpei is null)");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select count(*) from OrderTable where huokuan is null  and sjc is null and (fenpei != 3 or fenpei is null) and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where huokuan is null  and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
@@ -1054,11 +1054,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1074,7 +1074,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1086,7 +1086,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and  (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where huokuan is null and sjc is null and  (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1102,11 +1102,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select count(*) from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select count(*) from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1158,7 +1158,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select count(*) from OrderTable where yunfei is null  and sjc is null and (fenpei != 3 or fenpei is null)");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select count(*) from OrderTable where yunfei is null  and sjc is null and (fenpei != 3 or fenpei is null) and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where yunfei is null  and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
@@ -1183,11 +1183,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where  yunfei is null  and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where  yunfei is null  and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where yunfei is null and sjc is null and  (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where yunfei is null and sjc is null and  (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1203,7 +1203,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where  yunfei is null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where  yunfei is null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1215,7 +1215,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where yunfei is null and sjc is null and  (fenpei != 3 or fenpei is null) and time (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select count(*) from OrderTable where yunfei is null and sjc is null and  (fenpei != 3 or fenpei is null) and time (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1227,7 +1227,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where yunfei is null and sjc is null and (fenpei != 3 or fenpei is null) and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select count(*) from OrderTable where yunfei is null and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1235,7 +1235,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select count(*) from OrderTable where yunfei is null  and sjc is null and (fenpei != 3 or fenpei is null) and zhanghaoId = '"+dhgatezhanghao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select count(*) from OrderTable where yunfei is null  and sjc is null and (fenpei != 3 or fenpei is null) and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1329,7 +1329,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         }
         if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(caigoutime == null || "".equals(caigoutime)) && (caigoutime1 == null || "".equals(caigoutime1)) && (bianma != null && !"".equals(bianma))){
         	
-        	 stu = "from OrderTable a where a.fenpei = 1 and sjc is null and wancheng = 1 and caigouyuan = "+userid+" and bianma = '"+bianma+"' order by zhanghaoId"; 
+        	 stu = "from OrderTable a where a.fenpei = 1 and sjc is null and wancheng = 1 and caigouyuan = "+userid+" and bianma like '%"+bianma+"%' order by zhanghaoId"; 
         }
         if(("".equals(caigoutime) || caigoutime == null)&&("".equals(caigoutime1) || caigoutime1 == null) && (time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(bianma) || bianma == null)){
         	
@@ -1535,7 +1535,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         }
         if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(caigoutime == null || "".equals(caigoutime)) && (caigoutime1 == null || "".equals(caigoutime1)) && (bianma != null && !"".equals(bianma))&&(gongyunshang == null || "".equals(gongyunshang))&&(wuping == null || "".equals(wuping))){
         
-        	 stu = "from OrderTable a where wancheng = 1 and caigouyuan = "+userid+" and bianma = '"+bianma+"' order by zhanghaoId"; 
+        	 stu = "from OrderTable a where wancheng = 1 and caigouyuan = "+userid+" and bianma like '%"+bianma+"%' order by zhanghaoId"; 
         }
         else if((time != null && !"".equals(time))&&("".equals(caigoutime) || caigoutime == null)&&("".equals(caigoutime1) || caigoutime1 == null) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(bianma) || bianma == null)&&(gongyunshang == null || "".equals(gongyunshang))&&(wuping == null || "".equals(wuping))){
         	
@@ -1865,7 +1865,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select round(sum(money),3) from OrderTable where jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null)");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
@@ -1890,11 +1890,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1910,7 +1910,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is nulland (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is nulland (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1922,7 +1922,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and  (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and  (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1934,15 +1934,15 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1  and sjc is null and (fenpei != 3 or fenpei is null) and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1  and sjc is null and (fenpei != 3 or fenpei is null) and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and zhanghaoId = '"+dhgatezhanghao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where  jiufen = 1 and sjc is null and (fenpei != 3 or fenpei is null) and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -2091,7 +2091,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select  round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select  round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null and bianma = '"+bianma+"'");
+            	stu=ht.find("select  round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
@@ -2108,15 +2108,15 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money*huilv-(huokuan+yunfei+tuikuan)),3) from OrderTable where fenpei != 3 and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }        
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -2237,7 +2237,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
                 stu = ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null) and sjc is null  and (fenpei != 3 or fenpei is null)");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
-            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null) and sjc is null and (fenpei != 3 or fenpei is null) and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null) and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
@@ -2262,11 +2262,11 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null)  and sjc is null and  (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null)  and sjc is null and  (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null) and sjc is null and  (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null) and sjc is null and  (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -2283,7 +2283,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where  (ruzhang = 0 or ruzhang is null) and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where  (ruzhang = 0 or ruzhang is null) and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -2295,7 +2295,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null)  and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null)  and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -2307,15 +2307,15 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null) and sjc is null and (fenpei != 3 or fenpei is null) and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null) and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null)  and sjc is null and  (fenpei != 3 or fenpei is null) and danhao = '"+danhao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null)  and sjc is null and  (fenpei != 3 or fenpei is null) and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu))){
             	
-            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null)  and sjc is null and  (fenpei != 3 or fenpei is null) and zhanghaoId = '"+dhgatezhanghao+"' and bianma='"+bianma+"' and leimuid = '"+leimu+"'");
+            	stu=ht.find("select round(sum(money),3) from OrderTable where (ruzhang = 0 or ruzhang is null)  and sjc is null and  (fenpei != 3 or fenpei is null) and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }        
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	

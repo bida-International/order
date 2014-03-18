@@ -5,7 +5,7 @@
 
 package com.demo.dao;
 
-import com.demo.entity.Express.YunFeiTable;
+import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.DhgateAccounts;
 import com.demo.entity.order.OrderTable;
 import com.demo.entity.order.Order_Detail;
@@ -187,5 +187,7 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     public List<OrderTable> getOrderNull(String orderId);
     //得到不能处理的订单
     public String getCanNotHandle(String orderId,Long userid);
+    //订单号查询全部订单
+    public List<OrderTable> getOrderAll(String orderId);
 }
 

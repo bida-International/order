@@ -94,6 +94,7 @@ public class OrderTable implements Serializable
     private Long getordersId;//1.得到订单0.没有得到订单,2库存 
     private Long ArtProcessing;//美工是否处理
     private java.util.Date ReturnTime;//退货时间
+    private String itemcode;//编码
     public java.util.Date getReturnTime() {
 		return ReturnTime;
 	}

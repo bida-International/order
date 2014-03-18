@@ -184,7 +184,6 @@ public class DhMsgApiBiz {
 		Long topicId = json.getLong("tdMessageTopicId");
 		Long lastReplyTime = json.getLong("lastreplytime");
 		Integer marked = this.getTopicMarkedState(json, dhAccount);
-		
 		DhMsgTopic msgTopic = dhMsgTopicDao.getByTopicId(topicId);
 		if (msgTopic == null) {
 			msgTopic = new DhMsgTopic();

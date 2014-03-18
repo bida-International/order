@@ -2,7 +2,7 @@ package com.demo.dao;
 
 import java.util.List;
 
-import com.demo.entity.Express.YunFeiTable;
+import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 
 public interface GuoJiaDao  extends BaseDao<YunFeiTable,Long>{

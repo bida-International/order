@@ -103,11 +103,11 @@ function as(){
 	
   <table border="1"  width="1180" cellspacing="0" style="float:left" >
     <tr>
-      <td colspan="14" align="center"><strong>得到订单</strong>
+      <td colspan="15" align="center"><strong>得到订单</strong>
      <a href="caigou!weiwancheng.do">导出全部未完成订单</a></td>
     </tr>
     <tr>
-    	<td colspan="14" align="center">
+    	<td colspan="15" align="center">
 	  	时间查询：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/> 至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>  
 	  	订单号: <input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
 	  	类目：
@@ -142,6 +142,7 @@ function as(){
         <td width="90"><span class="STYLE2">编码</span></td>
            <td width="90"><span class="STYLE2">国家</span></td>
      <td width="163"><span class="STYLE2">类目</span></td>
+  
       <td width="130"><span class="STYLE2">采购金额</span></td>
       <td width="130"><span class="STYLE2">订单金额</span></td>
        <td width="100"><span class="STYLE2">供运商</span></td>
@@ -172,21 +173,17 @@ function as(){
 	         </s:if>
 	         </td>
 	          <td>
-	          		<s:if test="getCoding(#sd.bianma) != null">
-	          			<font color="#ff33ff">${sd.bianma}</font>
-	          		</s:if>
-	          	
-	          		<s:if test="getCoding(#sd.bianma) == null">
-	          			${sd.bianma}
-	          		</s:if>
+	          		${sd.bianma}
 	          </td>
 	          <td><s:property value="#sd.country"/></td>
+	          <td>
 	         	<s:if test="#sd.leimuid == null">
-	         		<td>${sd.yunshu}</td>
+	         		${sd.yunshu}
 	         	</s:if>
 	         <s:if test="#sd.leimuid != null">
-	         	<td><s:property value="getSelLeiMu(#sd.leimuid)"/></td>
+	         	<s:property value="getSelLeiMu(#sd.leimuid)"/>
 	         </s:if>
+	         </td>
 	   		 <td>${sd.huokuan}</td>	  
 	   		 <td>${sd.money}</td>
 	   		<td><textarea rows="5" cols="10">${sd.gongyunshang}</textarea></td>     
@@ -201,7 +198,7 @@ function as(){
 	     </tr>   
      </s:iterator> 
     <tr>     
-         <td colspan="14" align="center">
+         <td colspan="15" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
           <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>

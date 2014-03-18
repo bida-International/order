@@ -1,7 +1,7 @@
 
 package com.demo.dao;
 
-import com.demo.entity.Express.YunFeiTable;
+import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 import com.demo.list.PageData;
 import java.util.List;

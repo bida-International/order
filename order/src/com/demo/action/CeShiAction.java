@@ -50,7 +50,7 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
         sheet.setColumnWidth(4, 3500);
         sheet.setColumnWidth(5, 8500);
         sheet.setColumnWidth(6, 3000);
-     
+        sheet.setColumnWidth(7, 3000);
         try
         {
             orders = orderTableDao.getDaoChu(dc);
@@ -93,6 +93,7 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
 	                }
 	                cteateCell(workbook, row, 5, orders.get(i).getGuowaidizhi());                
 	                cteateCell(workbook, row, 6, orders.get(i).getOrderId());
+	                cteateCell(workbook, row, 7, orders.get(i).getCountry());
 	            }
 			}
         }
