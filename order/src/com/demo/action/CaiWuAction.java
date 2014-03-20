@@ -750,7 +750,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
     public String getDeDaoOrderAll()
     {
         int pageSize = 10;
-        pageBean = pageBiz.selYeWuDeDaoOrder(pageSize, pageNumber, orderId, gongyunshang, selzhanghao, danhao);
+        pageBean = pageBiz.selYeWuDeDaoOrder(pageSize, pageNumber, orderId, gongyunshang, selzhanghao, danhao,time,time1);
         return "yewuallorder";
     }
     //财务修改订单
@@ -935,7 +935,6 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
                  	List<YunFeiTable> yun = guoJiaDao.getAllGuoJia(y.getGuojia());  
                  	List<KuaiDiFangShi> kuai = kuaiDiFangShiDao.getCourier(kk.getName());
                  	List<YunFeiTableE> yunfei = yunFeieDao.getGuoJia(y.getGuojia());
-                 	
                  	if (kuai.size() != 0){
                  	//航空小包运费
 						if(kuai.get(0).getId() == 1l){
@@ -1393,7 +1392,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 			                	orderTableDao.merge(order.get(0));
 							}	                
 						}
-						}
+					}
 		        } 
 	        }
 	      }

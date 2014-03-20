@@ -30,7 +30,7 @@
 			<list>
 				<value>com.demo.entity</value>
 				<value>com.demo.entity.user</value>
-				<value>com.demo.entity.Express</value>
+				<value>com.demo.entity.Courier</value>
 				<value>com.demo.entity.order</value>
 			</list>
 		</property>

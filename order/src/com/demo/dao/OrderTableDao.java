@@ -75,7 +75,7 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //客户查询出货订单
     public String  getChuHuoOrder(Long denglu,String orderId,String guoneidanhao);
     //管理员查询全部订单
-    public abstract List<OrderTable> getChaKanOrder(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu);
+    public abstract List<OrderTable> getChaKanOrder(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu);
     //管理员查看速卖通订单
     public String getSuMaiTong(String orderId,String time,String time1);
     //业务查看要修改入账的订单
@@ -120,7 +120,7 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //查看全部分配订单
     public String getWenTiOrder(Long userid,String orderId,Long dhgatezhanghao);
    //查看全部订单
-    public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu);
+    public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu);
     //采购查看全部完成订单
     public List<OrderTable> getAllWanChengOrder(Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma);
     //纠纷总金额
@@ -178,7 +178,7 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //处理完毕
     public String getDisposed(String orderId,Long userid);
     //编码查询
-    public OrderTable getCoding(String bianma);
+    public List<OrderTable> getCoding(String bianma);
     //订单号和运输单号查询全部
     public List<OrderTable> getOddNumber(String orderId,String danhao);
     //订单号查询全部

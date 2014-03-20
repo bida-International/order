@@ -79,7 +79,7 @@
 	</table>
   <table border="1" width="1000px" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="8" align="center"><strong>付款订单</strong></td>
+      <td colspan="10" align="center"><strong>付款订单</strong></td>
        <td>
        		<s:hidden name="pageNumber" value="1"></s:hidden>
 			<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
@@ -97,7 +97,8 @@
        <td width="100"><span class="STYLE2">货款</span></td>
        <td width="100"><span class="STYLE2">备注</span></td>
       <td width="100"><span class="STYLE2">供应商</span></td>
-      
+       <td width="100"><span class="STYLE2">哪里采购</span></td>
+        <td width="100"><span class="STYLE2">物品</span></td>
       <td width="100"><span class="STYLE2">采购员</span></td>
     </tr>
     <s:iterator value="pageBean.list" var="i">
@@ -110,12 +111,13 @@
          <td><fmt:formatNumber value="${i.huokuan}" pattern="0.00"></fmt:formatNumber></td>
        <td><textarea rows="5" cols="10">${i.remark}</textarea> </td>
 	    <td><textarea cols="10" rows="5">${i.gongyunshang}</textarea></td>
-	   
+	    <td><s:property value="getGuoNeiKuaiDiFangShi(#i.guoneikuaidiId)"/></td>
+	    <td>${i.wuping}</td>
 	     <td><s:property value="#i.caigouyuan==0?('未分配'):(getUserId(#i.caigouyuan))"/></td>
      </tr>    
    </s:iterator>
      <tr>     
-         <td colspan="19" align="center">
+         <td colspan="11" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
      	<pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	  	<a href="javascript:page(1)">首页</a>

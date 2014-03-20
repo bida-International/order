@@ -217,11 +217,11 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
         }
     }
     //管理员查看总金额
-    public List<OrderTable> getMoney(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getMoney(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long category)
     {
     	 List<OrderTable> ss = null;
     	try {
-        	ss = orderDao.getAllMoney(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
+        	ss = orderDao.getAllMoney(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -230,48 +230,48 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
         return ss;
     }
     //管理员查看总运费
-    public  List<OrderTable> getYunFei(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public  List<OrderTable> getYunFei(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	
         return  orderDao.getAllYunFei(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
     }
     //管理员查看总货款
-    public  List<OrderTable> getHuoKuan(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public  List<OrderTable> getHuoKuan(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long category)
     {
     	
-        return orderDao.getAllHuoKuan(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
+        return orderDao.getAllHuoKuan(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category);
     }
     //管理员查看总退款
-    public  List<OrderTable> getTuiKuan(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public  List<OrderTable> getTuiKuan(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long category)
     {
 
-        return orderDao.getAllTuiKuan(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
+        return orderDao.getAllTuiKuan(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category);
     }
     //管理员查看总利润
-    public List<OrderTable> getZongLiRuns(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getZongLiRuns(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long category)
     {
     	
-        return orderDao.getZongLiRun(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
+        return orderDao.getZongLiRun(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category);
     }
     //管理员查看纠纷个数
-    public List<OrderTable> getJiuFen(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getJiuFen(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long category)
     {
-        return orderDao.getJiuFenNum(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
+        return orderDao.getJiuFenNum(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category);
     }
     //管理员查看运费为空
-    public List<OrderTable> getYunFeiNullNum(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getYunFeiNullNum(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long category)
     {
-        return orderDao.getYunFeiNullNum(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
+        return orderDao.getYunFeiNullNum(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category);
     }
     //管理员查看货款为空
-    public List<OrderTable> getHuoKuanNullNum(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getHuoKuanNullNum(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long category)
     {
-        return orderDao.getHuoKuanNullNum(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
+        return orderDao.getHuoKuanNullNum(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category);
     }
     //管理员查看纠纷总额
-    public  List<OrderTable> getCaiGouAllJiuFenMoney(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public  List<OrderTable> getCaiGouAllJiuFenMoney(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long category)
     {
-        return orderDao.getCaiGouAllJiuFenMoney(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,leimu);
+        return orderDao.getCaiGouAllJiuFenMoney(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category);
     }
     //总金额
     public List<OrderTable> getCaiGouAllMoney(Long caigouyuan, String orderId, String time, String time1)
@@ -423,8 +423,8 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
     	 return stu;
     }
     //查看未入账总额
-    public List<OrderTable> getRuZhang(String orderId,String time,String time1,String zhanghao,String danhao,String sumaitong,String bianma,String leimu){
-    	return orderDao.getWeiRuZhang(orderId, time, time1, zhanghao, danhao,sumaitong,bianma,leimu);
+    public List<OrderTable> getRuZhang(String orderId,String time,String time1,String zhanghao,String danhao,String sumaitong,String bianma,Long category){
+    	return orderDao.getWeiRuZhang(orderId, time, time1, zhanghao, danhao,sumaitong,bianma,category);
     }
     //查看未读信息个数
     public List<XieXinTable> getXieXin(){
@@ -518,11 +518,11 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
     	return yy.get(0).getMoney();
     }
     //全部订单平均采购速度
-  public Long getCaiGouTimed(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu){
+  public Long getCaiGouTimed(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long category){
 	
    	Long xs= 0l;
    	 try {
-   		List<OrderTable> all = orderTableDao.getAllOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu); 
+   		List<OrderTable> all = orderTableDao.getAllOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category); 
     	for (int i = 0; i < all.size(); i++) {	
 	    		Date beginDate=all.get(i).getTime();    
 	    		Date endDate= all.get(i).getCaigoutime(); 
@@ -629,14 +629,12 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
     }
     //编码查询
     public String getCoding(String coding){
-    	System.out.println("++++++"+coding);
-    	OrderTable cod = orderTableDao.getCoding(coding);
-    	if (cod != null) {
-    		return cod.getBianma();
+    	List<OrderTable> cod = orderTableDao.getCoding(coding);
+    	if (cod.size() !=0) {
+    		return cod.get(0).getBianma();
 		}else{
 			return null;
 		}
-    	
     }
     // 2014-2-25新增
 	public String getFormatTime(Long timestamp) {

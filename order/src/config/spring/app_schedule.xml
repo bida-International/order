@@ -27,8 +27,8 @@
 	<!-- 定时同步订单和站内信数据 -->
 	<bean id="synchDataJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="synchDataJobDetail" />
-		<!-- 每10分钟执行一次 -->
-		<property name="cronExpression" value="0 0/10 * * * ?" />
+		<!-- 每一个小时执行一次 -->
+		<property name="cronExpression" value="0 0 0/10 * * ?"/>
 	</bean>
 	<bean id="synchDataJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="synchDataJob" />
@@ -36,8 +36,6 @@
 		<property name="concurrent" value="false" />
 	</bean>
 	<bean id="synchDataJob" class="com.demo.schedule.SynchDataJob" lazy-init="false"></bean>
-	
-	
 </beans>
 
 

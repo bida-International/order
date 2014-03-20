@@ -9,6 +9,7 @@
 	<constant name="struts.multipart.saveDir" value="\tmp" />
 	<!-- 最大1000兆 -->
 	<constant name="struts.multipart.maxSize" value="1000000000"></constant>
+		
 	<package name="basecaigou" extends="sysdefault">
 		<action name="caigou" class="caiGouAction">
 			<result name="cgadmindedaoorder">/inc/caigou/cgadmindedaoorders.jsp</result>
@@ -33,6 +34,13 @@
 			<result name="zhupdate">/inc/caigou/cg/zhupdate.jsp</result>
 			<result name="daifa">/inc/caigou/cg/daifa.jsp</result>
 			<result name="upShipment">/inc/caigou/cg/upShipment.jsp</result>
+			<result name="addStock">/inc/caigou/cg/addStock.jsp</result>
+			 <interceptor-ref name="fileUpload">  
+                <!-- 配置允许上传的文件大小300M 314572800-->  
+                <param name="maximumSize">31457280</param>     
+            </interceptor-ref>     
+              
+            <interceptor-ref name="defaultStack"/> 
 		</action>
 	</package>
 </struts>

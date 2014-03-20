@@ -25,16 +25,28 @@ scrollbar-3dlight-color: #ffffff;
 scrollbar-arrow-color:  #547CBB;
 scrollbar-track-color: #FFFFFF;
 scrollbar-darkshadow-color: #FFFFFF;"> 
-	<s:form action="admin!ImportingDocuments.do" enctype="multipart/form-data" method="post" onsubmit="return as()">
-	  <table>
-	  <tr>
-	  	<td align="right"><SPAN style="color:red">导入</SPAN></td>
-	  	<td colspan="1">
-	  	<s:file  name="excelfile" accept=".xls"></s:file>
-		<s:submit value="导入文档"></s:submit>
-	  	</td>
-	  </tr>
-	  </table>
+	<s:form action="admin!WrittenDocument.do" method="post" onsubmit="return as()">
+	  <table border="1"  class="datagrid2" id="list" cellspacing="0" style="float:left">
+    <tr>
+      <td colspan="6" align="center"><strong>文档</strong></td>
+    </tr>
+    <tr align="center">
+      <td width="120"><span class="STYLE2">内容</span></td>
+    </tr>
+    <s:iterator begin="1" end="5" status="t">
+      <tr align="center">
+        <td><input type="text" size="50" name="title" id="title" title="内容 "></td>
+     </tr>    
+   </s:iterator>
+    <tr>    
+        <td colspan="6" align="center">
+         <input type="submit" id="t" value=" 添 加 " style="cursor: pointer;">    
+          </td>
+    </tr>
+  </table>
+  <s:iterator value="#insert" var="i">
+  ${i}
+  </s:iterator>
   </s:form>
 	 <form action="admin!getUnfinished.do"  name="forms" id="forms" method="post" onsubmit="return as()">
   <table border="1"  cellspacing="0" cellpadding="0" align="center" width="1000px" cellspacing="0">
@@ -54,7 +66,7 @@ scrollbar-darkshadow-color: #FFFFFF;">
     </tr>
     <tr align="center">
      <td width="163"><span class="STYLE2">内容</span></td>
-     <td width="100"><span class="STYLE2">时间</span></td>
+     <td width="100"><span class="STYLE2">时间  </span>(<font color="red">  需要刷新页面才能显示正确的时间格式</font>)</td>
     </tr>
     <s:iterator value="pageBean.list" var="i">
       <tr align="center">

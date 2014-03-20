@@ -78,7 +78,7 @@
 					style="margin-left: 50px;">&nbsp;</span> 
 					<pg:pager
 						url="./account/zhangHao!list.do" items="${pageBean.allRow}"
-						export="currentPageNumber=pageNumber" maxPageItems="10">
+						export="currentPageNumber=pageNumber" maxPageItems="12">
 						<pg:param name="accountType" value="${accountType }"/>
 						<pg:first>
 							<a href="${pageUrl}&pageNumber=1">首页</a>

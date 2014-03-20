@@ -3,7 +3,7 @@ package com.demo.page;
 public interface PageBiz
 {
 
-    public abstract PageBean selForPage(int pageSize, int page, String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu,Long chuli);
+    public abstract PageBean selForPage(int pageSize, int page, String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,Long chuli);
    
     //采购管理员得到订单
     public abstract PageBean selCaiGouAdminWanChengOrder(int pageSize, int page, Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma,String gongyunshang,String wuping);
@@ -16,7 +16,7 @@ public interface PageBiz
     public abstract PageBean selCaiGouWanChengOrder(int pageSize, int page, Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma);
  
     //业务得到修改订单
-    public abstract PageBean selYeWuDeDaoOrder(int pageSize, int page, String orderId, String gongyunshang, Long selzhanghao, String danhao);
+    public abstract PageBean selYeWuDeDaoOrder(int pageSize, int page, String orderId, String gongyunshang, Long selzhanghao, String danhao,String time,String time1);
     //速卖通已经入单
     public abstract PageBean selSuMaiTongRuDan(int pageSize, int page, Long userid, String orderId, String time, String time1);
     //业务查看未入单订单

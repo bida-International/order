@@ -37,12 +37,13 @@ public class ZhangHao implements Serializable{
 	private Long refresh_token_timeout; // 单位: 毫秒
 	private String user_id; // 第三方账号id
 	private String user_nickname; // 第三方账号昵称
-	private String account_type; // 账号类型: dh-敦煌账号; smt-速卖通账号 
+	private String account_type; // 账号类型: dh-敦煌账号; ali-速卖通账号 
 	private String app_key; // 速卖通账号才需要
 	private String app_secret; // 速卖通账号才需要 
 	private Long order_update_time; // 订单数据最新同步时间
 	private Long msg_update_time; // 站内信数据最新同步时间
 	private Long ClipArtId;//美工编号
+	private Long leimuid;//类目编号
 	public Long getClipArtId() {
 		return ClipArtId;
 	}

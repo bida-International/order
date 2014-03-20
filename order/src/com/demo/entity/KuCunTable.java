@@ -19,6 +19,43 @@ public class KuCunTable implements Serializable{
 	private Long num;//数量
 	private Long userid;//采购员编号
 	private String orderId;//订单号 
+	private String wuping;//物品
+	private String uploadFile;//图片
+	private String coding;//编码 
+	private Double totalprice;//总价
+	private Double unitprice;//单价 
+	public String getWuping() {
+		return wuping;
+	}
+	public void setWuping(String wuping) {
+		this.wuping = wuping;
+	}
+
+	public String getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(String uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	public String getCoding() {
+		return coding;
+	}
+	public void setCoding(String coding) {
+		this.coding = coding;
+	}
+
+	public Double getTotalprice() {
+		return totalprice;
+	}
+	public void setTotalprice(Double totalprice) {
+		this.totalprice = totalprice;
+	}
+	public Double getUnitprice() {
+		return unitprice;
+	}
+	public void setUnitprice(Double unitprice) {
+		this.unitprice = unitprice;
+	}
 	public String getOrderId() {
 		return orderId;
 	}

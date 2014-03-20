@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
   <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+  <script type="text/javascript"  src="My97DatePicker/WdatePicker.js"></script>
   <script type="text/javascript">
 <!--
 
@@ -43,6 +44,7 @@ function as(){
 	      </s:iterator>
 	      </select>  
     	运输单号:<input type="text" name="danhao" id="danhao" value="${param.danhao}"/>
+    		时间：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}" size="9"/>至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}" size="9"/>
     	供运商:<input type="text" name="gongyunshang" id="gongyunshang" value="${param.gongyunshang}"/>订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
 	<input type="submit" value="查询 "/>
   	<s:hidden name="pageNumber" value="1"></s:hidden>

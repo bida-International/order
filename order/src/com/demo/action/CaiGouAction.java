@@ -15,11 +15,21 @@ import com.demo.page.PageBean;
 import com.demo.page.PageBiz;
 import com.demo.vo.LoginInfo;
 import com.opensymphony.xwork2.ActionContext;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -68,8 +78,36 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     public Long leimus;
     public Long category;
     public String gongyunshang;
-    private HttpServletRequest request;
+    private HttpServletRequest request;     
+    //此属性对应于表单中文件字段的名称    
+    private List<File> uploadFile;   
+    //下面的这两个属性的命名必须遵守上定的规则，即为"表单中文件字段的名称" + "相应的后缀"    
+    private List<String> fileContentType; // 得到上传的文件的数据类型,    
+    private List<String> fileFileName; // 得到上传的文件的名称   
+	private String luJing; 
+	public List<File> getUploadFile() {
+		return uploadFile;
+	}
 
+	public void setUploadFile(List<File> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	
+	public List<String> getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(List<String> fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+
+	public List<String> getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(List<String> fileFileName) {
+		this.fileFileName = fileFileName;
+	}
 
 	public ZhangHao getMyzhangHao() {
 		return myzhangHao;
@@ -1040,6 +1078,80 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     	ordertable.setDanhao(danhao);
     	orderTableDao.merge(ordertable);
     	return getOnOrder();
+    }
+    public String bianma(){
+    	try {
+    	
+        	System.out.println("bianma++"+bianma);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    
+    	return "addStock";
+    }
+    //上传库存订单
+    public String uploadInventoryOrders() throws IOException{
+    	//得到工程保存图片的路径  
+    	try {
+    		   System.out.println("==bianma==="+bianma);  
+    	        String[] coding = request.getParameterValues("bianma");
+    	        String[] num = request.getParameterValues("num");
+    	        String[] totalprice = request.getParameterValues("totalprice");
+    	        String[] unitprice = request.getParameterValues("unitprice");
+    	        LoginInfo us = (LoginInfo)getFromSession("logininfo");
+    	        String[] wuping = request.getParameterValues("wuping");
+    	        String root = ServletActionContext.getServletContext().getRealPath("/image");
+    	        SimpleDateFormat date = new SimpleDateFormat("/yyyy/MM/dd");  
+    	        String dateTime = date.format(new Date());  
+    	        root += dateTime;
+    	        System.out.println("++fileContentType+====="+fileContentType);   
+    	        	KuCunTable kk = new KuCunTable();
+    	            //判断文件是否为空,并且文件不能大于2M  
+    	            if(uploadFile != null && uploadFile.size() < 2097152)  
+    	            {    
+    	            	//循环上传的文件
+    	            	for(int i = 0 ; i < uploadFile.size() ; i ++){
+    		            	InputStream is = new FileInputStream(uploadFile.get(i));
+    		            	//得到图片保存的位置(根据root来得到图片保存的路径在tomcat下的该工程里)
+    		            	File destFile = new File(root,this.getFileFileName().get(i));
+    		            	//把图片写入到上面设置的路径里
+    		            	OutputStream os = new FileOutputStream(destFile);
+    		            	byte[] buffer = new byte[400];
+    		            	int length = 0 ;
+    		            	while((length = is.read(buffer))>0){
+    		            	os.write(buffer, 0, length);
+    		            	}
+    		            	kk.setWuping(wuping[i]);
+    		            	kk.setCoding(coding[i]);
+    		            	kk.setUploadFile(root);
+    		            	kk.setUserid(us.getUserId());
+    		            	kk.setTotalprice(Double.parseDouble(totalprice[i]));
+    		            	kk.setUnitprice(Double.parseDouble(unitprice[i]));
+    		            	kk.setNum(Long.parseLong(num[i]));
+    		            	is.close();
+    		            	os.close();
+    	            	} 
+    	            	
+    	            }    
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+     
+    	return "addStock";
+    }
+    public String getLuJing() {
+		return luJing;
+	}
+
+	public void setLuJing(String luJing) {
+		this.luJing = luJing;
+	}
+
+	//上传库存
+    public String addStock(){
+    	return "addStock";
     }
     public void setServletRequest(HttpServletRequest arg0)
     {

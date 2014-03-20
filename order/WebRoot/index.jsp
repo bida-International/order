@@ -36,29 +36,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td bgcolor="#EEEEEE"><table width="464" height="294" border="0" align="center" cellpadding="0" cellspacing="0" background="./images/m_login.jpg">
+    <td bgcolor="#EEEEEE">
+     <table width="100%" height="100%" border="0" align="left" cellpadding="0" cellspacing="0" background="./images/m_login.jpg">
       <tr>
-        <td width="157" height="153">&nbsp;</td>
-        <td width="307" align="left" valign="bottom">&nbsp; ${denglu} ${msg}</td>
+        <td width="520px" height="230px">&nbsp;</td>
+        <td  align="left" valign="bottom">&nbsp; ${denglu} ${msg}</td>
       </tr>
       <tr>
         <td>&nbsp;</td>
         <td valign="top">
-			<s:form action="system!login.do" method="post"  name="managerForm" onsubmit="return login()" theme="simple">
-                 <table width="100%"  border="0" cellpadding="0" cellspacing="0" bordercolorlight="#FFFFFF" bordercolordark="#D2E3E6">
+			<s:form action="system!login.do" method="post"  onsubmit="return login()" theme="simple">
+                 <table width="100%"  border="0" cellpadding="0" cellspacing="0">
 	                    <tr>
-	                     <td width="20%" height="30">帐号：</td>
-	                 	 <td width="80%"><s:textfield name="username" id="username" size="25"/></td>
+	                 	 <td width="60px" align="right" height="30">用户名:</td><td><input type="text" name="username" id="username" size="35" style="height: 25px;"></td>
                    </tr>
 	                   <tr>
-	                     <td height="30">密码：</td>
-	                	 <td><s:password name="pwd" id="pwd" size="25"/></td>
+	                	  <td  width="60px" align="right" height="30">密码:</td><td><input type="password" name="pwd" id="pwd" size="35" style="height: 25px;"></td>
 	                   </tr>
 	                   <tr>
-	                     <td height="33" colspan="2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                     <s:submit styleClass="btn_grey" value="确定"/>
-	                  		
-	                   	 <s:reset value="重置" styleClass="btn_grey"/>
+	                     <td height="33" colspan="2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                     <s:submit value="确定"/>
+	                   	 <s:reset value="重置" />
 	                   	 <a href="system!registered.do">注册</a>
 					   </td>
 	                  </tr>

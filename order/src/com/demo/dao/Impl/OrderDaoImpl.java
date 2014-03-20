@@ -26,7 +26,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return stu;
     }
     //管理员查看全部订单
-    public String getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu,Long chuli)
+    public String getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,Long chuli)
     {
     	
         String stu = null;
@@ -252,26 +252,32 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return stu;
     }
     //业务得到全部修改的订单
-    public String getYeWuOrder(String orderId, String gongyunshang, Long selzhanghao, String danhao)
+    public String getYeWuOrder(String orderId, String gongyunshang, Long selzhanghao, String danhao,String time,String time1)
     {
         String stu = null;
-        if(!"".equals(gongyunshang) && gongyunshang != null && ("".equals(orderId) || orderId == null) && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(danhao) || danhao == null))
+        if (("".equals(gongyunshang) || gongyunshang == null) && ("".equals(orderId) || orderId == null) && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(danhao) || danhao == null) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))) {
+        	   stu = "from OrderTable a where fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') order by time desc";
+		}
+        if (("".equals(gongyunshang) || gongyunshang == null) && ("".equals(orderId) || orderId == null) && (!"".equals(selzhanghao) && selzhanghao != null) && ("".equals(danhao) || danhao == null) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))) {
+     	   stu = "from OrderTable a where fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and a.zhanghaoId = "+selzhanghao+" order by time desc";
+		}
+        if(!"".equals(gongyunshang) && gongyunshang != null && ("".equals(orderId) || orderId == null) && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(danhao) || danhao == null) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)))
         {
             stu = "from OrderTable a where fenpei != 3 and gongyunshang like '%"+gongyunshang+"%' order by time desc";
         } else
-        if(!"".equals(orderId) && orderId != null && ("".equals(gongyunshang) || gongyunshang == null) && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(danhao) || danhao == null))
+        if(!"".equals(orderId) && orderId != null && ("".equals(gongyunshang) || gongyunshang == null) && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(danhao) || danhao == null) && (time == null || "".equals(time))  && (time1 == null || "".equals(time1)))
         {
             stu = "from OrderTable a where fenpei != 3 and orderId = '"+orderId+"' order by time desc";
         } else
-        if(!"".equals(selzhanghao) && selzhanghao != null && ("".equals(orderId) || orderId == null) && ("".equals(gongyunshang) || gongyunshang == null) && ("".equals(danhao) || danhao == null))
+        if(!"".equals(selzhanghao) && selzhanghao != null && ("".equals(orderId) || orderId == null) && ("".equals(gongyunshang) || gongyunshang == null) && ("".equals(danhao) || danhao == null) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)))
         {
             stu = "from OrderTable a where fenpei != 3 and a.zhanghaoId = "+selzhanghao+" order by time desc";
         } else
-        if(!"".equals(danhao) && danhao != null && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(orderId) || orderId == null) && ("".equals(gongyunshang) || gongyunshang == null))
+        if(!"".equals(danhao) && danhao != null && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(orderId) || orderId == null) && ("".equals(gongyunshang) || gongyunshang == null) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)))
         {
             stu = "from OrderTable a where fenpei != 3 and danhao = '"+danhao+"' order by time desc";
         } else
-        if(("".equals(orderId) || orderId == null) && ("".equals(gongyunshang) || gongyunshang == null) && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(danhao) || danhao == null))
+        if(("".equals(orderId) || orderId == null) && ("".equals(gongyunshang) || gongyunshang == null) && ("".equals(selzhanghao) || selzhanghao == null) && ("".equals(danhao) || danhao == null) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)))
         {
             stu = "from OrderTable a where fenpei != 3 order by time desc";
         }
@@ -283,7 +289,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return ht.find("from OrderTable a where (denghuixin = 0 or denghuixin is null) and (sumaitong = 0 or sumaitong is null) and sjc is null and a.fenpei = 1 and (wancheng = 0 or wancheng is null) and (daifahuo = 0 or daifahuo is null) and caigouyuan = "+userid+" order by zhanghaoId");
     }
     //管理员查看总金额
-    public List<OrderTable> getAllMoney(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getAllMoney(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
           try
@@ -412,7 +418,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
           return stu;
     }
     //管理员查看总运费
-    public List<OrderTable> getAllYunFei(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getAllYunFei(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
         try
@@ -541,7 +547,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return stu;
     }
     //管理员查看总货款
-    public List<OrderTable> getAllHuoKuan(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getAllHuoKuan(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
         try
@@ -669,7 +675,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return stu;
     }
     //管理员查看总退款
-    public List<OrderTable> getAllTuiKuan(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getAllTuiKuan(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
         try
@@ -798,7 +804,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return stu;
     }
     //管理员查看纠纷个数
-    public List<OrderTable> getJiuFenNum(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getJiuFenNum(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
         try
@@ -998,7 +1004,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         });
     }
     //管理员查看货款为空
-    public List<OrderTable> getHuoKuanNullNum(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getHuoKuanNullNum(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
         try
@@ -1127,7 +1133,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return stu;
     }
     //管理员查看运费为空
-    public List<OrderTable> getYunFeiNullNum(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getYunFeiNullNum(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
         try
@@ -1834,7 +1840,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return stu;
     }
     //管理员查看纠纷总额 
-    public List<OrderTable> getCaiGouAllJiuFenMoney(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getCaiGouAllJiuFenMoney(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
         try
@@ -2060,7 +2066,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
         return stu;
     }
     //管理员查看总利润
-    public List<OrderTable> getZongLiRun(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu)
+    public List<OrderTable> getZongLiRun(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu)
     {
     	List<OrderTable> stu = null;
         try
@@ -2207,7 +2213,7 @@ public class OrderDaoImpl extends BaseDaoImpl<OrderTable,Long> implements OrderD
     	return ht.find("from OrderTable where wanchengtime = '"+time+"' and (ruzhang = 0 or ruzhang is null)  and sjc is null and wancheng = 1 and fenpei = 3 and dengluId = ?",new Object[]{id});
     }
     //总的未入账
-    public List<OrderTable> getWeiRuZhang(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu){
+    public List<OrderTable> getWeiRuZhang(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu){
     	List<OrderTable> stu = null;
         try
         {

@@ -180,7 +180,7 @@ text-decoration:none}
   <body style=" font-size:12px">
 		<div id="body">
 		<div style="height:90px;">
-	    	<table width="1300" height="99" border="0" cellpadding="0" cellspacing="0">
+	    	<table width="1297" height="89" border="0" cellpadding="0" cellspacing="0">
 			  <tr>
 			    <td background="./images/m_top.jpg">&nbsp;
 			    </td>

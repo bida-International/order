@@ -366,7 +366,7 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     }
 	  //查看编码是否一样
     public List<OrderTable> getBianMa(String bianma){    	
-    	return ht.find("from OrderTable where fenpei = 1 and wancheng = 1   and sjc is null  and bianma like '%"+bianma+"%'",new Object[]{bianma});
+    	return ht.find("from OrderTable where fenpei = 1 and wancheng = 1   and sjc is null  and bianma like '%"+bianma+"%'");
     }
     //查看纠纷总金额
     public List<OrderTable> getJiuFenMoney(Long userId,String orderId,String time,String time1){
@@ -409,7 +409,7 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     	 return stu;
     }
   //管理员查询全部订单
-    public List<OrderTable> getChaKanOrder(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu){
+    public List<OrderTable> getChaKanOrder(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu){
     	List<OrderTable> stu = null;
           try
           {
@@ -435,7 +435,7 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
               	
               	stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  and danhao='"+danhao+"' order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong)||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu))){
                   stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  order by time desc");
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
@@ -447,8 +447,8 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
                   stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  and datediff(day,time,'"+time+"')=0 order by time desc");
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
-              	
-              	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and ssjc is null  and leimuid="+leimu+" order by time desc");
+              	System.out.println("+leimu++"+leimu);
+              	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null  and leimuid="+leimu+" order by time desc");
               }
               else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu))){
               	
@@ -845,7 +845,7 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     	return hql;
     }
   //查看全部订单
-    public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu){
+    public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu){
 
     	List<OrderTable> stu = null;
         try
@@ -908,7 +908,7 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	
-            	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma = '"+bianma+"'");
+            	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
             else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
             	
@@ -1385,8 +1385,9 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     	return stu;
     }
     //编码查询
-    public OrderTable getCoding(String bianma){
-    	return ht.findFirst("from OrderTable where wancheng = 1 and bianma like '%"+bianma+"%'",new Object[]{bianma});
+    public List<OrderTable> getCoding(String bianma){
+    	
+    	return ht.find("from OrderTable where wancheng = 1 and bianma like '%"+bianma+"%'");
     }
     //订单号和运输单号查询全部
     public List<OrderTable> getOddNumber(String orderId,String danhao){

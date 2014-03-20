@@ -41,7 +41,7 @@
 <form action="admin!getAssignedAccounts.do" method="post" name="forms" id="forms">
   <table border="1" width="500"  class="datagrid2" id="list" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="3" align="center"><strong>查看全部账号</strong></td>
+      <td colspan="3" align="center"><strong>分配账号给美工</strong></td>
     </tr>
      <tr>
     <td colspan="3">
@@ -61,7 +61,8 @@
     <s:iterator value="pageBean.list" var="sd" >
 	     <tr align="center">
 	      <td><input name="chkItems" value="${sd.id}" onclick="chkItems_click(this)" type="checkbox"  id="chk_${sd.id}" readonly="readonly"  style="cursor:pointer"/></td>
-	          <td>${sd.name}</td>      
+	          <td>${sd.name}</td>     
+	        
 	           <td>
 	           <select name="AssignedAccount" id="AssignedAccount"> 
 		     	<option value="0">-请选择-</option>

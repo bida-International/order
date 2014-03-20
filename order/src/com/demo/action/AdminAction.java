@@ -154,6 +154,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     public String bianma;
     public String leimu;
     public String leimus;
+    public Long category;//类目
     public File excelfile;
     private HttpServletRequest request;
     
@@ -597,7 +598,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     {
     	try {
     		 int pagesize = 10;
-    	        pageBean = pageBiz.selForPage(pagesize, pageNumber, orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu,chuli);
+    	        pageBean = pageBiz.selForPage(pagesize, pageNumber, orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,chuli);
     	        
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -609,7 +610,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     //计算总利润
     public String getZongLiRun(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu){
     	
-    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu);
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category);
     	Double lirun = 0d;
     	Double tuikuan = 0d;
     	Double huokuan = 0d;
@@ -1092,7 +1093,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     	
     	try {
     		
-    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu);
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category);
     	Double tuikuan = 0d;
     	Double huokuan = 0d;
     	Double yunfei = 0d;
@@ -1147,7 +1148,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     //利润小于0的总数
     public String getChaKanZero(String orderId,String time,String time1,String dhgatezhanghao,String danhao)
     {
-    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu);
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category);
     	Double tuikuan = 0d;
     	Double huokuan = 0d;
     	Double yunfei = 0d;
@@ -1196,7 +1197,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     //管理员查看大于0小于30的订单
     public PageModel<OrderTable> getLiRunInterval()
     {
-    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu);
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category);
     	Double tuikuan = 0d;
     	Double huokuan = 0d;
     	Double yunfei = 0d;
@@ -1791,7 +1792,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
      //查看采购到入账时间差
      public PageModel<OrderTable> getCaiRuTime()
      {
-     	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu);
+     	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category);
      	
      	 PageModel<OrderTable> ls = new PageModel<OrderTable>();
      	java.util.Date caigoutime = null;
@@ -2203,47 +2204,36 @@ public class AdminAction extends BaseAction implements ServletRequestAware
           }
     	 return getAssignedAccounts();
      }
-     //导入文档
- 	public String ImportingDocuments(){
- 		try {
- 			
- 			if(excelfile == null || excelfile.length() <= 0){
- 				msg = "请选择正确的excel文件";
- 			}
- 			HSSFWorkbook book = new HSSFWorkbook(new FileInputStream(excelfile));
- 			HSSFSheet sheet = book.getSheetAt(0);
- 	        HSSFRow row = null;  
- 	        HSSFCell cell = null;  
- 	        int total = 0;
- 	      
- 	        for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {  
- 	            row = sheet.getRow(i);  
- 	            if (row == null) {  
- 	                continue;  
- 	            }   
- 	            for (int j = row.getFirstCellNum(); j < row.getLastCellNum(); j++) {  
- 	                cell = row.getCell(j);  
- 	                DocumentTable u = new DocumentTable();            
- 	                cell.setCellType(Cell.CELL_TYPE_STRING);
- 	                u.setTitle(cell.getStringCellValue().toString());	
- 	                List<DocumentTable> ss = documentDao.getDuplicateContent(u.getTitle());
- 	                if(ss.size() != 0){
- 	                	msg = "已经存在";
- 	                }else{
-	 	                java.util.Date d = new java.util.Date();
-	 	                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	 	                String ff = f.format(d);
-	 	                u.setTime(f.parse(ff));
-	 	                u.setGetDocuments(1l);
-	 	                documentDao.merge(u);
- 	                }
- 	            }
- 	         }	       
+     //管理员分配文档给jish
+ 	public String WrittenDocument(){
+ 		
+ 				String[] title = request.getParameterValues("title");
+                DocumentTable u = new DocumentTable();            
+                String[] str = new String[title.length];
+                try {
+                for(int i = 0; i < title.length; i++){
+                List<DocumentTable> ss = documentDao.getDuplicateContent(title[i]);
+                if("".equals(title[i]) || title[i] == null){
+                    str[i] = i+".内容不能为空！";
+                }
+                else if(ss.size() != 0){
+                	 str[i] = i + ".已经存在!";
+                }else if(ss.size() == 0 && title[i] != null){
+ 	                java.util.Date d = new java.util.Date();
+ 	                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+ 	                String ff = f.format(d);
+ 	                u.setTime(f.parse(ff));
+ 	                u.setTitle(title[i]);
+ 	                u.setGetDocuments(1l);
+ 	                str[i] = i + ".添加成功!";
+ 	                documentDao.merge(u);
+                }   
+                }
  		} catch (Exception e) {
  			// TODO: handle exception
  			e.printStackTrace();
  		}
- 		 
+ 		 ActionContext.getContext().put("insert", str);
  		return getUnfinished();
  	}
  	public String getUnfinished()

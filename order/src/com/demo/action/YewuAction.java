@@ -162,7 +162,7 @@ public class YewuAction extends BaseAction implements ServletRequestAware
     public String getDeDaoOrderAll()
     {
         int pageSize = 10;
-        pageBean = pageBiz.selYeWuDeDaoOrder(pageSize, pageNumber, orderId, gongyunshang, selzhanghao, danhao);
+        pageBean = pageBiz.selYeWuDeDaoOrder(pageSize, pageNumber, orderId, gongyunshang, selzhanghao, danhao,time,time1);
         return "yewuallorder";
     }
 

@@ -142,7 +142,6 @@ function as(){
         <td width="90"><span class="STYLE2">编码</span></td>
            <td width="90"><span class="STYLE2">国家</span></td>
      <td width="163"><span class="STYLE2">类目</span></td>
-  
       <td width="130"><span class="STYLE2">采购金额</span></td>
       <td width="130"><span class="STYLE2">订单金额</span></td>
        <td width="100"><span class="STYLE2">供运商</span></td>
@@ -173,7 +172,12 @@ function as(){
 	         </s:if>
 	         </td>
 	          <td>
+	          <s:if test="getCoding(#sd.bianma) != null">
+	          		<font color="red">${sd.bianma}</font>
+	          	</s:if>
+	          	<s:if test="getCoding(#sd.bianma) == null">
 	          		${sd.bianma}
+	          	</s:if>
 	          </td>
 	          <td><s:property value="#sd.country"/></td>
 	          <td>

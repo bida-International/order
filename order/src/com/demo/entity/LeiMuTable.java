@@ -21,7 +21,13 @@ public class LeiMuTable implements Serializable{
 	private String cateId; // 敦煌网的类目Id
 	private Long msgFenpeiUserId; // 站内信分配的（业务）用户id 
 	private String msgFenpeiUserName; // 站内信分配的（业务）用户名称
-	
+	private String ali_leimu;//速卖通类目
+	public String getAli_leimu() {
+		return ali_leimu;
+	}
+	public void setAli_leimu(String aliLeimu) {
+		ali_leimu = aliLeimu;
+	}
 	public Long getUserid() {
 		return userid;
 	}

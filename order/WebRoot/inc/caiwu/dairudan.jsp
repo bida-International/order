@@ -72,7 +72,6 @@
   <table border="1" cellspacing="0" width="1100px" style="float:left">
     <tr>
       <td colspan="12" align="center"><strong>待录单订单</strong></td>
-
     </tr>
     <tr>
     	<td colspan="12">

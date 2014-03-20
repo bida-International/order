@@ -66,7 +66,7 @@ function myupadmin(){
 <s:form action="admin!getWenTiOrder.do" theme="simple" method="post">
   <table border="1"  class="datagrid2" id="list" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="8" align="center"><strong>问题订单分配</strong>
+      <td colspan="9" align="center"><strong>问题订单分配</strong>
             请选择分配对象(<font color="blue" size="2">默认为采购</font>)：<select name="usertype" id="usertype" onchange="myshow()">
 	       				<option value="0">-请选择-</option>
 	       				<option value="1"
@@ -80,7 +80,7 @@ function myupadmin(){
       </td>
     </tr>
     <tr>
-      <td colspan="8" align="right"><input type="button" value="已经完成" onclick="wcorder()"> 订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
+      <td colspan="9" align="right"><input type="button" value="已经完成" onclick="wcorder()"> 订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
       <td><input type="submit" value="查询"/></td>
     </tr>
     <tr align="center">
@@ -89,6 +89,7 @@ function myupadmin(){
 		 <td width="100"><span class="STYLE2">账号</span></td>
       <td width="100"><span class="STYLE2">订单号</span></td>
       <td width="100"><span class="STYLE2">上传时间</span></td>
+      <td width="100"><span class="STYLE2">订单金额</span></td>
         <td width="130"><span class="STYLE2">类目</span></td>
          <td width="163"><span class="STYLE2">备注</span></td>
          <td width="130"><span class="STYLE2">采购员</span></td>
@@ -100,7 +101,8 @@ function myupadmin(){
 	     	 <td><input name="chkItems" value="${sd.id}" onclick="chkItems_click(this)" type="checkbox"  id="chk_${sd.id}" readonly="readonly"  style="cursor:pointer"/></td>
 	         <td><s:property value="getZhangHaoId(#sd.zhanghaoId)"/></td>
 	         <td>${sd.orderId}</td>
-	   		 <td>${sd.time}</td>	
+	   		 <td>${sd.time}</td>
+	   		 <td>${sd.money}</td>		
 	   		 <s:if test="#sd.leimuid == null">
 	         		<td>
 	         			${sd.yunshu}
@@ -123,7 +125,7 @@ function myupadmin(){
 	     </tr>   
      </s:iterator> 
       <tr>     
-         <td colspan="9" align="center">
+         <td colspan="10" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
         <pg:pager url="admin!getWenTiOrder.do" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  		 <pg:first> 

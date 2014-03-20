@@ -39,7 +39,7 @@
 ${msg}
   <table border="1" width="1000px" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="6" align="center"><strong>分配订单</strong>
+      <td colspan="8" align="center"><strong>分配订单</strong>
           请选择分配对象(<font color="blue" size="2">默认为采购</font>)：<select name="usertype" id="usertype" onchange="myshow()">
 	       				<option value="0">-请选择-</option>
 	       				<option value="1"
@@ -55,7 +55,7 @@ ${msg}
       <td><input type="button" style="cursor:pointer" value="问题订单 " onClick="mywenti()"></td>
     </tr>
     <tr>
-      <td colspan="7" align="right">订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
+      <td colspan="9" align="right">订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
       <td><input type="submit" value="查询"/>
         <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
@@ -68,8 +68,10 @@ ${msg}
 		<td width="130"><span class="STYLE2">账号</span></td>
       <td width="100"><span class="STYLE2">订单号</span></td>
       <td width="100"><span class="STYLE2">上传时间</span></td>
+         <td width="100"><span class="STYLE2">订单金额</span></td>
         <td width="130"><span class="STYLE2">类目</span></td>
          <td width="163"><span class="STYLE2">备注</span></td>
+         <td width="163"><span class="STYLE2">采购员</span></td>
       <td width="100"><span class="STYLE2">选择采购名</span></td>
        <td width="100"><span class="STYLE2">操作</span></td>
     </tr>
@@ -79,6 +81,7 @@ ${msg}
 	         <td><s:property value="getZhangHaoId(#sd.zhanghaoId)"/></td>
 	         <td>${sd.orderId}</td>
 	   		 <td>${sd.time}</td>	
+	   		 <td>${sd.money}</td>
 	   		<s:if test="#sd.leimuid == null">
 	         	  <td>
 	         		 <textarea rows="5" cols="10">${sd.yunshu}</textarea>
@@ -88,6 +91,7 @@ ${msg}
 	         	<td><textarea rows="5" cols="10"><s:property value="getSelLeiMu(#sd.leimuid)"/></textarea></td>
 	         </s:if>
 	   		 <td>${sd.remark}</td>
+	   		 <td><s:property value="#i.caigouyuan==0?('未分配'):(getUserId(#sd.caigouyuan))"/></td>
 		     <td>
 		     	<select name="selcaigouyuan" id="selcaigou"> 
 		     	<option value="0">-请选择-</option>
@@ -100,7 +104,7 @@ ${msg}
 	     </tr>   
      </s:iterator> 
      <tr>     
-         <td colspan="8" align="center">
+         <td colspan="10" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
         <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>

@@ -82,7 +82,7 @@ ${msg}
 </table>
   <table border="1"  class="datagrid2" id="list" width="800px" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="8" align="center"><strong>分配订单</strong>
+      <td colspan="9" align="center"><strong>分配订单</strong>
       请选择分配对象(<font color="blue" size="2">默认为采购</font>)：<select name="usertype" id="usertype" onchange="myshow()">
 	       				<option value="0">-请选择-</option>
 	       				<option value="1"
@@ -96,7 +96,7 @@ ${msg}
 
     </tr>
     <tr>
-      <td colspan="7" align="right">订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
+      <td colspan="8" align="right">订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
       <td><input type="submit" value="查询"/>
        <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
@@ -109,6 +109,7 @@ ${msg}
 		<td width="130"><span class="STYLE2">账号</span></td>
       <td width="100"><span class="STYLE2">订单号</span></td>
       <td width="100"><span class="STYLE2">上传时间</span></td>
+      <td width="100"><span class="STYLE2">订单金额</span></td>
         <td width="80"><span class="STYLE2">类目</span></td>
          <td width="163"><span class="STYLE2">备注</span></td>
       <td width="100"><span class="STYLE2">选择采购名</span></td>
@@ -119,7 +120,8 @@ ${msg}
 	     	 <td><input name="chkItems" value="${sd.id}" onclick="chkItems_click(this)" type="checkbox"  id="chk_${sd.id}" readonly="readonly"  style="cursor:pointer"/></td>
 	         <td><s:property value="getZhangHaoId(#sd.zhanghaoId)"/></td>
 	         <td>${sd.orderId}</td>
-	   		 <td>${sd.time}</td>	
+	   		 <td>${sd.time}</td>
+	   		 <td>${sd.money}</td>		
 	         	<td>
 	         	<textarea rows="5" cols="10"> 
 	         <s:if test="#sd.leimuid != null">
@@ -140,7 +142,7 @@ ${msg}
 	     </tr>   
      </s:iterator> 
      <tr>     
-         <td colspan="8" align="center">
+         <td colspan="9" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
         <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>

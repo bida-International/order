@@ -16,10 +16,12 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.dao.HuiLvDao;
 import com.demo.dao.LeiMuDao;
 import com.demo.dao.OrderTableDao;
 import com.demo.dao.ZhangHaoDao;
 import com.demo.dao.Courier.YunFeiTableDao;
+import com.demo.entity.HuiLvTable;
 import com.demo.entity.LeiMuTable;
 import com.demo.entity.ZhangHao;
 import com.demo.entity.Courier.YunFeiTable;
@@ -42,7 +44,8 @@ public class AliOrderApiBiz {
 	private LeiMuDao leiMuDao;
 	@Resource
 	private YunFeiTableDao yunFeiTableDao;
-	
+	@Resource
+	private HuiLvDao huiLvDao;
 	private final Integer pageSize = 20;
 	private Integer updateCount = 0;
 	
@@ -157,11 +160,14 @@ public class AliOrderApiBiz {
 	 */
 	private int saveOrder(JSONObject json, ZhangHao aliAccount) {
 		String orderId = json.getString("orderId");
-		List<OrderTable> orders = orderTableDao.getOrder(orderId);
+		List<OrderTable> orders = orderTableDao.getOrderAll(orderId);
 		if (orders != null && !orders.isEmpty()) {
 			return 0;
 		}
-		
+		java.util.Date d = new java.util.Date();
+        SimpleDateFormat f = new SimpleDateFormat("yyyyMM");
+        String ff = f.format(d);
+    	List<HuiLvTable> hh = huiLvDao.getHuiTime(ff);
 		OrderTable order = new OrderTable();
 		order.setOrderId(orderId);
 		order.setOrdersn(this.getOrderSn());
@@ -176,7 +182,7 @@ public class AliOrderApiBiz {
 			money = json.getJSONObject("payAmount").getDouble("amount");
 		}
 		if (!money.equals(0)) {
-			money = Double.parseDouble(new DecimalFormat("#.00").format(money * 0.95)); // 实收金额
+			money = Double.parseDouble(new DecimalFormat("#.000").format(money * 0.95)); // 实收金额
 			order.setMoney(money);
 		}
 		
@@ -210,11 +216,19 @@ public class AliOrderApiBiz {
 		order.setBianma(bianma);
 		// 取类目
 		Long leiMuId = null;
+		Long caigouId = null;
 		List<LeiMuTable> leiMus = leiMuDao.getAllName(aliAccount.getAccount());
 		if (leiMus != null && !leiMus.isEmpty()) {
 			leiMuId = leiMus.get(0).getId();
+			caigouId = leiMus.get(0).getUserid();
 		}
+		 if(hh.size() != 0){
+	    	for (int j = 0; j < hh.size(); j++) {
+				order.setHuilv(hh.get(0).getHuilv());
+			}
+	      }
 		order.setLeimuid(leiMuId);
+		order.setCaigouyuan(caigouId);
 		// 订单详情
 		JSONObject orderDetailJson = this.getOrder(orderId, aliAccount);
 		if (orderDetailJson != null) {
@@ -257,6 +271,12 @@ public class AliOrderApiBiz {
 					+ "Phone Number: " + order.getTelephone();
 			order.setGuowaidizhi(guowaidizhi);
 		}
+		order.setFenpei(1l);
+        order.setQianshou(0l);
+        order.setShangwang(0l);
+        order.setRuzhang(0l);
+        order.setGetordersId(1l);
+        order.setArtistsGetOrders(1l);
 		orderTableDao.merge(order);
 		return 1;
 	}
