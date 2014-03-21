@@ -55,13 +55,7 @@ public class AliOrderApiBiz {
 	 */
 	public String autoFetchOrders(ZhangHao aliAccount) {
 		Date endDate = new Date();
-		Date startDate = null;
-		Long orderUpdateTime = aliAccount.getOrder_update_time();
-		if (orderUpdateTime == null) {
-			startDate = DateUtils.getAfterDaysDate(endDate, -5); // 初始从5天前的数据开始取
-		} else {
-			startDate = new Date(orderUpdateTime);
-		}
+		Date startDate = DateUtils.getAfterDaysDate(endDate, -30); // 取30天内
 		
 		String result = this.fetchOrders(aliAccount, startDate, endDate);
 		if (!result.contains("错误")) {

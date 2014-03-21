@@ -57,13 +57,7 @@ public class DhOrderApiBiz {
 	 */
 	public String autoFetchOrders(ZhangHao dhAccount) {
 		Date endDate = new Date();
-		Date startDate = null;
-		Long orderUpdateTime = dhAccount.getOrder_update_time();
-		if (orderUpdateTime == null) {
-			startDate = DateUtils.getAfterDaysDate(endDate, -5); // 初始从5天前的数据开始取
-		} else {
-			startDate = new Date(orderUpdateTime);
-		}
+		Date startDate = DateUtils.getAfterDaysDate(endDate, -30); // 取30天内
 		
 		String strStartDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 			.format(startDate);
@@ -129,8 +123,8 @@ public class DhOrderApiBiz {
 					updateCount += this.updateOrder(dhAccount, orders.getJSONObject(i));
 				}
 				
-				// 当取到的数量与pagesize相等时，继续取下一页
-				if (orders.size() == this.pageSize) {
+				// 需要取下一页
+				if (pageNum < respJson.getInt("sumPage")) {
 					this.fetchOrders(dhAccount, startDate, endDate, pageNum + 1);
 				}
 				
