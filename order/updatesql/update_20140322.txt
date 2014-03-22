@@ -1,0 +1,6 @@
+USE [order];
+
+-- 添加菜单
+insert into [dbo].[mymenu](name, role) values('工具箱', 1);
+insert into [dbo].[mymenu](name, role, url) values('采集产品链接', 1139, 'tools/gatherData1.do');
+insert into [dbo].[mymenu](name, role, url) values('采集产品链接记录', 1139, 'tools/gatherData1Key.do');

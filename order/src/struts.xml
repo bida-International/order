@@ -30,6 +30,7 @@
 	<include file="config/struts/account.xml"></include>
 	<include file="config/struts/ClipArt.xml"></include>
 	<include file="config/struts/technician.xml"></include>
+	<include file="config/struts/tools.xml"></include>
 	
 </struts>
 

@@ -78,4 +78,24 @@ public class HttpClientUtils {
 		}
 		return returnJson;
 	}
+	
+	/**
+	 * ว๋ว๓อ๘าณ
+	 * @param url
+	 * @return
+	 */
+	public static String doGetHtml(String url) {
+		HttpClient client = getHttpClient();
+		GetMethod httpMethod = new GetMethod(url);
+		String htmlStr = null;
+		try {
+			client.executeMethod(httpMethod);
+			htmlStr = httpMethod.getResponseBodyAsString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			httpMethod.releaseConnection();
+		}
+		return htmlStr;
+	}
 }

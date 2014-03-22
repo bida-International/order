@@ -32,6 +32,7 @@
 				<value>com.demo.entity.user</value>
 				<value>com.demo.entity.Courier</value>
 				<value>com.demo.entity.order</value>
+				<value>com.demo.entity.tools</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

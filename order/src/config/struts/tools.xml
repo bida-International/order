@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	
+	<package name="tools" extends="sysdefault" namespace="/tools">
+		<action name="gatherData1" class="tools.gatherData1Action">
+			<result name="success">/inc/tools/gatherData1.jsp</result>
+		</action>
+		<action name="gatherData1Key" class="tools.gatherData1KeyAction">
+			<result name="success">/inc/tools/gatherData1Key.jsp</result>
+		</action>
+		<action name="gatherData1Result" class="tools.gatherData1ResultAction">
+			<result name="success">/inc/tools/gatherData1Result.jsp</result>
+		</action>
+	</package>
+	
+</struts>
+
