@@ -1,5 +1,7 @@
 package com.demo.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -12,6 +14,10 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 public class HttpClientUtils {
+
+	public static Integer dhApiReqCount = 0; // 敦煌api请求数
+	public static Integer aliApiReqCount = 0; // 速卖通api请求数
+	public static String lastReqCountUpdateDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date()); // 请求数更新日期 yyyy-MM-dd
 	
 	private static MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
 	
@@ -54,6 +60,7 @@ public class HttpClientUtils {
 			e.printStackTrace();
 		} finally {
 			httpMethod.releaseConnection();
+			updateApiReqCount(url); // 更新记数器
 		}
 		return returnJson;
 	}
@@ -97,5 +104,26 @@ public class HttpClientUtils {
 			httpMethod.releaseConnection();
 		}
 		return htmlStr;
+	}
+	
+	/**
+	 * 更新请求数
+	 * @param apiUrl
+	 */
+	private static void updateApiReqCount(String apiUrl) {
+		String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		if (!lastReqCountUpdateDate.equals(date)) { // 新一天, 重置请求数
+			dhApiReqCount = 0;
+			aliApiReqCount = 0;
+			lastReqCountUpdateDate = date;
+		}
+		
+		if (apiUrl.indexOf((String) ApplicationUtils.get("dhgateApiUrl")) >= 0) {
+			dhApiReqCount++;
+		} else if (apiUrl.indexOf((String) ApplicationUtils.get("dhgateGetTokenUrl")) >= 0) {
+			dhApiReqCount++;
+		} else if (apiUrl.indexOf((String) ApplicationUtils.get("aliApiUrl")) >= 0) {
+			aliApiReqCount++;
+		}
 	}
 }

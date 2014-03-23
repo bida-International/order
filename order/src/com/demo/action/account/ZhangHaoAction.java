@@ -6,9 +6,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.demo.action.BaseAction;
+import com.demo.biz.aliexpress.AliCommonApiBiz;
+import com.demo.biz.aliexpress.AliOrderApiBiz;
+import com.demo.biz.dhgate.DhCommonApiBiz;
+import com.demo.biz.dhgate.DhMsgApiBiz;
+import com.demo.biz.dhgate.DhOrderApiBiz;
 import com.demo.dao.ZhangHaoDao;
 import com.demo.entity.ZhangHao;
 import com.demo.page.PageBean;
+import com.demo.utils.HttpClientUtils;
 import com.demo.utils.Struts2Utils;
 
 /**
@@ -23,6 +29,12 @@ public class ZhangHaoAction extends BaseAction {
 
 	@Resource
 	private ZhangHaoDao zhangHaoDao;
+	@Resource
+	private DhOrderApiBiz dhOrderApiBiz;
+	@Resource
+	private DhMsgApiBiz dhMsgApiBiz;
+	@Resource
+	private AliOrderApiBiz aliOrderApiBiz;
 
 	private PageBean pageBean;
 	
@@ -94,6 +106,49 @@ public class ZhangHaoAction extends BaseAction {
 		return null;
 	}
 
+	// 同步一次账号的订单数据
+	public String synchOrder() {
+		ZhangHao zhangHao = zhangHaoDao.get(id);
+		String result = null;
+		if (zhangHao != null) {
+			if (zhangHao.getAccount_type().equals(DhCommonApiBiz.ACCOUNT_TYPE)) { // 敦煌账号
+				result = dhOrderApiBiz.autoFetchOrders(zhangHao);
+			} else if (zhangHao.getAccount_type().equals(AliCommonApiBiz.ACCOUNT_TYPE)) { // 速卖通账号
+				result = aliOrderApiBiz.autoFetchOrders(zhangHao);
+			}
+		} else {
+			result = "发生错误：账号不存在";
+		}
+		Struts2Utils.renderJson(result, true);
+		return null;
+	}
+
+	// 同步一次账号的站内信数据
+	public String synchMsg() {
+		ZhangHao zhangHao = zhangHaoDao.get(id);
+		String result = null;
+		if (zhangHao != null) {
+			if (zhangHao.getAccount_type().equals(DhCommonApiBiz.ACCOUNT_TYPE)) { // 敦煌账号
+				result = dhMsgApiBiz.autoFetchMsg(zhangHao);
+			} else {
+				result = "发生错误：该账号不是敦煌账号";
+			}
+		} else {
+			result = "发生错误：账号不存在";
+		}
+		Struts2Utils.renderJson(result, true);
+		return null;
+	}
+	
+	public String showApiReqCount() {
+		String result = "统计日期：" + HttpClientUtils.lastReqCountUpdateDate + "\\r\\n"
+				+ "敦煌API请求次数：" + HttpClientUtils.dhApiReqCount  + "\\r\\n"
+				+ "速卖通API请求次数：" + HttpClientUtils.aliApiReqCount;
+		
+		Struts2Utils.renderJson(result, true);
+		return null;
+	}
+	
 	public String getAccountType() {
 		return accountType;
 	}

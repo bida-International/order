@@ -9,7 +9,9 @@
 	<s:form action="./account/zhangHao!list.do">
 		<table border="1" cellspacing="0" style="float: left">
 			<tr>
-				<th colspan="6" align="center">卖家账号列表</th>
+				<th colspan="6" align="center">
+					<span>卖家账号列表</span>
+				</th>
 			</tr>
 			<tr>
 				<td colspan="6">
@@ -26,13 +28,16 @@
 					<span>&nbsp;&nbsp;</span>
 					<span>&nbsp;&nbsp;</span>
 					<a href="./account/zhangHao!edit.do">添加账号</a>
+					<span>&nbsp;&nbsp;</span>
+					<span>&nbsp;&nbsp;</span>
+					<a href="javascript:showApiReqCount()">查看当前api请求次数</a>
 				</td>
 			</tr>
 			<tr align="center" style="font-weight: bold;">
 				<td width="200">账号</td>
 				<td width="100">类型</td>
-				<td width="150">订单同步时间</td>
-				<td width="150">站内信同步时间</td>
+				<td width="200">订单同步时间</td>
+				<td width="200">站内信同步时间</td>
 				<td width="100">授权状态</td>
 				<td width="200">操作</td>
 			</tr>
@@ -46,11 +51,22 @@
 						<s:if test="order_update_time != null">
 							<s:property value="getFormatTime(order_update_time)"/>
 						</s:if>
+						<s:if test="account_type.equals('dh')">
+							<span>&nbsp;</span>
+							<a href="javascript:synchOrder(${i.id })">现在同步</a>
+						</s:if>
+						<s:elseif test="account_type.equals('ali') && app_key != null">
+							<span>&nbsp;</span>
+							<a href="javascript:synchOrder(${i.id })">现在同步</a>
+						</s:elseif>
 					</td>
 					<td>
-						
 						<s:if test="msg_update_time != null">
 							<s:property value="getFormatTime(msg_update_time)"/>
+						</s:if>
+						<s:if test="account_type.equals('dh')">
+							<span>&nbsp;</span>
+							<a href="javascript:synchMsg(${i.id })">现在同步</a>
 						</s:if>
 					</td>
 					<td>
@@ -143,6 +159,51 @@
 				if (resp.success) {
 					location.href = location.href;
 				}
+			}
+		});
+	}
+	
+	function synchOrder(id) {
+		$waiting("正在同步数据，请稍候...");
+		$.ajax({
+			url: "./account/zhangHao!synchOrder.do",
+			type: "post",
+			data: {
+				id : id
+			},
+			dataType: "json",
+			success: function(resp) {
+				$remove_wariting();
+				alert(resp.msg);
+				location.href = location.href;
+			}
+		});
+	}
+	
+	function synchMsg(id) {
+		$waiting("正在同步数据，请稍候...");
+		$.ajax({
+			url: "./account/zhangHao!synchMsg.do",
+			type: "post",
+			data: {
+				id : id
+			},
+			dataType: "json",
+			success: function(resp) {
+				$remove_wariting();
+				alert(resp.msg);
+				location.href = location.href;
+			}
+		});
+	}
+	
+	function showApiReqCount() {
+		$.ajax({
+			url: "./account/zhangHao!showApiReqCount.do",
+			type: "get",
+			dataType: "json",
+			success: function(resp) {
+				alert(resp.msg);
 			}
 		});
 	}

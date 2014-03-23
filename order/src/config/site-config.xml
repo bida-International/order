@@ -8,8 +8,6 @@
 	<dhgateApiUrl>http://api.dhgate.com/dop/router</dhgateApiUrl>
 	
 	<!-- 速卖通 -->
-	<aliAppKey>6299707</aliAppKey>
-	<aliAppSecret>3DmPuGqwnh</aliAppSecret>
 	<aliRedirectUri>http://qiantingdi.gicp.net:14189/order/aliAuth.do</aliRedirectUri>
 	<aliApiUrl>https://gw.api.alibaba.com/openapi/</aliApiUrl>
 

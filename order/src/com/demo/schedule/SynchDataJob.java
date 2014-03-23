@@ -35,6 +35,20 @@ public class SynchDataJob implements InitializingBean {
 	private ZhangHaoDao zhangHaoDao;
 	
 	public void execute() {
+		Integer curHour = Integer.parseInt(new SimpleDateFormat("HH").format(new Date()));
+//		Integer curMin = Integer.parseInt(new SimpleDateFormat("mm").format(new Date()));
+
+		/**
+		 * 自动同步时间段：07:00到19:00
+		 */
+		boolean synchData = false;
+		if (curHour >= 7 && curHour < 19) {
+			synchData = true;
+		}
+		if (!synchData) {
+			return;
+		}
+		
 		System.out.println("----同步敦煌和速卖通数据----");
 		try {
 			List<ZhangHao> zhangHaos = zhangHaoDao.getAllZhangHao();
@@ -53,10 +67,8 @@ public class SynchDataJob implements InitializingBean {
 				}
 			}
 			
-			// 每天的23.30左右检查速卖通的refreshToken是否过期
-			Integer curHour = Integer.parseInt(new SimpleDateFormat("HH").format(new Date()));
-			Integer curMin = Integer.parseInt(new SimpleDateFormat("mm").format(new Date()));
-			if (curHour == 23 && curMin > 20 && curMin < 40) {
+			// 每天的7点检查速卖通的refreshToken是否过期
+			if (curHour == 7) {
 				for (ZhangHao zhangHao : zhangHaos) {
 					if (!zhangHao.getAccount_type().equals(AliCommonApiBiz.ACCOUNT_TYPE) ||
 							zhangHao.getApp_key() == null ||
