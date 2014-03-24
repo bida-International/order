@@ -18,12 +18,11 @@ public class GatherData1Thread implements Runnable {
 	private GatherData1ResultDao gatherData1ResultDao;
 	private String sessionId;
 	
-	public GatherData1Thread(String targetUrl, Integer minOrderNum, 
-			GatherData1Key gatherKey, GatherData1ResultDao gatherData1ResultDao,
+	public GatherData1Thread(GatherData1Key gatherData1Key, GatherData1ResultDao gatherData1ResultDao,
 			String sessionId) {
-		this.firstTargetUrl = targetUrl;
-		this.minOrderNum = minOrderNum;
-		this.gatherKey = gatherKey;
+		this.firstTargetUrl = gatherData1Key.getGatherKey();
+		this.minOrderNum = Integer.parseInt(gatherData1Key.getQueryParam());
+		this.gatherKey = gatherData1Key;
 		this.gatherData1ResultDao = gatherData1ResultDao;
 		this.sessionId = sessionId;
 	}
@@ -79,10 +78,13 @@ public class GatherData1Thread implements Runnable {
 			String orderNum = macher.group(3).trim();
 			orderNum = orderNum.substring(1, orderNum.length() - 1);
 			if (Integer.parseInt(orderNum) > minOrderNum) {
-				GatherData1Result gatherResult = new GatherData1Result();
-				gatherResult.setKeyCreateTime(gatherKey.getCreateTime());
-				gatherResult.setLink(link);
-				gatherResult.setOrderNum(Integer.parseInt(orderNum));
+				GatherData1Result gatherResult = gatherData1ResultDao.findUnique(gatherKey.getCreateTime(), link);
+				if (gatherResult == null) {
+					gatherResult = new GatherData1Result();
+					gatherResult.setKeyCreateTime(gatherKey.getCreateTime());
+					gatherResult.setLink(link);
+				}
+				gatherResult.setOrderNum(Integer.parseInt(orderNum)); // 已存在的只更新订单数, 不重复入库
 				gatherData1ResultDao.merge(gatherResult);
 				gartherNum++;
 			} else { // 结束

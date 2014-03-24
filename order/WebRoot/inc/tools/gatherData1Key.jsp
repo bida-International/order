@@ -21,7 +21,7 @@
 				<tr align="center">
 					<td>${i.gatherKey }</td>
 					<td>订单数大于 ${i.queryParam }</td>
-					<td><s:property value="getFormatTime(createTime)" /></td>
+					<td><s:property value="getFormatTime(updateTime)" /></td>
 					<td><a href="./tools/gatherData1Result.do?keyCreateTime=${i.createTime }">详细</a>
 						<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 						<a href="./tools/gatherData1Key!delete.do?id=${i.id}&keyCreateTime=${i.createTime}&pageNumber=${pageNumber}">删除</a></td>

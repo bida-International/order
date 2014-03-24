@@ -17,6 +17,7 @@ public class GatherData1Key implements Serializable {
 	private String gatherKey; // 采集地址
 	private String queryParam; // 采集条件
 	private Long createTime;
+	private Long updateTime; // 采集时间
 	
 	@Id
 	@GeneratedValue
@@ -46,5 +47,12 @@ public class GatherData1Key implements Serializable {
 	}
 	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
+	}
+	@Column(name = "update_time")
+	public Long getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
 	}
 }

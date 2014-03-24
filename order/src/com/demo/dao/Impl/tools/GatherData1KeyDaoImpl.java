@@ -22,7 +22,11 @@ public class GatherData1KeyDaoImpl extends BaseDaoImpl<GatherData1Key, Long>
 	private PageDao pageDao;
 	
 	public GatherData1Key getByCreateTime(Long createTime) {
-		return ht.findFirst("from GatherData1Key where create_time = ?", new Object[] {createTime});
+		return ht.findFirst("from GatherData1Key where createTime = ?", new Object[] {createTime});
+	}
+	
+	public GatherData1Key getByGatherKey(String gatherKey) {
+		return ht.findFirst("from GatherData1Key where gatherKey = ?", new Object[] {gatherKey});
 	}
 
 	public PageBean getAllByPage(Integer pageSize, Integer page) {

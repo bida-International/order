@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 
 import com.demo.action.BaseAction;
 import com.demo.biz.tools.GatherData1Biz;
+import com.demo.dao.tools.GatherData1KeyDao;
+import com.demo.entity.tools.GatherData1Key;
 import com.demo.utils.Struts2Utils;
 
 /**
@@ -23,6 +25,8 @@ public class GatherData1Action extends BaseAction {
 
 	@Resource
 	private GatherData1Biz gatherData1Biz;
+	@Resource
+	private GatherData1KeyDao gatherData1KeyDao;
 	
 	private String targetUrl;
 	private Integer minOrderNum;
@@ -34,8 +38,19 @@ public class GatherData1Action extends BaseAction {
 	
 	public String startGather() {
 		try {
-			Long createTime = new Date().getTime();
-			gatherData1Biz.startGather(targetUrl, minOrderNum, createTime);
+			GatherData1Key gatherData1Key = gatherData1KeyDao.getByGatherKey(targetUrl);
+			if (gatherData1Key == null) {
+				gatherData1Key = new GatherData1Key();
+				gatherData1Key.setGatherKey(targetUrl);
+				gatherData1Key.setCreateTime(new Date().getTime());
+			}
+			gatherData1Key.setQueryParam(minOrderNum.toString());
+			gatherData1Key.setUpdateTime(new Date().getTime());
+			gatherData1KeyDao.merge(gatherData1Key);
+			
+			gatherData1Biz.startGather(gatherData1Key);
+			
+			Long createTime = gatherData1Key.getCreateTime();
 			Struts2Utils.renderJson(createTime.toString(), true);
 		} catch (Exception e) {
 			e.printStackTrace();

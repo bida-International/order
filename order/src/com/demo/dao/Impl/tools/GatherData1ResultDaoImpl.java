@@ -27,6 +27,11 @@ public class GatherData1ResultDaoImpl extends BaseDaoImpl<GatherData1Result, Lon
         return pageBean.getFenYe(hql, pageSize, page);
     }
 	
+	public GatherData1Result findUnique(Long keyCreateTime, String link) {
+		return ht.findFirst("from GatherData1Result where keyCreateTime = ? and link =?", 
+				new Object[] {keyCreateTime, link});
+	}
+	
 	public void batchDelete(Long keyCreateTime) {
 		ht.bulkUpdate("delete from GatherData1Result where keyCreateTime = " + keyCreateTime);
 	}
