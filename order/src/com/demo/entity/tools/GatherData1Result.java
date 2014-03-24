@@ -33,6 +33,7 @@ public class GatherData1Result implements Serializable {
 	public void setKeyCreateTime(Long keyCreateTime) {
 		this.keyCreateTime = keyCreateTime;
 	}
+	@Column(length = 500)
 	public String getLink() {
 		return link;
 	}

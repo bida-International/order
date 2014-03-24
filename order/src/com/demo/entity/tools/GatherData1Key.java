@@ -27,7 +27,7 @@ public class GatherData1Key implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	@Column(name = "gather_key")
+	@Column(name = "gather_key", length=500)
 	public String getGatherKey() {
 		return gatherKey;
 	}
