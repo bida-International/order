@@ -69,14 +69,14 @@ public class GatherData1Thread implements Runnable {
 		// 取链接和订单数
 		Integer doneNum = 0;
 		Integer gartherNum = 0;
-		regx = "<a class=\"order-num-a(.*?)href=\"(.*?)\" (.*?)><em title=\"Total Orders\"> Orders (.*?)</em>";
+		regx = "<a class=\"order-num-a(.*?)href=\"(.*?)\" (.*?)><em title=\"Total Orders\"> Order(.*?)</em>";
 		p = Pattern.compile(regx);
 		macher = p.matcher(html);
 		while (macher.find()) {
 			doneNum++;
 			String link = macher.group(2).trim().split("#")[0];
 			String orderNum = macher.group(4).trim();
-			orderNum = orderNum.substring(1, orderNum.length() - 1);
+			orderNum = orderNum.substring(orderNum.indexOf("(") + 1, orderNum.indexOf(")"));
 			if (Integer.parseInt(orderNum) > minOrderNum) {
 				GatherData1Result gatherResult = gatherData1ResultDao.findUnique(gatherKey.getCreateTime(), link);
 				if (gatherResult == null) {
