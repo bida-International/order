@@ -21,4 +21,6 @@ public interface LeiMuDao extends BaseDao<LeiMuTable,Long>
     public abstract List<LeiMuTable> getAllName(String name);
     //根据cateId查询
     public LeiMuTable getByCateId(String cateId);
+    //根据速卖通cateId查询
+    public LeiMuTable getByAliCateId(Long aliCateId);
 }

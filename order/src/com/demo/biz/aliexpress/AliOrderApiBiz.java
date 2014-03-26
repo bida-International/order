@@ -16,6 +16,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.dao.AliLeiMuDao;
 import com.demo.dao.HuiLvDao;
 import com.demo.dao.LeiMuDao;
 import com.demo.dao.OrderTableDao;
@@ -36,6 +37,10 @@ public class AliOrderApiBiz {
 
 	@Resource
 	private AliCommonApiBiz aliCommonApiBiz;
+	@Resource
+	private AliProductApiBiz aliProductApiBiz;
+	@Resource
+	private AliLeiMuDao aliLeiMuDao;
 	@Resource
 	private ZhangHaoDao zhangHaoDao;
 	@Resource
@@ -211,10 +216,10 @@ public class AliOrderApiBiz {
 		// 取类目
 		Long leiMuId = null;
 		Long caigouId = null;
-		List<LeiMuTable> leiMus = leiMuDao.getAllName(aliAccount.getAccount());
-		if (leiMus != null && !leiMus.isEmpty()) {
-			leiMuId = leiMus.get(0).getId();
-			caigouId = leiMus.get(0).getUserid();
+		LeiMuTable leiMu = this.getOrderLeiMu(bianma.split(",")[0], aliAccount);
+		if (leiMu != null) {
+			leiMuId = leiMu.getId();
+			caigouId = leiMu.getUserid();
 		}
 		 if(hh.size() != 0){
 	    	for (int j = 0; j < hh.size(); j++) {
@@ -294,6 +299,30 @@ public class AliOrderApiBiz {
 		return null;
 	}
 
+
+	/**
+	 * 获取订单类目
+	 * @param orderProduct
+	 * @return
+	 */
+	public LeiMuTable getOrderLeiMu(String orderProductId, ZhangHao aliAccount) {
+		// 取产品详情
+		JSONObject product = aliProductApiBiz.getProduct(orderProductId, aliAccount);
+		if (product == null) {
+			return null;
+		}
+		
+		Long catePubId = product.getLong("categoryId");
+		// 取一级类目id
+		Long parentCatePubId = aliLeiMuDao.getFirstParentCateId(catePubId);
+		LeiMuTable leiMu = leiMuDao.getByAliCateId(parentCatePubId);
+		if (leiMu == null) {
+			return null;
+		}
+		return leiMu;
+	}
+
+	
 	private String getOrderSn() {
 		return new SimpleDateFormat("yyyy-MM-dd-HHmmss-SSS").format(new Date())
 				+ new Random().nextInt(1000);

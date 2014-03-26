@@ -47,4 +47,8 @@ public class LeiMuDaoImpl extends BaseDaoImpl<LeiMuTable,Long>
 	public LeiMuTable getByCateId(String cateId) {
 		return ht.findFirst("from LeiMuTable where cateId = ?", new Object[]{cateId});
 	}
+	//根据速卖通cateId查询
+    public LeiMuTable getByAliCateId(Long aliCateId) {
+		return ht.findFirst("from LeiMuTable where aliCateId = ?", new Object[]{aliCateId});
+    }
 }
