@@ -93,6 +93,8 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
     private GuoNeiWangZhanDao guoNeiWangZhanDao;
     @Resource
     private KuaiDiFangShiDao kuaiDiFangShiDao;
+    @Resource
+    private KuCunDao kuCunDao;
     public Long zhanghaoId;
     private OrderTable ordertable;
     public String tit;
@@ -522,7 +524,9 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 	
    	Long xs= 0l;
    	 try {
-   		List<OrderTable> all = orderTableDao.getAllOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category); 
+   		 
+   		List<OrderTable> all = orderTableDao.getAllOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category);
+
     	for (int i = 0; i < all.size(); i++) {	
 	    		Date beginDate=all.get(i).getTime();    
 	    		Date endDate= all.get(i).getCaigoutime(); 
@@ -607,7 +611,7 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
     	List<LeiMuTable> ll = null;
     	try {
         	 ll = leiMuDao.getAllName(cgs);
-        System.out.println("6666666666"+ll.size());
+     
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -635,6 +639,24 @@ public abstract class BaseAction extends ActionSupport implements ServletRequest
 		}else{
 			return null;
 		}
+    }
+    //库存订单总金额
+    public List<KuCunTable> getTheTotalAmount(String time,String time1){
+    	List<KuCunTable> hh = kuCunDao.getTheTotalAmount(time, time1);
+    	return hh;
+    }
+    //采购查看库存订单
+    public List<KuCunTable> getStockOrders(){
+    
+    	List<KuCunTable> hh = null;
+    	try {
+    		LoginInfo us = (LoginInfo) getFromSession("logininfo");
+    		hh = kuCunDao.getUserId(us.getUserId());
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	return hh;
     }
     // 2014-2-25新增
 	public String getFormatTime(Long timestamp) {

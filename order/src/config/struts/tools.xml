@@ -9,6 +9,7 @@
 		</action>
 		<action name="gatherData1Key" class="tools.gatherData1KeyAction">
 			<result name="success">/inc/tools/gatherData1Key.jsp</result>
+			 <result name="export">/inc/tools/exportOrder.jsp</result> 
 		</action>
 		<action name="gatherData1Result" class="tools.gatherData1ResultAction">
 			<result name="success">/inc/tools/gatherData1Result.jsp</result>

@@ -5,6 +5,7 @@ import com.demo.dao.*;
 import com.demo.dao.Courier.DhlZkDao;
 import com.demo.dao.Courier.DhlfqDao;
 import com.demo.dao.Courier.FedexDao;
+import com.demo.dao.tools.GatherData1ResultDao;
 import com.demo.dao.user.CaiGouAdminDao;
 import com.demo.dao.user.CaiGouDao;
 import com.demo.dao.user.CaiWuDao;
@@ -22,6 +23,7 @@ import com.demo.entity.Courier.Fedex;
 import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 import com.demo.entity.order.Order_Detail;
+import com.demo.entity.tools.GatherData1Result;
 import com.demo.entity.user.CaiGou;
 import com.demo.entity.user.CaiGouAdmin;
 import com.demo.entity.user.CaiWuTable;
@@ -110,6 +112,8 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     private DocumentDao documentDao;
 	@Resource
     private ClipArtDao clipArtDao;
+	@Resource
+	private GatherData1ResultDao gatherData1ResultDao;
  	private YunCun yunCun;
  	public Long chuli;
  	public List<OrderTable> stu1;
@@ -156,6 +160,8 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     public String leimus;
     public Long category;//类目
     public File excelfile;
+    public Long disputes;//是否处理
+	public List<GatherData1Result> gatherdata1result; 
     private HttpServletRequest request;
     
 	public File getExcelfile() {
@@ -440,7 +446,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     	try {
     		int pageSize = 10;
     	
-        	pageBean = pageBiz.selDisputes(pageSize, pageSize, orderId, time, time1, selcaigouyuan, leimus);
+        	pageBean = pageBiz.selDisputes(pageSize, pageNumber, orderId, time, time1, selcaigouyuan, leimus,disputes);
         		
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -472,11 +478,11 @@ public class AdminAction extends BaseAction implements ServletRequestAware
 //        return stu;
 //    }
     //采购员查看纠纷总金额
-    public List<OrderTable> getAllMoney(String orderId,String time,String time1,Long selcaigouyuan,Long leimus){
+    public List<OrderTable> getAllMoney(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes){
     	List<OrderTable> stu = null;
     	try {
     	
-    		stu = orderTableDao.getAllMoney(orderId, time, time1, selcaigouyuan,leimus);
+    		stu = orderTableDao.getAllMoney(orderId, time, time1, selcaigouyuan,leimus,disputes);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -485,15 +491,15 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     	return stu;
     }
     //采购员查看纠纷总货款
-    public List<OrderTable> getAllHuoKuan(String orderId,String time,String time1,Long selcaigouyuan,Long leimus){
+    public List<OrderTable> getAllHuoKuan(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes){
     	
-    	List<OrderTable> stu = orderTableDao.getAllHuoKuan(orderId, time, time1, selcaigouyuan,leimus);
+    	List<OrderTable> stu = orderTableDao.getAllHuoKuan(orderId, time, time1, selcaigouyuan,leimus,disputes);
     	return stu;
     }
     //采购员查看纠纷总运费
-    public List<OrderTable> getAllYunFei(String orderId,String time,String time1,Long selcaigouyuan,Long leimus){
+    public List<OrderTable> getAllYunFei(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes){
     	
-    	List<OrderTable> stu = orderTableDao.getAllYunFei(orderId, time, time1, selcaigouyuan,leimus);
+    	List<OrderTable> stu = orderTableDao.getAllYunFei(orderId, time, time1, selcaigouyuan,leimus,disputes);
     	return stu;
     }
     public OrderTable getUpdateId()
@@ -598,7 +604,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     {
     	try {
     		 int pagesize = 10;
-    	        pageBean = pageBiz.selForPage(pagesize, pageNumber, orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,chuli);
+    	        pageBean = pageBiz.selForPage(pagesize, pageNumber, orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category);
     	        
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -608,7 +614,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
         return "getall";
     }
     //计算总利润
-    public String getZongLiRun(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,String leimu){
+    public String getZongLiRun(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long category){
     	
     	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category);
     	Double lirun = 0d;
@@ -1278,11 +1284,12 @@ public class AdminAction extends BaseAction implements ServletRequestAware
         }
         return getSuMaiTong();
     }
-
+    //速卖通返回订单给采购
     public String fanhuicaigou()
     {
         ordertable = (OrderTable)orderDao.get(ordertable.getId());
         ordertable.setSumaitong(0l);
+        ordertable.setGetordersId(1l);
         orderDao.merge(ordertable);
         return getSuMaiTong();
     }
@@ -1858,9 +1865,10 @@ public class AdminAction extends BaseAction implements ServletRequestAware
      //纠纷个数
      public String getJiuFenNum(){
     	
-    	 String userid= request.getParameter("caigouyuan");
+    	
     	 int pageSize = 10;
-    	 pageBean = pageBiz.selChaKanJiuFenOrder(pageSize, pageNumber, Long.parseLong(userid), orderId, time, time1);
+    	 pageBean = pageBiz.selChaKanJiuFenOrder(pageSize, pageNumber, caigouyuan, orderId, time, time1);
+    	 request.getSession().setAttribute("cg", caigouyuan);
     	 return "cgjiufen";
      }
      //修改分配备注
@@ -2284,13 +2292,19 @@ public class AdminAction extends BaseAction implements ServletRequestAware
  	        msg = "操作成功 ";
  	        return getAudit();
  	}
- 	
+ 	//查看全部库存订单
+ 	public String getStockOrderAll(){
+ 		int pageSize = 10;
+ 		pageBean = pageBiz.selStockOrderAll(pageSize, pageNumber, time, time1);
+ 		return "stockorder";
+ 	}
 	//完成
  	public String getCompleted(){
  		int pageSize= 10;
  		pageBean = pageBiz.selCompletes(pageSize, pageNumber, time, time1);
  		return "getCompleted";
  	}
+
     public void setServletRequest(HttpServletRequest arg0)
     {
         request = arg0;

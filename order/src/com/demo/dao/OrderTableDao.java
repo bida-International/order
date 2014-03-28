@@ -124,11 +124,11 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //采购查看全部完成订单
     public List<OrderTable> getAllWanChengOrder(Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma);
     //纠纷总金额
-    public List<OrderTable> getAllMoney(String orderId,String time,String time1,Long selcaigouyuan,Long leimus);
+    public List<OrderTable> getAllMoney(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes);
     //纠纷总货款
-    public List<OrderTable> getAllHuoKuan(String orderId,String time,String time1,Long selcaigouyuan,Long leimus);
+    public List<OrderTable> getAllHuoKuan(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes);
     //纠纷总运费
-    public List<OrderTable> getAllYunFei(String orderId,String time,String time1,Long selcaigouyuan,Long leimus);
+    public List<OrderTable> getAllYunFei(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes);
     //查看全部订单
     public String getYeAllOrder(String orderId,Long userid);
     //查询全部订单
@@ -189,5 +189,7 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     public String getCanNotHandle(String orderId,Long userid);
     //订单号查询全部订单
     public List<OrderTable> getOrderAll(String orderId);
+    //采购查看问题订单
+    public String getIssuesOrders(String orderid,Long userid);
 }
 

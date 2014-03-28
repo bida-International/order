@@ -135,7 +135,7 @@ function myupadmin(){
 	         <s:if test="#sd.leimuid != null">
 	         	<td><textarea rows="5" cols="10"><s:property value="getSelLeiMu(#sd.leimuid)"/></textarea></td>
 	         </s:if>
-	   		 <td>${sd.remark}</td>
+	   		 <td><textarea rows="5" cols="10">${sd.remark}</textarea></td>
 	   		 <td><s:property value="(#sd.caigouyuan==0 || #sd.caigouyuan==null)?('未分配'):(getUserId(#sd.caigouyuan))"/></td>
 		     <td>
 		     	<select name="selcaigouyuan" id="selcaigou"> 

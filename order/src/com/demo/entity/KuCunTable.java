@@ -1,6 +1,7 @@
 package com.demo.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,21 @@ public class KuCunTable implements Serializable{
 	private String coding;//编码 
 	private Double totalprice;//总价
 	private Double unitprice;//单价 
+	private Date time;//上传时间
+	private Date sytime;//使用时间
+	
+	public Date getSytime() {
+		return sytime;
+	}
+	public void setSytime(Date sytime) {
+		this.sytime = sytime;
+	}
+	public Date getTime() {
+		return time;
+	}
+	public void setTime(Date time) {
+		this.time = time;
+	}
 	public String getWuping() {
 		return wuping;
 	}

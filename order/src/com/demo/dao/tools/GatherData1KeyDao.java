@@ -8,8 +8,7 @@ public interface GatherData1KeyDao extends BaseDao<GatherData1Key, Long> {
 
 	public GatherData1Key getByCreateTime(Long createTime);
 	
-	public GatherData1Key getByGatherKey(String gatherKey);
-	
 	public PageBean getAllByPage(Integer pageSize, Integer page);
 	
+	public GatherData1Key getByGatherKey(String gatherKey);
 }

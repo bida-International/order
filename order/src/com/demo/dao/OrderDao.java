@@ -10,7 +10,7 @@ import java.util.List;
 public interface OrderDao extends BaseDao<OrderTable,Long>
 {
 	//查看全部订单
-    public abstract String getAllOrder(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,Long chuli);
+    public abstract String getAllOrder(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu);
 
     public abstract OrderTable getDingDao(String s);
 
@@ -40,7 +40,7 @@ public interface OrderDao extends BaseDao<OrderTable,Long>
 
     public abstract List<OrderTable> getJiuFen(String s, String s1, String s2,Long selcaigouyuan,String leimus);
     //查看纠纷订单
-    public abstract String getAllDispute(String s, String s1, String s2,Long selcaigouyuan,String leimus);
+    public abstract String getAllDispute(String s, String s1, String s2,Long selcaigouyuan,String leimus,Long disputes);
     //查看单号
     public abstract String getDanHao(String s, String s1, String s2);
 

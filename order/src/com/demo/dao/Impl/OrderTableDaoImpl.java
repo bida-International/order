@@ -436,7 +436,8 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
               	stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  and danhao='"+danhao+"' order by time desc");
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu))){
-                  stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  order by time desc");
+            	
+                  stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null order by time desc");
               }
               else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  and bianma like '%"+bianma+"%' order by time desc");
@@ -795,8 +796,9 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     	String stu = null;
         try
         {
-            if((time != null || !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId))){
-                stu = "from OrderTable where wancheng=1 and fenpei=1 and jiufen=1 and sjc is null and wancheng=1 and caigouyuan = "+userid+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+            if((time != null && !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId))){
+            	System.out.println("+userid++"+userid);
+                stu = "from OrderTable where wancheng=1 and fenpei=1 and jiufen=1 and caigouyuan = "+userid+" and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')";
             }
             if(!"".equals(orderId) && orderId != null){
                 stu = "from OrderTable where fenpei = 1 and wancheng = 1 and jiufen =1 and sjc is nulland caigouyuan = "+userid+" and orderId='"+orderId+"'";
@@ -846,10 +848,11 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     }
   //查看全部订单
     public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu){
-
+    
     	List<OrderTable> stu = null;
         try
         {
+        	
             if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)))
             {
             
@@ -875,8 +878,9 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
             if((!"".equals(dhgatezhanghao) && dhgatezhanghao != null)&& (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu))){
                 stu = ht.find("from OrderTable a where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and a.zhanghaoId = "+dhgatezhanghao+" and leimuid="+leimu+" order by zhanghaoId desc");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong)||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu))){
-                stu = ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) order by zhanghaoId desc");
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(danhao == null || "".equals(danhao)) && (sumaitong==null || "".equals(sumaitong)) && (bianma == null || "".equals(bianma) )&&(leimu == null || "".equals(leimu))){
+            
+                stu = ht.find("from OrderTable  where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) order by zhanghaoId desc");
             }
             else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu))){
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%' order by zhanghaoId desc");
@@ -1010,27 +1014,27 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
         return stu;
     }
     //纠纷总金额
-    public List<OrderTable> getAllMoney(String orderId,String time,String time1,Long selcaigouyuan,Long leimus){
+    public List<OrderTable> getAllMoney(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes){
     
     	List<OrderTable> stu = null;
         try
         {
-            if((time != null || !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==0 || "".equals(selcaigouyuan))&&(leimus == null || "".equals(leimus))){
+            if((time != null || !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==0 || "".equals(selcaigouyuan))&&(leimus == null || "".equals(leimus)) && (disputes == null || "".equals(disputes))){
             	
                 stu = ht.find("select round(sum(money),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus != null && !"".equals(leimus))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus != null && !"".equals(leimus)) && (disputes == null || "".equals(disputes))){
                     stu = ht.find("select round(sum(money),3) from OrderTable  where leimuid="+leimus+" and fenpei = 1  and sjc is null and wancheng = 1 and jiufen = 1");
                 }
             	else
-                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus == null || "".equals(leimus))){
+                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus == null || "".equals(leimus)) && (disputes == null || "".equals(disputes))){
                     stu = ht.find("select round(sum(money),3) from OrderTable  where fenpei = 1  and sjc is null and wancheng = 1 and jiufen = 1");
                 }
-                else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan!=0)&&(leimus == null || "".equals(leimus))){
+                else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan!=0)&&(leimus == null || "".equals(leimus)) && (disputes == null || "".equals(disputes))){
             	
             	stu = ht.find("select round(sum(money),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and caigouyuan = "+selcaigouyuan+"");
                 }
-                else if((time != null && !"".equals(time)) && (time1 != null || !"".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus == null || "".equals(leimus)) && (selcaigouyuan!=0)){
+                else if((time != null && !"".equals(time)) && (time1 != null || !"".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus == null || "".equals(leimus)) && (selcaigouyuan!=0) && (disputes == null || "".equals(disputes))){
                 	
                 	stu = ht.find("select round(sum(money),3) from OrderTable where fenpei = 1  and sjc is null and wancheng = 1 and jiufen = 1 and caigouyuan = "+selcaigouyuan+" and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')");
                  }
@@ -1039,7 +1043,17 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
                 stu = ht.find("select round(sum(money),3) from OrderTable where fenpei = 1  and sjc is null  and wancheng = 1 and jiufen = 1 and orderId = ?", new Object[] {
                     orderId
                 });
-            }
+                }
+            	else
+                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus == null || "".equals(leimus))&& disputes == 0l){
+                
+                    stu = ht.find("select round(sum(money),3) from OrderTable  where fenpei = 1 and wancheng = 1 and jiufen = 1 and chuli = 0");
+                }
+                else
+                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus == null || "".equals(leimus))&& disputes == 1l){
+                
+                    stu = ht.find("select round(sum(money),3) from OrderTable  where fenpei = 1 and wancheng = 1 and jiufen = 1 and chuli = "+disputes+"");
+                }
            
         }
         catch(Exception e)
@@ -1049,28 +1063,28 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
         return stu;
     }
     //纠纷总货款
-    public List<OrderTable> getAllHuoKuan(String orderId,String time,String time1,Long selcaigouyuan,Long leimus){
+    public List<OrderTable> getAllHuoKuan(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes){
      
     	List<OrderTable> stu = null;
         try
         {
-            if((time != null || !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==0 || "".equals(selcaigouyuan))&&(leimus==null || "".equals(leimus))){
+            if((time != null || !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==0 || "".equals(selcaigouyuan))&&(leimus==null || "".equals(leimus)) && (disputes == null || "".equals(disputes))){
             	
                 stu = ht.find("select round(sum(huokuan),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')");
             }
             else
-                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan==null || selcaigouyuan == 0l)){
+                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan==null || selcaigouyuan == 0l) && (disputes == null || "".equals(disputes))){
                     stu = ht.find("select round(sum(huokuan),3) from OrderTable  where leimuid="+leimus+" and fenpei = 1 and sjc is null  and wancheng = 1 and jiufen = 1");
                 }
             	else
-                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan==null || selcaigouyuan == 0l)){
+                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan==null || selcaigouyuan == 0l) && (disputes == null || "".equals(disputes))){
                     stu = ht.find("select round(sum(huokuan),3) from OrderTable  where fenpei = 1 and sjc is null  and wancheng = 1 and jiufen = 1");
                 }
-                else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan!=0)){
+                else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan!=0) && (disputes == null || "".equals(disputes))){
             	
             	stu = ht.find("select round(sum(huokuan),3) from OrderTable where fenpei = 1 and wancheng = 1 and sjc is null and jiufen = 1 and caigouyuan = "+selcaigouyuan+"");
                 }
-                else if((time != null && !"".equals(time)) && (time1 != null || !"".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan!=0)){
+                else if((time != null && !"".equals(time)) && (time1 != null || !"".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan!=0) && (disputes == null || "".equals(disputes))){
                 	
                 	stu = ht.find("select round(sum(huokuan),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and caigouyuan = "+selcaigouyuan+" and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')");
                  }
@@ -1079,6 +1093,16 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
                 stu = ht.find("select round(sum(huokuan),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and orderId = ?", new Object[] {
                     orderId
                 });
+                }
+        	else
+            if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus == null || "".equals(leimus))&& disputes == 0l){
+            
+                stu = ht.find("select round(sum(huokuan),3) from OrderTable  where fenpei = 1 and wancheng = 1 and jiufen = 1 and chuli = 0");
+            }
+            else
+            if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus == null || "".equals(leimus))&& disputes == 1l){
+            
+                stu = ht.find("select round(sum(huokuan),3) from OrderTable  where fenpei = 1 and wancheng = 1 and jiufen = 1 and chuli = "+disputes+"");
             }
            
         }
@@ -1089,38 +1113,47 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
         return stu;
     }
     //纠纷总运费
-    public List<OrderTable> getAllYunFei(String orderId,String time,String time1,Long selcaigouyuan,Long leimus){
+    public List<OrderTable> getAllYunFei(String orderId,String time,String time1,Long selcaigouyuan,Long leimus,Long disputes){
      
     	List<OrderTable> stu = null;
         try
         {
-            if((time != null || !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==0 || "".equals(selcaigouyuan))&&(leimus==null || "".equals(leimus))){
+            if((time != null || !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==0 || "".equals(selcaigouyuan))&&(leimus==null || "".equals(leimus)) && (disputes == null || "".equals(disputes))){
             	
                 stu = ht.find("select round(sum(yunfei),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')");
             }
             else
-                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan==null || selcaigouyuan == 0l)){
-                    stu = ht.find("select round(sum(yunfei),3) from OrderTable  where leimuid="+leimus+" and fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1");
-                }
-            	else
-                if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan==null || selcaigouyuan == 0l)){
-                    stu = ht.find("select round(sum(yunfei),3) from OrderTable  where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1");
-                }
-                else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan!=0)){
-            	
-            	stu = ht.find("select round(sum(yunfei),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and caigouyuan = "+selcaigouyuan+"");
-                }
-                else if((time != null && !"".equals(time)) && (time1 != null || !"".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan!=0)){
-                	
-                	stu = ht.find("select round(sum(yunfei),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and caigouyuan = "+selcaigouyuan+" and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')");
-                 }
-                else if(!"".equals(orderId) && orderId != null){
-            	
-                stu = ht.find("select round(sum(yunfei),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and orderId = ?", new Object[] {
-                    orderId
-                });
+            if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan==null || selcaigouyuan == 0l) && (disputes == null || "".equals(disputes))){
+                stu = ht.find("select round(sum(yunfei),3) from OrderTable  where leimuid="+leimus+" and fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1");
             }
-           
+        	else
+            if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan==null || selcaigouyuan == 0l) && (disputes == null || "".equals(disputes))){
+                stu = ht.find("select round(sum(yunfei),3) from OrderTable  where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1");
+            }
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan!=0) && (disputes == null || "".equals(disputes))){
+        	
+        	stu = ht.find("select round(sum(yunfei),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and caigouyuan = "+selcaigouyuan+"");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null || !"".equals(time1)) && (orderId == null || "".equals(orderId))&&(leimus==null || "".equals(leimus)) && (selcaigouyuan!=0) && (disputes == null || "".equals(disputes))){
+            	
+            	stu = ht.find("select round(sum(yunfei),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and caigouyuan = "+selcaigouyuan+" and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')");
+             }
+            else if(!"".equals(orderId) && orderId != null){
+        	
+            stu = ht.find("select round(sum(yunfei),3) from OrderTable where fenpei = 1 and sjc is null and wancheng = 1 and jiufen = 1 and orderId = ?", new Object[] {
+                orderId
+            });
+            }
+            else
+            if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus == null || "".equals(leimus))&& disputes == 0l){
+            
+                stu = ht.find("select round(sum(yunfei),3) from OrderTable  where fenpei = 1 and wancheng = 1 and jiufen = 1 and chuli = 0");
+            }
+            else
+            if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (selcaigouyuan==null || selcaigouyuan == 0l)&&(leimus == null || "".equals(leimus))&& disputes == 1l){
+            
+                stu = ht.find("select round(sum(yunfei),3) from OrderTable  where fenpei = 1 and wancheng = 1 and jiufen = 1 and chuli = "+disputes+"");
+            }
         }
         catch(Exception e)
         {
@@ -1410,5 +1443,15 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     //订单号查询全部订单
     public List<OrderTable> getOrderAll(String orderId){
     	return ht.find("from OrderTable where orderId='"+orderId+"'");
+    }
+    //采购查看问题订单
+    public String getIssuesOrders(String orderid,Long userid){
+    	String stu = null;
+    	if(orderid != null && !"".equals(orderid)){
+    		stu = "from OrderTable where fenpei = 2 and orderId = '"+orderid+"' and caigouyuan = "+userid+"";
+    	}else{
+    		stu = "from OrderTable where fenpei = 2 and caigouyuan = "+userid+"";
+    	}
+    	return stu;
     }
 }

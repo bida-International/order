@@ -156,7 +156,6 @@ public class CaiGouAdminAction extends BaseAction implements ServletRequestAware
                     str[i] = i +".操作成功！";
                 }
         }
-
         ActionContext.getContext().put("str", str);
         return getCaiGouAdminDeDaoOrder();
     }
@@ -166,97 +165,58 @@ public class CaiGouAdminAction extends BaseAction implements ServletRequestAware
         return "cgadminorder";
     }
     //采购管理员修改订单
-    public String cgadminorder()
-        throws Exception
+    public String cgadminorder() throws Exception
     {
-    	try {
-    		String orderId = ordertable.getOrderId();
-            Long cai = ordertable.getCaigouyuan();
-            String danhao = ordertable.getDanhao();
-            Double huokuan = ordertable.getHuokuan();
-            Double yunfei = ordertable.getYunfei();
-            String remark = ordertable.getRemark();
-            String gongyunshang = ordertable.getGongyunshang();
-            String dizhi = ordertable.getGuowaidizhi();
-            String wuping = ordertable.getWuping();
-            Date shijian = ordertable.getCaigoutime();
-            Long caigou = ordertable.getGuoneiwangzhanId();
-            Long kuaidi = ordertable.getKuaidifangshiId();
-            Long kucun = ordertable.getKucun();
-            String num = request.getParameter("num");
-            String guojia = ordertable.getGuojia();
-            String bianhao = request.getParameter("bianhao");
-            String biaojihao = request.getParameter("biaojihao");
-            ordertable = (OrderTable)orderDao.get(ordertable.getId());
-            ordertable.setCaigouyuan(cai);
-            ordertable.setDanhao(danhao);
-            ordertable.setHuokuan(huokuan);
-            ordertable.setYunfei(yunfei);
-            ordertable.setRemark(remark);
-            ordertable.setGongyunshang(gongyunshang);
-            ordertable.setGuowaidizhi(dizhi);
-            ordertable.setWuping(wuping);
-            if(huokuan!=null && !"".equals(huokuan)){
-            	ordertable.setCaigoutime(shijian);
-            }
-            ordertable.setGuoneiwangzhanId(caigou);
-            ordertable.setKuaidifangshiId(kuaidi);
-            ordertable.setXiugai(1l);
-            ordertable.setGuojia(guojia);
-            ordertable.setKucun(kucun);
-            LoginInfo us = (LoginInfo)getFromSession("logininfo");
-            KuCunTable tt = kuCunDao.getKuCunAll(biaojihao,orderId);
-            KuCunTable ss = kuCunDao.getOrderAll(orderId);
-            KuCunTable aa = kuCunDao.getBiaoHao(biaojihao);
-            if(bianhao == null){
-            	orderDao.merge(ordertable);
-                msg = "操作成功";
-                return getCaiGouAdminDeDaoOrder();
-            }
-            if(Integer.parseInt(bianhao) == 0){
-             if(ss == null){
-            	if(aa == null){
-            		
-            	KuCunTable kk = new KuCunTable();
-            	kk.setOrderId(orderId);
-            	kk.setBiaoji(biaojihao);
-            	kk.setNum(Long.parseLong(num));
-            	kk.setUserid(us.getUserId());
-            	msg = "操作成功";
-            	kuCunDao.merge(kk);
-            	}else{
-            		msg = "编号已经存在、操作失败";
-            		return "cgadminorder";
-            	}
-             }else{
-            	 msg = "此订单已经有编号";
-            	 return "cgadminorder";
-             }
-            }
-            if(Integer.parseInt(bianhao)==1){
-            	if(aa == null){
-            		msg = "未找到此编号、操作失败";
-            		return "cgadminorder";
-            	}else{
-            		
-            		
-            		if(aa.getNum()-(Long.parseLong(num))>0){
-            			aa.setId(aa.getId());
-            			aa.setNum(aa.getNum()-(Long.parseLong(num)));
-            			kuCunDao.merge(aa);
-            		}else{
-            			msg = "库存"+aa.getNum()+"不足、操作失败";
-            			return "cgadminorder";
-            		}
-            	}
-            }
-            
-            
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+    	String orderId = ordertable.getOrderId();
+        String gongyunshang = ordertable.getGongyunshang();
+        String beizhu = ordertable.getRemark();
+        Long cai = ordertable.getCaigouyuan();
+        String danhao = ordertable.getDanhao();
+        Double huokuan = ordertable.getHuokuan();
+        String dizhi = ordertable.getGuowaidizhi();
+        String wuping = ordertable.getWuping();
+        Date shijian = ordertable.getCaigoutime();
+        Long caigou = ordertable.getGuoneiwangzhanId();    
+        String kucun = request.getParameter("kucun");
+        Long kuaidi = ordertable.getKuaidifangshiId();
+        String guojia = ordertable.getGuojia();
+        String num = request.getParameter("num");
+        ordertable = (OrderTable)orderDao.get(ordertable.getId());
+        ordertable.setGongyunshang(gongyunshang);
+        ordertable.setRemark(beizhu);
+        ordertable.setCaigouyuan(cai);
+        ordertable.setDanhao(danhao);
+        ordertable.setHuokuan(huokuan);
+        ordertable.setGuowaidizhi(dizhi);
+        ordertable.setWuping(wuping);
+        if(huokuan!=null&&!"".equals(huokuan)){
+        	ordertable.setCaigoutime(shijian);
+        }
+        ordertable.setGuoneiwangzhanId(caigou); 
+       	ordertable.setKuaidifangshiId(kuaidi);
+        ordertable.setGuojia(guojia);
+        ordertable.setXiugai(1l);
+        if (Long.parseLong(kucun) == 1) {
+        	 LoginInfo us = (LoginInfo)getFromSession("logininfo");
+             List<KuCunTable> kk = kuCunDao.getGoodsUserId(wuping, us.getUserId());
+             if (kk.size() == 0) {
+     			msg = "库存订单里面没有找到("+wuping+")此物品、操作失败";
+     			return getCaiGouAdminDeDaoOrder();
+     		}else{
+     			if (kk.get(0).getNum() < Long.parseLong(num)) {
+     				kk.get(0).setId(kk.get(0).getId());
+     				msg= "库存数量还差"+((Long.parseLong(num))-(kk.get(0).getNum()));
+     				kk.get(0).setNum(0l);
+     				kuCunDao.merge(kk.get(0));
+     			}else{
+     				kk.get(0).setId(kk.get(0).getId());
+     				kk.get(0).setNum((kk.get(0).getNum()-(Long.parseLong(num))));
+     				kuCunDao.merge(kk.get(0));
+     			}
+     		}
 		}
-		 return getCaiGouAdminDeDaoOrder();
+        orderDao.merge(ordertable);
+		return getCaiGouAdminDeDaoOrder();
        
     }
 

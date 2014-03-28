@@ -21,7 +21,11 @@
 	  }
    function chulis(){
 	 	var items=document.getElementsByName("chkItems"); 
-	 	var lujing = "yewu1!chuli.do?pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
+	 	var time = document.getElementById("time").value;
+	 	var time1 = document.getElementById("time1").value;
+	 	var chuli = document.getElementById("chuli").value;
+	 	var zhanghaoId = document.getElementById("zhanghaoId").value;
+	 	var lujing = "yewu1!chuli.do?time="+time+"&time1="+time1+"&chuli="+chuli+"&zhanghaoId"+zhanghaoId+"&pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
 	 	 bianhao(items,lujing);
 	 }	
 </script>
@@ -34,7 +38,7 @@
     <tr>
       <td colspan="9">订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
       	时间查询：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/> 至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>
-      	是否处理:
+      	 纠纷是否处理完毕：
 	  	<select name="chuli" id="chuli">
 	  		<option value="">-请选择-</option>
 	  		<option value="0"
@@ -55,7 +59,7 @@
 	      </select> 
       
       <input type="submit" value="查询"/>
-      <input type="button" value="是否处理" style="cursor: pointer;" onclick="chulis()"/>
+      <input type="button" value="纠纷是否处理完毕" style="cursor: pointer;" onclick="chulis()"/>
       <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
 		<input type="hidden" value="${tit}" name="tit">  

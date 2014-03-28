@@ -925,9 +925,8 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
                  	kk.setName(row.getCell(3).getStringCellValue());
                  	row.getCell(6).setCellType(Cell.CELL_TYPE_STRING);
                  	u.setOrderId(row.getCell(6).getStringCellValue());
-                 	if(row.getCell(7) != null && !"".equals(row.getCell(2))){
-	                 	row.getCell(7).setCellType(Cell.CELL_TYPE_FORMULA);
-	                 	u.setZhongliang(row.getCell(7).getNumericCellValue());
+                 	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
+	                 	u.setZhongliang(Double.parseDouble(row.getCell(7).toString()));
                  	}                 	
                  	row.getCell(8).setCellType(Cell.CELL_TYPE_STRING);
                  	y.setGuojia(row.getCell(8).getStringCellValue());
@@ -935,7 +934,8 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
                  	List<YunFeiTable> yun = guoJiaDao.getAllGuoJia(y.getGuojia());  
                  	List<KuaiDiFangShi> kuai = kuaiDiFangShiDao.getCourier(kk.getName());
                  	List<YunFeiTableE> yunfei = yunFeieDao.getGuoJia(y.getGuojia());
-                 	if (kuai.size() != 0){
+                 	
+                 	if (kuai.size() != 0 && order.size() != 0 && (u.getDanhao() != null && !"".equals(u.getDanhao())) && (u.getZhongliang() != null && !"".equals(u.getZhongliang()))){
                  	//航空小包运费
 						if(kuai.get(0).getId() == 1l){
 							if(yun.size() != 0){
@@ -943,11 +943,12 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 									if (order.size() != 0) {			                 
 					                	String ss =order.get(0).getDanhao();
 					                	String dd =u.getDanhao();     
+					                	
 					                	if((ss!= null && !"".equals(ss))&&!ss.equals(dd)) {  
 					                		Double yuns = (yun.get(0).getMoney()*u.getZhongliang()*0.85+8);
 					                		order.get(0).setId(order.get(0).getId());	     	
 						                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-						                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+						                	if(row.getCell(7) != null && !"".equals(row.getCell(7)) ){
 						                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 						                	}
 						                	String num = "";
@@ -959,7 +960,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 											Double yuns = (yun.get(0).getMoney()*u.getZhongliang()*0.85+8);
 											order.get(0).setId(order.get(0).getId());	     	
 						                	order.get(0).setDanhao(u.getDanhao());
-						                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+						                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 						                		order.get(0).setZhongliang(u.getZhongliang());
 						                	}
 						                	String num = "";
@@ -980,7 +981,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 				                	String dd =u.getDanhao();     
 				                	String num = "";
 				                	DecimalFormat df = new DecimalFormat("0.000");
-				                	System.out.println("++ss++"+ss+"+dd++"+dd+"+国家++"+y.getGuojia());
+				                
 				                	if((ss != null && !"".equals(ss))&&!ss.equals(dd)){    
 				                		Double yund = 0d;
 				                		
@@ -1004,7 +1005,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 				                		order.get(0).setId(order.get(0).getId());	     	
 					                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
 					                	
-					                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+					                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 					                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 					                	}
 					                	orderTableDao.merge(order.get(0));
@@ -1052,7 +1053,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 						  	if((ssd != null && !"".equals(ssd))&&!ss.equals(dd)){     	
 		                		order.get(0).setId(order.get(0).getId());	     	
 			                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-			                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+			                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 			                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 			                	}
 			                	order.get(0).setYunfei(order.get(0).getYunfei()+ss.get(0).getZifei()+8);
@@ -1060,7 +1061,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 							}else{
 								order.get(0).setId(order.get(0).getId());	     	
 			                	order.get(0).setDanhao(u.getDanhao());
-			                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+			                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 			                		order.get(0).setZhongliang(u.getZhongliang());
 			                	}
 			                	order.get(0).setYunfei(ss.get(0).getZifei()+8);
@@ -1106,7 +1107,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 			                	if((ss != null && !"".equals(ss))&&!ss.equals(dd)){     	
 			                		order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(order.get(0).getYunfei()+m+8);
@@ -1114,7 +1115,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 								}else{
 									order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(m+8);
@@ -1151,7 +1152,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 			                	if((ss != null && !"".equals(ss))&&!ss.equals(dd)){     	
 			                		order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(order.get(0).getYunfei()+m+8);
@@ -1159,7 +1160,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 								}else{
 									order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(m+8);
@@ -1206,7 +1207,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 			                	if((ss != null && !"".equals(ss))&&!ss.equals(dd)){     	
 			                		order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(order.get(0).getYunfei()+m+8);
@@ -1214,7 +1215,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 								}else{
 									order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(m+8);
@@ -1251,7 +1252,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 			                	if((ss != null && !"".equals(ss))&&!ss.equals(dd)){     	
 			                		order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(order.get(0).getYunfei()+m+8);
@@ -1259,7 +1260,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 								}else{
 									order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(m);
@@ -1306,7 +1307,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 			                	if((ss != null && !"".equals(ss))&&!ss.equals(dd)){     	
 			                		order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(order.get(0).getYunfei()+m);
@@ -1314,7 +1315,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 								}else{
 									order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(m+8);
@@ -1351,7 +1352,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 			                	if((ss != null && !"".equals(ss))&&!ss.equals(dd)){     	
 			                		order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(order.get(0).getYunfei()+m+8);
@@ -1359,7 +1360,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 								}else{
 									order.get(0).setId(order.get(0).getId());	     	
 				                	order.get(0).setDanhao(u.getDanhao());
-				                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+				                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 				                		order.get(0).setZhongliang(u.getZhongliang());
 				                	}
 				                	order.get(0).setYunfei(m+8);
@@ -1379,14 +1380,14 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 		                	if((ss != null && !"".equals(ss))&&!ss.equals(dd)){     	
 		                		order.get(0).setId(order.get(0).getId());	     	
 			                	order.get(0).setDanhao(u.getDanhao()+","+order.get(0).getDanhao());
-			                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+			                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 			                		order.get(0).setZhongliang(order.get(0).getZhongliang()+u.getZhongliang());
 			                	}
 			                	orderTableDao.merge(order.get(0));
 							}else{
 								order.get(0).setId(order.get(0).getId());	     	
 			                	order.get(0).setDanhao(u.getDanhao());
-			                	if(row.getCell(2) != null && !"".equals(row.getCell(2))){
+			                	if(row.getCell(7) != null && !"".equals(row.getCell(7))){
 			                		order.get(0).setZhongliang(u.getZhongliang());
 			                	}
 			                	orderTableDao.merge(order.get(0));

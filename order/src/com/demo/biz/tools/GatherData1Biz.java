@@ -16,8 +16,7 @@ public class GatherData1Biz {
 
 	@Resource
 	private GatherData1ResultDao gatherData1ResultDao;
-	
-	public void startGather(GatherData1Key gatherData1Key) {		
+	public void startGather(GatherData1Key gatherData1Key) {
 		String sessionId = Struts2Utils.getSessionId();
 		new Thread(new GatherData1Thread(gatherData1Key, 
 				gatherData1ResultDao, sessionId)).start();

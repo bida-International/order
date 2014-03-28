@@ -12,4 +12,17 @@ public interface KuCunDao  extends BaseDao<KuCunTable,Long>{
 	public KuCunTable getOrderAll(String orderid);
 	//用编号查询全部
 	public KuCunTable getBiaoHao(String biaoji);
+	//物品和useriid查询
+	public List<KuCunTable> getGoodsUserId(String goods,Long userid);
+	//采购员查看全部库存订单
+	public String getStockOrder(Long userid,String time,String time1,String bianma);
+	//管理员查看全部库存订单
+	public String getStockOrderAll(String time,String time1);
+	//库存订单总金额
+	public List<KuCunTable> getTheTotalAmount(String time,String time1);
+	//库存订单总金额
+	public List<KuCunTable> getUserId(Long userid);
+	//图片名称和用户编码查询
+	public List<KuCunTable> getThePictureName(String picturename,Long userid);
+
 }

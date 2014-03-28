@@ -159,7 +159,7 @@ public class DhOrderApiBiz {
 		order.setAddress1(json.getString("addressline1")); // 地址
 		// 取国家
 		String country = json.getString("country");
-		System.out.println("+country++"+country);
+	
 		YunFeiTable yunFei = yunFeiTableDao.getCorresponding(country);
 		if (yunFei != null) {
 			country = yunFei.getGuojia();

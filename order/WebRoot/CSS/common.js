@@ -67,7 +67,21 @@ function showDhgateAuthDialog(account) {
 		}
 	});
 }
-
+//弹出显示大图
+function showEnlargeImage(show) {
+	var $dialog = $("#dhgateAuthDialog");
+	$dialog.find(".authAccount").html("<img src="+show+">");
+	$dialog.dialog({
+		width: 1000,
+		height: 500,
+		modal: true,
+		buttons: {
+			'取消': function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+}
 // 发送授权请求
 function getDhgateToken() {
 	var $dialog = $("#dhgateAuthDialog")

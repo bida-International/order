@@ -60,14 +60,18 @@
 	<tr>
      <td width="40" align="right"><span class="STYLE2">是否为库存订单 </span></td>
       <td>
-      	<input name="ordertable.kucun" type="radio" id="kucun" style="ime-mode:disabled" value="0"  onclick="myshow()" checked="checked">否
-      	<input name="ordertable.kucun" type="radio" id="kucun" style="ime-mode:disabled" value="1"  onclick="myshow()">是
+      	<input name="kucun" type="radio" id="kucun" style="ime-mode:disabled" value="0"  onclick="myshow()" checked="checked">否
+      	<input name="kucun" type="radio" id="kucun" style="ime-mode:disabled" value="1"  onclick="myshow()">是
     
       <div style="display:none" id="div1">
-      	 是否有编号:<input type="radio" name="bianhao" value="0"/>否
-     		 <input type="radio" name="bianhao" value="1"/>是<br/>
-                        编号:<input type="text" name="biaojihao"/>
-      	   数量：<input type="text" name="num" value="${updateIds.num}"/>
+                         物品：
+              <select name="goods" id="goods">
+              	<option value="">-请选择-</option>
+              	<s:iterator value="getStockOrders()" var="i">
+              		<option value="${i.id}">${i.wuping}</option>
+              	</s:iterator>
+              </select>       
+      	   数量：<input type="text" name="num" />
       	</div>
       </td>
 	</tr>

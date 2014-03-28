@@ -41,14 +41,14 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	 <table><tr><td><input type="button" value="审核" onclick="Audit()"></td></tr></table>
   <table border="1"  cellspacing="0" cellpadding="0" align="center" width="1000px" cellspacing="0">
     <tr>
-      <td colspan="3" align="center"><strong>未完成</strong>
+      <td colspan="4" align="center"><strong>未完成</strong>
          <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
 		<input type="hidden" value="${tit}" name="tit"> 
       </td>
     </tr>
      <tr>
-    	<td colspan="3">
+    	<td colspan="4">
     		时间：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}" size="9"/>至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}" size="9"/>
     		<input type="submit" value="查询"/>
     	</td>
@@ -57,18 +57,20 @@ scrollbar-darkshadow-color: #FFFFFF;">
     <tr align="center">
      <td width="34" height="25">
 		<input name="checkbox" onclick="quan()" type="checkbox" style="cursor:pointer"/></td>
-     <td width="163"><span class="STYLE2">内容</span></td>
+	<td width="163" align="center"><span class="STYLE2">序号</span></td>
+     <td width="163" align="center"><span class="STYLE2">内容</span></td>
      <td width="100"><span class="STYLE2">时间</span></td>
     </tr>
     <s:iterator value="pageBean.list" var="i">
       <tr align="center">
       <td><input name="chkItems" value="${i.id}" onclick="chkItems_click(this)" type="checkbox"  id="chk_${i.id}" readonly="readonly"  style="cursor:pointer"/></td>
+      	<td>${i.id}</td>
         <td>${i.title}</td>
         <td>${i.time}</td>  
      </tr>    
    </s:iterator>
     <tr> 
-	    <td colspan="3" align="center">
+	    <td colspan="4" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
        <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>

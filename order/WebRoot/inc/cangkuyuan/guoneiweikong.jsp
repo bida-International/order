@@ -102,7 +102,6 @@
 			<td><input type="button" onclick="myguonei()" style="cursor:pointer" value="批量修改国内单号"/></td>
 			 <td><input type="button" onclick="mywancheng()" style="cursor: pointer;" value="待放区"/></td>
 		</tr>
-	
 	</table>
   <table border="1" width="1150px" cellspacing="0" style="float:left">
     <tr>

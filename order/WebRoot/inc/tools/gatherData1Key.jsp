@@ -5,9 +5,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <m:frame>
+<script>
 
-	<s:form action="./tools/gatherData1Key.do">
-		<table border="1" cellspacing="0" style="width: 100%; float: left">
+</script>
+	<s:form action="./tools/gatherData1Key.do" method="post">
+	<table><tr><td>
+		 <a href="./tools/gatherData1Key!getAllLink.do" onclick="return confirm('确定导出?')">导出链接</a>
+	</td></tr></table>
+		 <table border="1" cellspacing="0" style="width: 100%; float: left">
 			<tr>
 				<th colspan="4" align="center">采集记录</th>
 			</tr>
@@ -59,6 +64,6 @@
 					</pg:pager>
 				</td>
 			</tr>
-		</table>
+		</table> 
 	</s:form>
 </m:frame>

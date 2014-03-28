@@ -118,7 +118,7 @@
 			<td><span style="color:red">传给仓库:</span></td>
 			<td>
 				<input type="button" style="cursor: pointer;" value="把库存订单全部传给仓库"  onclick="daifaqu()"/>  
-				<input type="button" style="cursor:pointer" value="待发货 " onClick="wancheng()">
+				<!-- <input type="button" style="cursor:pointer" value="待发货 " onClick="wancheng()"> -->
 			</td>
 			<td><span style="color:red">采购导出:</span></td>
 			<td>
@@ -131,8 +131,8 @@
 			<td><span style="color:red">传给业务:</span></td>
 			<td> <input type="button" style="cursor:pointer" value="将代发产品传给业务" onClick="daifa()"></td>
 			
-			<td><span style="color:red">传给管理员:</span></td>
-			<td> <input type="button" style="cursor:pointer" value="将速卖通的产品返回给管理员" onclick="mysumaitong()"/></td>
+			<td><span style="color:red">速卖通下单:</span></td>
+			<td> <input type="button" style="cursor:pointer" value="速卖通下单审核" onclick="mysumaitong()"/></td>
 			</tr>
 			
 	</table>

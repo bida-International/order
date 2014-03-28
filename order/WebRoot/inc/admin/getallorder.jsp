@@ -129,16 +129,6 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	    			>${i.leimu}</option>
 	    		</s:iterator>
 	    	</select>
-	    是否处理:
-		    <select name="chuli">
-		  		<option value="">-请选择-</option>
-		  		<option value="0"
-		  		${chuli==0?('selected="selected"'):('')}
-		  		>否</option>
-		  		<option value="1"
-		  		${chuli==1?('selected="selected"'):('')}
-		  		>是</option>
-		  	</select>
     	<input type="submit" value="查询"/>
     </td>
     </tr>
@@ -214,7 +204,7 @@ scrollbar-darkshadow-color: #FFFFFF;">
    </s:iterator>
  <tr>
    	<td colspan="19">
-   	<s:if test="chuli!=0 && chuli != 1">
+   
    		总金额($)：<s:property value="getMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"></s:property>
    		总运费：<s:property value="getYunFei(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
    		总采购货款：<s:property value="getHuoKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
@@ -224,10 +214,10 @@ scrollbar-darkshadow-color: #FFFFFF;">
    		货款为空：<a href="admin!huokuannull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getHuoKuanNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/></a>
    		纠纷总额($): <s:property value="getCaiGouAllJiuFenMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
    		<a href="admin!adminlirun.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}">利润小于0</a> /<a href="admin!liruninterval.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}">利润大于0小于30</a>
-   		总利润:<s:property value="getZongLiRun(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,leimu)"/>
+   		总利润:<s:property value="getZongLiRun(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
    		未入账：<a href="admin!weiruzhang.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}&dhgatezhanghao=${param.dhgatezhanghao}&danhao=${param.danhao}"><s:property value="getRuZhang(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/></a>
    		平均采购速度(小时)<s:property value="getCaiGouTimed(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
-   	</s:if>
+  
    		<br>
    	</td>
    </tr> 

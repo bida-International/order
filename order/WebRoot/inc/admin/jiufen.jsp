@@ -66,7 +66,12 @@
 	    			<option value="${i.id}">${i.leimu}</option>
 	    		</s:iterator>
 	    	</select>
-	  
+	  	   纠纷是否处理完毕：
+	  		    <select name="disputes" id="disputes">
+	    		<option value="">-请选择 -</option>
+	    		<option value="0">否</option>
+	    		<option value="1">是</option>
+	    	</select>
     	<input type="submit" value="查询"/>
          <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
@@ -89,7 +94,6 @@
        <td width="160"><span class="STYLE2">备注</span></td>
        <td width="160"><span class="STYLE2">是否纠纷</span></td>
        <td width="120"><span class="STYLE2">账号</span></td>
-      
       <td width="163"><span class="STYLE2">采购员</span></td>
     </tr>
     <s:iterator value="pageBean.list" var="i">
@@ -124,11 +128,9 @@
    </s:iterator>
    <tr>
    	<td colspan="16" > 
-   	 	
-	   		纠纷总金额：<s:property value="getAllMoney(orderId,time,time1,selcaigouyuan,leimus)"/>
-	   		纠纷总货款：<s:property value="getAllHuoKuan(orderId,time,time1,selcaigouyuan,leimus)"/>
-	    	纠纷总运费：<s:property value="getAllYunFei(orderId,time,time1,selcaigouyuan,leimus)"/>
-   		 
+	   		纠纷总金额：<s:property value="getAllMoney(orderId,time,time1,selcaigouyuan,leimus,disputes)"/>
+	   		纠纷总货款：<s:property value="getAllHuoKuan(orderId,time,time1,selcaigouyuan,leimus,disputes)"/>
+	    	纠纷总运费：<s:property value="getAllYunFei(orderId,time,time1,selcaigouyuan,leimus,disputes)"/>
     </td>
    </tr>
     <tr> 

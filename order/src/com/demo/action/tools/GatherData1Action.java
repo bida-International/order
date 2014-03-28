@@ -6,11 +6,11 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import com.demo.dao.tools.GatherData1KeyDao;
+import com.demo.entity.tools.GatherData1Key;
 
 import com.demo.action.BaseAction;
 import com.demo.biz.tools.GatherData1Biz;
-import com.demo.dao.tools.GatherData1KeyDao;
-import com.demo.entity.tools.GatherData1Key;
 import com.demo.utils.Struts2Utils;
 
 /**
@@ -27,7 +27,7 @@ public class GatherData1Action extends BaseAction {
 	private GatherData1Biz gatherData1Biz;
 	@Resource
 	private GatherData1KeyDao gatherData1KeyDao;
-	
+
 	private String targetUrl;
 	private Integer minOrderNum;
 	
@@ -51,6 +51,8 @@ public class GatherData1Action extends BaseAction {
 			gatherData1Biz.startGather(gatherData1Key);
 			
 			Long createTime = gatherData1Key.getCreateTime();
+
+
 			Struts2Utils.renderJson(createTime.toString(), true);
 		} catch (Exception e) {
 			e.printStackTrace();

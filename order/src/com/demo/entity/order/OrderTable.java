@@ -93,14 +93,14 @@ public class OrderTable implements Serializable
     private String country;
     private Long getordersId;//1.得到订单0.没有得到订单,2库存 
     private Long ArtProcessing;//美工是否处理
-    private java.util.Date ReturnTime;//退货时间
-    
-    public java.util.Date getReturnTime() {
-		return ReturnTime;
+    private java.util.Date returnTime;//退货时间
+
+	public java.util.Date getReturnTime() {
+		return returnTime;
 	}
 
 	public void setReturnTime(java.util.Date returnTime) {
-		ReturnTime = returnTime;
+		this.returnTime = returnTime;
 	}
 
 	public Long getArtistsGetOrdersId() {

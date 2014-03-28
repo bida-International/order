@@ -37,7 +37,7 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
 
     public InputStream getExcelFile()
     {
-    	System.out.println("+++µ¼³ö+++");
+    
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("sheet1");
         HSSFRow row = sheet.createRow(0);

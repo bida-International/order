@@ -1,7 +1,12 @@
 package com.demo.action.tools;
 
-import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -9,6 +14,7 @@ import com.demo.action.BaseAction;
 import com.demo.dao.tools.GatherData1KeyDao;
 import com.demo.dao.tools.GatherData1ResultDao;
 import com.demo.entity.tools.GatherData1Key;
+import com.demo.entity.tools.GatherData1Result;
 import com.demo.page.PageBean;
 
 /**
@@ -17,7 +23,7 @@ import com.demo.page.PageBean;
  */
 @Controller("tools.gatherData1KeyAction")
 @Scope("prototype")
-public class GatherData1KeyAction extends BaseAction {
+public class GatherData1KeyAction extends BaseAction  implements ServletRequestAware{
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,9 +35,13 @@ public class GatherData1KeyAction extends BaseAction {
 	private Integer pageSize = 20;
 	private Integer pageNum = 1;
 	private Long keyCreateTime;
-	
+	public List<GatherData1Result> gatherdata1result; 
 	private PageBean pageBean;
-	
+	private HttpServletRequest request;
+	public void setServletRequest(HttpServletRequest arg0)
+    {
+        request = arg0;
+    }
 	public String execute() {
 		pageBean = gatherData1KeyDao.getAllByPage(pageSize, pageNum);
 		return SUCCESS;
@@ -43,7 +53,24 @@ public class GatherData1KeyAction extends BaseAction {
 		gatherData1KeyDao.delete(gatherKey);
 		return execute();
 	}
-
+	//查询全部链接
+	public String getAllLink() throws Exception{
+		
+        gatherdata1result = gatherData1ResultDao.getAllLink();
+        java.util.Date ds = new java.util.Date();
+        SimpleDateFormat fs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String ffs = fs.format(ds);
+		if (gatherdata1result.size() != 0) {		
+		  for(int i = 0; i < gatherdata1result.size(); i++)
+          {
+			  gatherdata1result.get(i).setId(gatherdata1result.get(i).getId());
+			  gatherdata1result.get(i).setExporttime(fs.parse(ffs));
+			  gatherdata1result.get(i).setSfexport(1l);
+			  gatherData1ResultDao.merge(gatherdata1result.get(i));
+          }
+		}
+		return "export";
+	}
 	public Integer getPageSize() {
 		return pageSize;
 	}

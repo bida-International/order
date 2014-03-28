@@ -133,19 +133,21 @@
      </tr>   
       </s:if>
    </s:iterator>
+   <s:if test="caigouyuan != null">
    <tr>
    	   	<td colspan="14">
    		总金额($)：<s:property value="getCaiGouAllMoney(caigouyuan,orderId,time,time1)" />
    		总运费：<s:property value="getCaiGouAllYunFei(caigouyuan,orderId,time,time1)"/>
    		总采购货款：<s:property value="getCaiGouAllHuoKuan(caigouyuan,orderId,time,time1)"/>
    		退款个数：<s:property value="getCaiGouAllTuiKuan(caigouyuan,orderId,time,time1)"/>
-   		纠纷个数：<a href="admin!getJiuFenNum.do?caigouyuan=${sessionScope.caigouyuan}&time=${param.time}&time1=${param.time1}"><s:property value="getCaiGouAllJiuFen(caigouyuan,orderId,time,time1)"/></a>
+   		纠纷个数：<a href="admin!getJiuFenNum.do?caigouyuan=${param.caigouyuan}&time=${param.time}&time1=${param.time1}"><s:property value="getCaiGouAllJiuFen(caigouyuan,orderId,time,time1)"/></a>
    		退款总金额($): <s:property value="getCaiGouTuiKuan(caigouyuan,orderId,time,time1)"/>
    		纠纷总额($):<s:property value="getCaiGouJiuFenMoney(caigouyuan,orderId,time,time1)"/><br>
-   		运费为空：<a href="admin!getChaYunFeiNull.do?caigouyuan=${sessionScope.caigouyuan}&time=${param.time}&time1=${param.time1}"><s:property value="getYunFeiAll(caigouyuan,orderId,time,time1)"/></a>
-   		货款为空：<a href="admin!getChaHuoKuanNull.do?caigouyuan=${sessionScope.caigouyuan}&time=${param.time}&time1=${param.time1}"><s:property value="getHuoKuanAll(caigouyuan,orderId,time,time1)"/></a>
+   		运费为空：<a href="admin!getChaYunFeiNull.do?caigouyuan=${param.caigouyuan}&time=${param.time}&time1=${param.time1}"><s:property value="getYunFeiAll(caigouyuan,orderId,time,time1)"/></a>
+   		货款为空：<a href="admin!getChaHuoKuanNull.do?caigouyuan=${param.caigouyuan}&time=${param.time}&time1=${param.time1}"><s:property value="getHuoKuanAll(caigouyuan,orderId,time,time1)"/></a>
    	</td>
    </tr>
+  </s:if>
   <tr> 
 	    <td colspan="17" align="center">
 	           总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
@@ -171,6 +173,7 @@
 	</pg:pager> 
 	    </td>   		
     </tr>
+   
   </table>
   <br>
 </form>

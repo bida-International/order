@@ -91,7 +91,7 @@
 		     	${sd.tuihuo==0?('否'):('是')}
 		     </td>
 		     <td>${(sd.chuli==0 || sd.chuli==null)?('否'):('是')}</td>
-		     <td>${sd.ReturnTime}</td>
+		     <td>${sd.returnTime}</td>
 	     </tr>   
      </s:iterator> 
       <tr>     

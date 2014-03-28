@@ -35,6 +35,9 @@
 			<result name="daifa">/inc/caigou/cg/daifa.jsp</result>
 			<result name="upShipment">/inc/caigou/cg/upShipment.jsp</result>
 			<result name="addStock">/inc/caigou/cg/addStock.jsp</result>
+			<result name="stockorder">/inc/caigou/cg/stockorder.jsp</result>
+			<result name="issuesorders">/inc/caigou/cg/wentiorder.jsp</result>
+			
 			 <interceptor-ref name="fileUpload">  
                 <!-- 配置允许上传的文件大小300M 314572800-->  
                 <param name="maximumSize">31457280</param>     
@@ -44,4 +47,5 @@
 		</action>
 	</package>
 </struts>
+
 

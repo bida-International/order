@@ -78,14 +78,14 @@ function as(){
 
 </script>
 <m:frame>
-
+  ${msg}
 <form  action="caigou!getCaiGouOrder.do" method="post" onsubmit="return as()" id="forms" name="forms">
  <table border="1"  class="datagrid2" id="list" width="1200px">
 		<tr>
 			<td><span style="color:red">传给仓库:</span></td>
 			<td>
 				<input type="button" style="cursor: pointer;" value="把库存订单全部传给仓库" onclick="daifaqu()"/>  
-				<input type="button" style="cursor:pointer" value="待发货 " onClick="myfenpei()">
+				<!--  <input type="button" style="cursor:pointer" value="待发货 " onClick="myfenpei()">-->
 			</td>
 			<td><span style="color:red">采购导出:</span></td>
 			<td>
@@ -95,8 +95,8 @@ function as(){
 			<td> <input type="button" style="cursor:pointer" onclick="getPayment()" value="给财务付款订单"/></td>
 			</tr>
 			<tr>
-			<td><span style="color:red">传给管理员:</span></td>
-			<td> <input type="button" style="cursor:pointer" value="将速卖通的产品返回给管理员" onclick="mysumaitong()"/></td>
+			<td><span style="color:red">速卖通下单:</span></td>
+			<td> <input type="button" style="cursor:pointer" value="速卖通下单审核" onclick="mysumaitong()"/></td>
 			</tr>
 		
 	</table>
@@ -227,7 +227,7 @@ function as(){
 	    </td>   		
     </tr>
   </table>
-  ${msg}
+
   </form>
   ${fanhui}
   <s:iterator value="#str" var="d">

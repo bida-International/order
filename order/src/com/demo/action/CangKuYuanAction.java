@@ -663,6 +663,7 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
                 	ls.get(i).setGetordersId(0l);
                 	ls.get(i).setWancheng(0l);
                 	ls.get(i).setDaochu(0l);
+                	ls.get(i).setChuli(0l);
                  	ls.get(i).setTuihuo(1l);  
                     Date d = new Date();
                     SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

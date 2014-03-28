@@ -16,12 +16,15 @@ import com.demo.page.PageBiz;
 import com.demo.vo.LoginInfo;
 import com.opensymphony.xwork2.ActionContext;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -78,13 +81,12 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     public Long leimus;
     public Long category;
     public String gongyunshang;
+    private List<File> uploadFile;
+    private List<String> uploadFileFileName;
+    private List<String> uploadFileContentType;
     private HttpServletRequest request;     
-    //此属性对应于表单中文件字段的名称    
-    private List<File> uploadFile;   
-    //下面的这两个属性的命名必须遵守上定的规则，即为"表单中文件字段的名称" + "相应的后缀"    
-    private List<String> fileContentType; // 得到上传的文件的数据类型,    
-    private List<String> fileFileName; // 得到上传的文件的名称   
-	private String luJing; 
+
+
 	public List<File> getUploadFile() {
 		return uploadFile;
 	}
@@ -92,23 +94,32 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
 	public void setUploadFile(List<File> uploadFile) {
 		this.uploadFile = uploadFile;
 	}
-	
-	public List<String> getFileContentType() {
-		return fileContentType;
+
+	public List<String> getUploadFileFileName() {
+		return uploadFileFileName;
 	}
 
-	public void setFileContentType(List<String> fileContentType) {
-		this.fileContentType = fileContentType;
+	public void setUploadFileFileName(List<String> uploadFileFileName) {
+		this.uploadFileFileName = uploadFileFileName;
 	}
 
-	public List<String> getFileFileName() {
-		return fileFileName;
+	public List<String> getUploadFileContentType() {
+		return uploadFileContentType;
 	}
 
-	public void setFileFileName(List<String> fileFileName) {
-		this.fileFileName = fileFileName;
+	public void setUploadFileContentType(List<String> uploadFileContentType) {
+		this.uploadFileContentType = uploadFileContentType;
 	}
 
+	public String getCaption() {
+		return caption;
+	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
+	private String caption;  
+    
 	public ZhangHao getMyzhangHao() {
 		return myzhangHao;
 	}
@@ -288,7 +299,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
         return "updatehuokuans";
     }
     //采购修改得到订单
-    public String updatedingdans()
+    public String updatedingdans() throws Exception
     {
     	String orderId = ordertable.getOrderId();
         String gongyunshang = ordertable.getGongyunshang();
@@ -300,12 +311,10 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
         String wuping = ordertable.getWuping();
         Date shijian = ordertable.getCaigoutime();
         Long caigou = ordertable.getGuoneiwangzhanId();    
-        Long kucun = ordertable.getKucun();
+        String kucun = request.getParameter("kucun");
         Long kuaidi = ordertable.getKuaidifangshiId();
         String guojia = ordertable.getGuojia();
         String num = request.getParameter("num");
-        String bianhao = request.getParameter("bianhao");
-        String biaojihao = request.getParameter("biaojihao");
         ordertable = (OrderTable)orderDao.get(ordertable.getId());
         ordertable.setGongyunshang(gongyunshang);
         ordertable.setRemark(beizhu);
@@ -319,54 +328,33 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
         }
         ordertable.setGuoneiwangzhanId(caigou); 
        	ordertable.setKuaidifangshiId(kuaidi);
-        ordertable.setKucun(kucun);
         ordertable.setGuojia(guojia);
         ordertable.setXiugai(1l);
-        LoginInfo us = (LoginInfo)getFromSession("logininfo");
-       // KuCunTable tt = kuCunDao.getKuCunAll(biaojihao,orderId);
-        KuCunTable ss = kuCunDao.getOrderAll(orderId);
-        KuCunTable aa = kuCunDao.getBiaoHao(biaojihao);
-        if(bianhao == null){
-        	orderDao.merge(ordertable);
-            msg = "操作成功";
-            return getCaiGouOrder();
-        }
-       if(Integer.parseInt(bianhao) == 0){
-    	 if(ss == null){
-	        if(aa == null){
-	        	KuCunTable kk = new KuCunTable();
-	        	kk.setOrderId(orderId);
-	        	kk.setBiaoji(biaojihao);
-	        	kk.setNum(Long.parseLong(num));
-	        	kk.setUserid(us.getUserId());
-	        	msg = "操作成功";
-	        	kuCunDao.merge(kk);
-	        	}else{
-	        		msg = "编号已经存在、操作失败";
-	        		return "updatehuokuan";
-	        	}
-    	 }else{
-    		 msg = "此订单已经有编号";
-    		 return "updatehuokuan";
-    	 }
-        }
-        if(Integer.parseInt(bianhao)==1){
-        	if(aa == null){
-        		msg = "未找到此编号、操作失败";
-        		return "updatehuokuan";
-        	}else{
-        	
-        		if(aa.getNum()-(Long.parseLong(num))>0){
-        			aa.setId(aa.getId());
-        			aa.setNum(aa.getNum()-(Long.parseLong(num)));
-        			kuCunDao.merge(aa);
-        		}else{
-        			msg = "库存"+aa.getNum()+".不足、操作失败";
-        			return "updatehuokuan";
-        		}
-        	}
-        }
-        
+        Date d = new Date();
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String ff = f.format(d);
+        if (Long.parseLong(kucun) == 1) {
+        	 LoginInfo us = (LoginInfo)getFromSession("logininfo");
+             List<KuCunTable> kk = kuCunDao.getGoodsUserId(wuping, us.getUserId());
+             if (kk.size() == 0) {
+     			msg = "库存订单里面没有找到("+wuping+")此物品、操作失败";
+     			return getCaiGouOrder();
+     		}else{
+     			if (kk.get(0).getNum() < Long.parseLong(num)) {
+     				kk.get(0).setId(kk.get(0).getId());
+     				msg= "库存数量还差"+((Long.parseLong(num))-(kk.get(0).getNum()));
+     				kk.get(0).setNum(0l);
+     				kk.get(0).setSytime(f.parse(ff));
+     				kuCunDao.merge(kk.get(0));
+     			}else{
+     				kk.get(0).setId(kk.get(0).getId());
+     				kk.get(0).setNum((kk.get(0).getNum()-(Long.parseLong(num))));
+     				kk.get(0).setSytime(f.parse(ff));
+     				kuCunDao.merge(kk.get(0));
+     			}
+     		}
+		}
+        orderDao.merge(ordertable);
         return getCaiGouOrder();
     }
 
@@ -1079,76 +1067,136 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     	orderTableDao.merge(ordertable);
     	return getOnOrder();
     }
-    public String bianma(){
+  //批量上传图片
+    public String uploadInventoryOrders() throws Exception{
     	try {
-    	
-        	System.out.println("bianma++"+bianma);
+        	//得到工程保存图片的路径
+        	String root = ServletActionContext.getServletContext().getRealPath("WebRoot/"+"upload/");
+            String[] coding = request.getParameterValues("bianma");
+            String[] num = request.getParameterValues("num");
+            String[] totalprice = request.getParameterValues("totalprice");
+            String[] unitprice = request.getParameterValues("unitprice");
+            LoginInfo us = (LoginInfo)getFromSession("logininfo");
+            String[] wuping = request.getParameterValues("wuping");
+            Date ds = new Date();
+            SimpleDateFormat fs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String ffs = fs.format(ds);
+            KuCunTable kk = new KuCunTable();
+            File dirs = new File(root);//+(System.currentTimeMillis())   
+            if(!dirs.exists()){  
+                dirs.mkdirs();  
+            }
+            if(uploadFile == null){  
+                return null;  
+            }else{
+            //循环上传的文件
+            for(int i = 0 ; i < uploadFile.size() ; i ++){
+            	List<KuCunTable> pic = kuCunDao.getThePictureName("upload"+"/"+this.getUploadFileFileName().get(i), us.getUserId());
+            	String[] stu = new String[uploadFile.size()];
+            	if (pic.size() == 0) {
+            		List<KuCunTable> cc = kuCunDao.getGoodsUserId(wuping[i], us.getUserId());
+               	 	InputStream is = new FileInputStream(uploadFile.get(i)); 
+                    //得到图片保存的位置(根据root来得到图片保存的路径在tomcat下的该工程里)
+                    File destFile = new File(root,this.getUploadFileFileName().get(i));
+                    //把图片写入到上面设置的路径里
+                    OutputStream os = new FileOutputStream(destFile);
+                    byte[] buffer = new byte[1024];
+                    int length  = 0;
+                    while((length = is.read(buffer))>0){
+                        os.write(buffer, 0, length);
+                    }
+               	if (cc.size() == 0 ) {
+               		 kk.setCoding(coding[i]);
+                        kk.setNum(Long.parseLong(num[i]));
+                        kk.setTotalprice(Double.parseDouble(totalprice[i]));
+                        kk.setUnitprice(Double.parseDouble(unitprice[i]));
+                        kk.setWuping(wuping[i]);
+                        kk.setUserid(us.getUserId());
+                        kk.setUploadFile("upload"+"/"+this.getUploadFileFileName().get(i));//+(System.currentTimeMillis())
+                        kk.setTime(fs.parse(ffs));
+                        stu[i] = i+"操作成功";
+                        kuCunDao.merge(kk);
+       			}else{
+       				cc.get(i).setId(cc.get(i).getId());
+       				cc.get(i).setCoding(coding[i]);
+       				cc.get(i).setNum(Long.parseLong(num[i]));
+       				cc.get(i).setTotalprice(Double.parseDouble(totalprice[i]));
+       				cc.get(i).setUnitprice(Double.parseDouble(unitprice[i]));
+       				cc.get(i).setUserid(us.getUserId());
+       				cc.get(i).setUploadFile("upload"+"/"+this.getUploadFileFileName().get(i));//+(System.currentTimeMillis())
+       				cc.get(i).setWuping(wuping[i]);
+       				cc.get(i).setTime(fs.parse(ffs));
+       				stu[i] = i+"操作成功";
+       				kuCunDao.merge(cc.get(i));
+       			}
+                   is.close();
+                   os.close();
+    			}else{
+    				stu[i] = i+"图片名称已经存在";
+    			}
+            	 ActionContext.getContext().put("insert", stu);
+            }
+            }
+           
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+    	return "addStock";
+    }
+  //显示库存订单
+    public String getStockOrder(){
+    	try {
+    		LoginInfo us = (LoginInfo)getFromSession("logininfo");
+        	int pageSize = 10;
+        	pageBean = pageBiz.selStockOrder(pageSize, pageNumber, us.getUserId(),time,time1,bianma);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
     
-    	return "addStock";
+    	return "stockorder";
     }
-    //上传库存订单
-    public String uploadInventoryOrders() throws IOException{
-    	//得到工程保存图片的路径  
-    	try {
-    		   System.out.println("==bianma==="+bianma);  
-    	        String[] coding = request.getParameterValues("bianma");
-    	        String[] num = request.getParameterValues("num");
-    	        String[] totalprice = request.getParameterValues("totalprice");
-    	        String[] unitprice = request.getParameterValues("unitprice");
-    	        LoginInfo us = (LoginInfo)getFromSession("logininfo");
-    	        String[] wuping = request.getParameterValues("wuping");
-    	        String root = ServletActionContext.getServletContext().getRealPath("/image");
-    	        SimpleDateFormat date = new SimpleDateFormat("/yyyy/MM/dd");  
-    	        String dateTime = date.format(new Date());  
-    	        root += dateTime;
-    	        System.out.println("++fileContentType+====="+fileContentType);   
-    	        	KuCunTable kk = new KuCunTable();
-    	            //判断文件是否为空,并且文件不能大于2M  
-    	            if(uploadFile != null && uploadFile.size() < 2097152)  
-    	            {    
-    	            	//循环上传的文件
-    	            	for(int i = 0 ; i < uploadFile.size() ; i ++){
-    		            	InputStream is = new FileInputStream(uploadFile.get(i));
-    		            	//得到图片保存的位置(根据root来得到图片保存的路径在tomcat下的该工程里)
-    		            	File destFile = new File(root,this.getFileFileName().get(i));
-    		            	//把图片写入到上面设置的路径里
-    		            	OutputStream os = new FileOutputStream(destFile);
-    		            	byte[] buffer = new byte[400];
-    		            	int length = 0 ;
-    		            	while((length = is.read(buffer))>0){
-    		            	os.write(buffer, 0, length);
-    		            	}
-    		            	kk.setWuping(wuping[i]);
-    		            	kk.setCoding(coding[i]);
-    		            	kk.setUploadFile(root);
-    		            	kk.setUserid(us.getUserId());
-    		            	kk.setTotalprice(Double.parseDouble(totalprice[i]));
-    		            	kk.setUnitprice(Double.parseDouble(unitprice[i]));
-    		            	kk.setNum(Long.parseLong(num[i]));
-    		            	is.close();
-    		            	os.close();
-    	            	} 
-    	            	
-    	            }    
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-     
-    	return "addStock";
+    //显示问题订单
+    public String getIssuesOrders(){
+    	LoginInfo us = (LoginInfo)getFromSession("logininfo");
+    	int pageSize = 10;
+    	pageBean = pageBiz.selIssuesOrders(pageSize, pageNumber, orderId, us.getUserId());
+    	return "issuesorders";
     }
-    public String getLuJing() {
-		return luJing;
-	}
+    //将完成订单返回给代发 
+    public String fhdaifahuo()
+    {
+        try
+        {
+            String[] ch = request.getParameter("bulletinId").split("-");
+            String[] str = new String[ch.length];
+            for(int i = 0; i < ch.length; i++)
+            {
+                List<OrderTable> ls = orderDao.getSelId(Long.parseLong(ch[i]));
+                if(ls.size() != 0)
+                {
+                    ls.get(0).setId(Long.parseLong(ch[i]));
+                    ls.get(0).setFenpei(1l);
+                    ls.get(0).setWancheng(0l);
+                    ls.get(0).setDaifahuo(0l);
+                    ls.get(0).setDaochu(0l);
+                    ls.get(0).setSumaitong(0l);
+                    ls.get(0).setGetordersId(1l);
+                    orderDao.merge(ls.get(0));
+                    str[i] = i + ".操作成功！";
+                } 
+            }
 
-	public void setLuJing(String luJing) {
-		this.luJing = luJing;
-	}
-
+            ActionContext.getContext().put("wenti", str);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return getIssuesOrders();
+    }
 	//上传库存
     public String addStock(){
     	return "addStock";

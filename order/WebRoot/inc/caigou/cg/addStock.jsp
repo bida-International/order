@@ -48,11 +48,24 @@ function delFile(){
         }  
     }  
 }  
+function as(){
+  window.location = "caigou!getStockOrder.do";
+}
 </script>
 <m:frame>
   <form action="caigou!uploadInventoryOrders.do"  enctype="multipart/form-data" method="post">
- 	<input type="hidden" id="luJing" name="luJing" value="${info.baoCunZhuLuJing}">  
+   
     <table id="myTable">  
+    	<tr>
+				<td colspan="6" style="color:#ff0000;">
+					注：
+					<ol>
+						<li>上传图片时,图片名称要改一下</li>
+						<li>图片名称不能是一样的</li>
+						<li>每个字段都必须填写</li>
+					</ol>
+				</td>
+			</tr>
         <tr>  
             <td width="70px;">图片</td>  
             <td><input type="file" name="uploadFile" value="" id="file"/></td>  
@@ -71,6 +84,7 @@ function delFile(){
     </table>  
     <input type="submit" id="upload" name="upload" value="上传" style="cursor: pointer;"/>  
     <input type="button" value="上传更多" style="cursor: pointer;" onclick="addMoreFiles();">  
+    <input type="button" value="返回" onclick="as()" style="cursor: pointer;">
   </form>
     <s:iterator value="#insert" var="d">
   	${d}<br>

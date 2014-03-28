@@ -3,7 +3,7 @@ package com.demo.page;
 public interface PageBiz
 {
 
-    public abstract PageBean selForPage(int pageSize, int page, String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,Long chuli);
+    public abstract PageBean selForPage(int pageSize, int page, String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu);
    
     //采购管理员得到订单
     public abstract PageBean selCaiGouAdminWanChengOrder(int pageSize, int page, Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma,String gongyunshang,String wuping);
@@ -133,7 +133,7 @@ public interface PageBiz
     //查看退货订单
     public PageBean selProcessingReturns(int pageSize, int page,String danhao,Long userid);
   //查看是否处理
-    public PageBean selDisputes(int pageSize, int page,String orderId,String time,String time1,Long selcaigouyuan,String leimus);
+    public PageBean selDisputes(int pageSize, int page,String orderId,String time,String time1,Long selcaigouyuan,String leimus,Long disputes);
     //美工得到订单
     public PageBean selArtistsGetOrders(int pageSize, int page,String orderId,Long userid);
     //美工得到处理完毕订单
@@ -146,4 +146,10 @@ public interface PageBiz
     public PageBean selCompletes(int pageSize,int page,String time,String time1);
     //不能处理订单
     public PageBean selCanNotHandle(int pageSize,int page,String OrderId,Long userid);
+    //采购员查看库存订单
+    public PageBean selStockOrder(int pageSize,int page,Long userid,String time,String time1,String bianma);
+  //管理员查看库存订单
+    public PageBean selStockOrderAll(int pageSize,int page,String time,String time1);
+    //采购查看问题订单
+    public PageBean selIssuesOrders(int pageSize,int page,String orderid,Long userid);
 }

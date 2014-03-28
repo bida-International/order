@@ -75,6 +75,8 @@
 		            <result name="getunfinished">/inc/admin/getUnfinished.jsp</result>
 		            <result name="getAudit">/inc/admin/getAudit.jsp</result>
 		            <result name="getCompleted">/inc/admin/getCompleted.jsp</result>
+		             <result name="stockorder">/inc/admin/stockorder.jsp</result>
+		             <result name="exportorder">/inc/admin/exportOrder.jsp</result>
 		</action>
 		<action name="test" class="testAction">
 		<result name="addorder">/inc/admin/addorder.jsp</result>

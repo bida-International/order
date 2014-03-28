@@ -1,6 +1,7 @@
 package com.demo.entity.tools;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,20 @@ public class GatherData1Result implements Serializable {
 	private Long keyCreateTime;
 	private String link; // 产品链接
 	private Integer orderNum; // 订单数
-	
+	private Long sfexport;//是否导出 0或NULL 没有导出, 1.导出
+	private Date exporttime;//导出时间
+	public Date getExporttime() {
+		return exporttime;
+	}
+	public void setExporttime(Date exporttime) {
+		this.exporttime = exporttime;
+	}
+	public Long getSfexport() {
+		return sfexport;
+	}
+	public void setSfexport(Long sfexport) {
+		this.sfexport = sfexport;
+	}
 	@Id
 	@GeneratedValue
 	public Long getId() {
