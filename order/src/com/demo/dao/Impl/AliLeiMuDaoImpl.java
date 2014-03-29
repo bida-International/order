@@ -19,7 +19,7 @@ public class AliLeiMuDaoImpl extends BaseDaoImpl<AliLeiMu, Long> implements AliL
 			return null;
 		}
 		
-		if (aliLeiMu.getLevel() != 0) {
+		if (aliLeiMu.getParentId() != 0) {
 			return this.getFirstParentCateId(aliLeiMu.getParentId());
 		} else {
 			return aliLeiMu.getId();

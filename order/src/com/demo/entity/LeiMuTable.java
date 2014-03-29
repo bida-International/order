@@ -22,7 +22,7 @@ public class LeiMuTable implements Serializable{
 	private Long msgFenpeiUserId; // 站内信分配的（业务）用户id 
 	private String msgFenpeiUserName; // 站内信分配的（业务）用户名称
 	private String ali_leimu;//速卖通类目
-	private String aliCateId; // 速卖通类目
+	private Long aliCateId; // 速卖通类目
 	
 	public String getAli_leimu() {
 		return ali_leimu;
@@ -72,10 +72,10 @@ public class LeiMuTable implements Serializable{
 		this.msgFenpeiUserName = msgFenpeiUserName;
 	}
 	@Column(name = "ali_cate_id")
-	public String getAliCateId() {
+	public Long getAliCateId() {
 		return aliCateId;
 	}
-	public void setAliCateId(String aliCateId) {
+	public void setAliCateId(Long aliCateId) {
 		this.aliCateId = aliCateId;
 	}
 	
