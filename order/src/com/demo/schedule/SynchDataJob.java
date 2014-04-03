@@ -41,13 +41,13 @@ public class SynchDataJob implements InitializingBean {
 		/**
 		 * 自动同步时间段：07:00到19:00
 		 */
-		boolean synchData = false;
-		if (curHour >= 7 && curHour < 19) {
-			synchData = true;
-		}
-		if (!synchData) {
-			return;
-		}
+//		boolean synchData = false;
+//		if (curHour >= 7 && curHour < 19) {
+//			synchData = true;
+//		}
+//		if (!synchData) {
+//			return;
+//		}
 		
 		System.out.println("----同步敦煌和速卖通数据----");
 		try {

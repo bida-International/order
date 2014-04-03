@@ -198,24 +198,36 @@ public class DhOrderApiBiz {
 		String bianma = ""; // 编码
 		String remark = ""; // 买家备注
 		for (int i = 0; i < products.size(); i++) {
+			JSONObject product = products.getJSONObject(i);
 			// 计算物品
 			if (!wuping.equals("")) {
 				wuping += "+";
 			}
-			wuping += products.getJSONObject(i).getString("productname")
-					+  "(数量:" + products.getJSONObject(i).getString("quantity") + ")" ;
+			wuping += product.getString("productname")
+					+  "(数量:" + product.getString("quantity") + "; " ;
+			// 物品定制属性
+			if (!product.getString("proAttrDTOLst").equals("null")) {
+				JSONArray productAttrs = product.getJSONArray("proAttrDTOLst");
+				for (int j = 0; j < productAttrs.size(); j++) {
+					if (!productAttrs.getJSONObject(j).getString("valDTO").equals("null")) {
+						wuping += productAttrs.getJSONObject(j).getJSONObject("valDTO").getString("attrValue") + ";";
+					}
+				}
+			}
+			wuping += ")";
+			
 			// 取编码
 			if (!bianma.equals("")) {
 				bianma += ",";
 			}
-			bianma = products.getJSONObject(i).getString("itemcode");
+			bianma = product.getString("itemcode");
 			// 取买家备注
 			if (!remark.equals("")) {
 				remark += ",";
 			}
-			if (!products.getJSONObject(i).getString("specification").equals("null")) {
-				remark += products.getJSONObject(i).getString("itemcode") 
-						+ products.getJSONObject(i).getString("specification");
+			if (!product.getString("specification").equals("null")) {
+				remark += product.getString("itemcode") 
+						+ product.getString("specification");
 			}
 		}
 		if(zh.size()!=0){
