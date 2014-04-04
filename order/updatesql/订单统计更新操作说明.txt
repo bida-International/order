@@ -1,0 +1,10 @@
+1.添加一条菜单数据:
+1171	账号订单统计	NULL	1000	order/statZh.do
+
+2.每一小时自动执行一次统计, 第一次运行如果想马上进行统计, 可以这样操作:
+先用浏览器打开系统, 登录
+然后在浏览器地址栏输入这个地址并回车 http://qiantingdi.gicp.net:14189/order/order/statZh!doStatistic.do
+
+3.手动修改订单纠纷状态的代码需要增加调用下面这段, 以更新统计数据:
+orderStatZhBiz.updateStatData(statDate, zhangHao); // statDate为订单的上传时间, zhangHao为订单所属的账号
+

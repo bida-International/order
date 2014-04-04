@@ -12,6 +12,7 @@
 		<property name="triggers">
 			<list>
 				<ref bean="synchDataJobCronTrigger" />
+				<ref bean="orderStatJobCronTrigger" />
 			</list>
 		</property>
 		<!-- Quartz配置 -->
@@ -28,7 +29,7 @@
 	<bean id="synchDataJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="synchDataJobDetail" />
 		<!-- 每一个小时执行一次 -->
-		<property name="cronExpression" value="0 0 0/10 * * ?"/>
+		<property name="cronExpression" value="0 0 0/1 * * ?"/>
 	</bean>
 	<bean id="synchDataJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="synchDataJob" />
@@ -36,6 +37,19 @@
 		<property name="concurrent" value="false" />
 	</bean>
 	<bean id="synchDataJob" class="com.demo.schedule.SynchDataJob" lazy-init="false"></bean>
+	
+	<!-- 定时统计订单数据 -->
+	<bean id="orderStatJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="orderStatJobDetail" />
+		<!-- 每一个小时执行一次 -->
+		<property name="cronExpression" value="0 0 0/1 * * ?"/>
+	</bean>
+	<bean id="orderStatJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orderStatJob" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="orderStatJob" class="com.demo.schedule.OrderStatJob" lazy-init="false"></bean>
 </beans>
 
 

@@ -7,6 +7,9 @@
 		<action name="aliApi" class="order.aliApiAction">
 			<result name="success">/inc/order/aliApi.jsp</result>
 		</action>
+		<action name="statZh" class="order.statZhAction">
+			<result name="success">/inc/order/statZh.jsp</result>
+		</action>
 	</package>
 	
 </struts>

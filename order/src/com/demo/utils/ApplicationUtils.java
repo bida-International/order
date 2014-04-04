@@ -26,4 +26,8 @@ public class ApplicationUtils {
 		return ctx.getAttribute(key);
 	}
 	
+	public static String getPrjRootDir() {
+		return ctx.getRealPath("/");
+	}
+	
 }
