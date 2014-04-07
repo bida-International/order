@@ -5,11 +5,11 @@
 	<s:form action="./order/statZh.do">
 		<table border="1" cellspacing="0" style="width: 99%; float: left">
 			<tr>
-				<th colspan="5" align="center">账号订单统计数据</th>
+				<th colspan="6" align="center">账号订单统计数据</th>
 			</tr>
 			<tr>
-				<td colspan="5">
-					<span>请选择统计时间段：</span> 
+				<td colspan="6">
+					<span>统计时间段：</span> 
 					<s:select name="beginDate" list="dates" value="beginDate"></s:select>
 					<span> 到 </span>
 					<s:select name="endDate" list="dates" value="endDate"></s:select>
@@ -19,10 +19,11 @@
 			</tr>
 			<tr align="center" style="font-weight: bold;">
 				<td width="20%">账号</td>
-				<td width="20%">订单总个数</td>
-				<td width="20%">纠纷订单个数</td>
-				<td width="20%">纠纷率</td>
-				<td width="20%">订单总金额</td>
+				<td width="15%">订单总个数</td>
+				<td width="15%">纠纷订单个数</td>
+				<td width="15%">纠纷率</td>
+				<td width="15%">订单总金额</td>
+				<td width="20%">详细统计数据</td>
 			</tr>
 			<s:iterator value="orderStatZhs" var="i">
 				<tr align="center">
@@ -31,20 +32,25 @@
 					<td>${i.jiufenAmount }</td>
 					<td>${i.jiufenRate }%</td>
 					<td>${i.totalMoney }</td>
+					<td>
+						<s:if test="zhanghaoId != 0">
+							<a href="./order/statZhDetail.do?zhanghaoId=${i.zhanghaoId }">查看</a>
+						</s:if>
+					</td>
 				</tr>
 			</s:iterator>
 			<tr>
-				<td colspan="5" align="center" style="padding:5px;">
+				<td colspan="6" align="center" style="padding:5px;">
 					<img src="./${totalMoneyChart }" />
 				</td>
 			</tr>
 			<tr>
-				<td colspan="5" align="center" style="padding:5px;">
+				<td colspan="6" align="center" style="padding:5px;">
 					<img src="./${orderAmountChart }" />
 				</td>
 			</tr>
 			<tr>
-				<td colspan="5" align="center" style="padding:5px;">
+				<td colspan="6" align="center" style="padding:5px;">
 					<img src="./${jiufenRateChart }" />
 				</td>
 			</tr>

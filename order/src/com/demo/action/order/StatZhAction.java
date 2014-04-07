@@ -148,11 +148,11 @@ public class StatZhAction extends BaseAction {
 
 		DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
 		for (OrderStatZh orderStatZh : orderStatZhs) {
-			categoryDataset.setValue(orderStatZh.getOrderAmount(), "订单总个数", orderStatZh.getZhanghaoAccount());
+			categoryDataset.setValue(orderStatZh.getOrderAmount(), "总数", orderStatZh.getZhanghaoAccount());
 		}
 
 		// 设置标题文字
-		String headerTitle = "账号订单总个数统计图";
+		String headerTitle = "订单总数统计";
 		ChartCreator.createBarChart3D(categoryDataset, headerTitle, fileName, false);
 		orderAmountChart = ChartCreator.getFileDir() + fileName;
 	}
@@ -162,11 +162,11 @@ public class StatZhAction extends BaseAction {
 
 		DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
 		for (OrderStatZh orderStatZh : orderStatZhs) {
-			categoryDataset.setValue(orderStatZh.getTotalMoney(), "订单总金额", orderStatZh.getZhanghaoAccount());
+			categoryDataset.setValue(orderStatZh.getTotalMoney(), "总金额", orderStatZh.getZhanghaoAccount());
 		}
 
 		// 设置标题文字
-		String headerTitle = "账号订单总金额统计图";
+		String headerTitle = "订单总金额统计";
 		ChartCreator.createBarChart3D(categoryDataset, headerTitle, fileName, false);
 		totalMoneyChart = ChartCreator.getFileDir() + fileName;
 	}
@@ -176,11 +176,11 @@ public class StatZhAction extends BaseAction {
 
 		DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
 		for (OrderStatZh orderStatZh : orderStatZhs) {
-			categoryDataset.setValue(orderStatZh.getJiufenRate(), "订单纠纷率", orderStatZh.getZhanghaoAccount());
+			categoryDataset.setValue(orderStatZh.getJiufenRate(), "纠纷率", orderStatZh.getZhanghaoAccount());
 		}
 
 		// 设置标题文字
-		String headerTitle = "账号订单纠纷率统计图";
+		String headerTitle = "订单纠纷率统计";
 		ChartCreator.createBarChart3D(categoryDataset, headerTitle, fileName, true);
 		jiufenRateChart = ChartCreator.getFileDir() + fileName;
 	}

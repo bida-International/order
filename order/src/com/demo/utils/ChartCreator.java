@@ -10,6 +10,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer3D;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -28,7 +29,10 @@ public class ChartCreator {
 		Font font = new Font("ËÎÌו", Font.BOLD, 16);
 		TextTitle title = new TextTitle(headerTitle, font);
 		chart.setTitle(title);
-
+		
+		chart.getLegend().setItemFont(new Font("ËÎÌו", Font.ITALIC, 12));
+		chart.setNotify(false);
+		
 		try {
 			String filePath = getFilePath();
 			if (!FileUtils.isExistFile(filePath + fileName)) {

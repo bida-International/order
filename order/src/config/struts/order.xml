@@ -10,6 +10,9 @@
 		<action name="statZh" class="order.statZhAction">
 			<result name="success">/inc/order/statZh.jsp</result>
 		</action>
+		<action name="statZhDetail" class="order.statZhDetailAction">
+			<result name="success">/inc/order/statZhDetail.jsp</result>
+		</action>
 	</package>
 	
 </struts>

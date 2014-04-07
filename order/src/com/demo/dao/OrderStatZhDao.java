@@ -30,4 +30,7 @@ public interface OrderStatZhDao extends BaseDao<OrderStatZh, Long> {
 	public List getGroupListByZhangHao();
 	// 获取按账号分组的一段时间内统计数据
 	public List getGroupListByZhangHao(Integer beginMonth, Integer endMonth);
+	
+	// 获取统计数据
+	public List<OrderStatZh> getStatList(Long zhanghaoId, Integer statType, Date beginTime, Date endTime);
 }

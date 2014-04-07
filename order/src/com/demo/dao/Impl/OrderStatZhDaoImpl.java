@@ -86,4 +86,11 @@ public class OrderStatZhDaoImpl extends BaseDaoImpl<OrderStatZh, Long> implement
 				+ " group by zhanghaoId, zhanghaoAccount";
 		return ht.find(hql);
 	}
+	
+	public List<OrderStatZh> getStatList(Long zhanghaoId, Integer statType, Date beginTime, Date endTime) {
+		String hql = "from OrderStatZh where zhanghaoId = ?"
+				+ " and statType = ? and statBeginDate >= ? and statEndDate <= ? order by id";
+		return ht.find(hql, new Object[]{zhanghaoId, statType, beginTime, endTime}, 
+				0, 30, ht.getSessionFactory().openSession());
+	}
 }

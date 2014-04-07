@@ -93,6 +93,17 @@ public class DateUtils {
 	}
 	
 	/**
+	 * 计算date是一月中的几号
+	 * @param date
+	 * @return
+	 */
+	public static Integer getDay(Date date) {
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(date);
+		return cal.get(Calendar.DAY_OF_MONTH);
+	}
+	
+	/**
 	 * 计算date所在周的第一天
 	 * @param date
 	 * @return

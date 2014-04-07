@@ -133,7 +133,7 @@ public class OrderStatZhBiz {
 		} else {
 			statMonth = Integer.parseInt(year.toString() + month.toString());
 		}
-		OrderStatZh monthStat = orderStatZhDao.findMonthStat(zhangHao.getId(), year, month);
+		OrderStatZh monthStat = orderStatZhDao.findMonthStat(zhangHao.getId(), year, statMonth);
 		if (monthStat == null) {
 			monthStat = new OrderStatZh();
 			monthStat.setStatType(3);
