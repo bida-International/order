@@ -8,14 +8,12 @@ import javax.annotation.Resource;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.entity.ZhangHao;
 import com.demo.utils.ApplicationUtils;
 import com.demo.utils.HttpClientUtils;
 
 @Service
-@Transactional
 public class DhProductApiBiz {
 
 	@Resource

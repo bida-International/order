@@ -103,7 +103,8 @@ public class DhOrderApiBiz {
 		JSONObject respJson = HttpClientUtils.doPost(apiUrl, paramMap);
 		if (respJson != null) {
 			if (respJson.containsKey("code")) {
-				if (respJson.getString("code").equals("2")) {
+				if (respJson.getString("code").equals("2") || 
+						respJson.getString("code").equals("40")) {
 					dhCommonApiBiz.clearAccessToken(dhAccount);
 					return "发生错误：" + DhCommonApiBiz.ERR_TOKEN;
 				} else if (!respJson.getString("code").equals("0")) {
@@ -226,8 +227,7 @@ public class DhOrderApiBiz {
 				remark += ",";
 			}
 			if (!product.getString("specification").equals("null")) {
-				remark += product.getString("itemcode") 
-						+ product.getString("specification");
+				remark +=  product.getString("specification");
 			}
 		}
 		if(zh.size()!=0){
@@ -259,7 +259,6 @@ public class DhOrderApiBiz {
 		orderTableDao.merge(order);
 		return 1;
 	}
-	
 	/**
 	 * 获取一个订单信息
 	 * @param rfxno 订单号
