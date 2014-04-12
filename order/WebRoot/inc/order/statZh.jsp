@@ -34,24 +34,20 @@
 					<td>${i.totalMoney }</td>
 					<td>
 						<s:if test="zhanghaoId != 0">
-							<a href="./order/statZhDetail.do?zhanghaoId=${i.zhanghaoId }">查看</a>
+							<a href="./order/statZhByDay.do?zhanghaoId=${i.zhanghaoId }">查看</a>
 						</s:if>
 					</td>
 				</tr>
 			</s:iterator>
 			<tr>
-				<td colspan="6" align="center" style="padding:5px;">
-					<img src="./${totalMoneyChart }" />
-				</td>
-			</tr>
-			<tr>
-				<td colspan="6" align="center" style="padding:5px;">
-					<img src="./${orderAmountChart }" />
-				</td>
-			</tr>
-			<tr>
-				<td colspan="6" align="center" style="padding:5px;">
-					<img src="./${jiufenRateChart }" />
+				<td colspan="6" align="center">
+					<table width="100%">
+						<tr>
+							<td width="33%"><img src="./displayChart?filename=${totalMoneyChart }" /></td>
+							<td width="33%"><img src="./displayChart?filename=${orderAmountChart }" /></td>
+							<td width="33%"><img src="./displayChart?filename=${jiufenRateChart }" /></td>
+						</tr>
+					</table>
 				</td>
 			</tr>
 		</table>

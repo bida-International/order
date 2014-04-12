@@ -110,6 +110,16 @@
 		<filter-name>struts</filter-name>
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
+	
+	<servlet>
+		<servlet-name>DisplayChart</servlet-name>
+		<servlet-class>org.jfree.chart.servlet.DisplayChart</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DisplayChart</servlet-name>
+		<url-pattern>/displayChart</url-pattern>
+	</servlet-mapping>
+	
 	<!-- session 单位分钟 -->
 	<session-config>
 		<session-timeout>60</session-timeout>

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -143,46 +144,48 @@ public class StatZhAction extends BaseAction {
 		}
 	}
 	
+	// 生成订单数据统计图表
 	private void createOrderAmountChart() {
-		String fileName = "oa" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".jpg";
-
-		DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (OrderStatZh orderStatZh : orderStatZhs) {
-			categoryDataset.setValue(orderStatZh.getOrderAmount(), "总数", orderStatZh.getZhanghaoAccount());
+			dataset.setValue(orderStatZh.getOrderAmount(), "总数", orderStatZh.getZhanghaoAccount());
 		}
-
 		// 设置标题文字
-		String headerTitle = "订单总数统计";
-		ChartCreator.createBarChart3D(categoryDataset, headerTitle, fileName, false);
-		orderAmountChart = ChartCreator.getFileDir() + fileName;
+		String headerTitle = "订单数量统计";
+		int width = 350;
+		int height = 60 + 25 * orderStatZhs.size(); 
+		orderAmountChart = ChartCreator.createBarChart(dataset, headerTitle, PlotOrientation.HORIZONTAL, 
+				width, height, false, Struts2Utils.getSession());
 	}
 	
+	// 生成订单金额统计图表
 	private void createTotalMoneyChart() {
-		String fileName = "tm" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".jpg";
-
-		DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (OrderStatZh orderStatZh : orderStatZhs) {
-			categoryDataset.setValue(orderStatZh.getTotalMoney(), "总金额", orderStatZh.getZhanghaoAccount());
+			dataset.setValue(orderStatZh.getTotalMoney(), "总金额", orderStatZh.getZhanghaoAccount());
 		}
-
+		
 		// 设置标题文字
 		String headerTitle = "订单总金额统计";
-		ChartCreator.createBarChart3D(categoryDataset, headerTitle, fileName, false);
-		totalMoneyChart = ChartCreator.getFileDir() + fileName;
+		int width = 350;
+		int height = 60 + 25 * orderStatZhs.size(); 
+		totalMoneyChart = ChartCreator.createBarChart(dataset, headerTitle, PlotOrientation.HORIZONTAL, 
+				width, height, false, Struts2Utils.getSession());
 	}
-	
-	private void createJiufenRateChart() {
-		String fileName = "jr" + new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + ".jpg";
 
-		DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+	// 生成订单纠纷率统计图表
+	private void createJiufenRateChart() {
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (OrderStatZh orderStatZh : orderStatZhs) {
-			categoryDataset.setValue(orderStatZh.getJiufenRate(), "纠纷率", orderStatZh.getZhanghaoAccount());
+			dataset.setValue(orderStatZh.getJiufenRate() / 100, "纠纷率", orderStatZh.getZhanghaoAccount());
 		}
 
 		// 设置标题文字
 		String headerTitle = "订单纠纷率统计";
-		ChartCreator.createBarChart3D(categoryDataset, headerTitle, fileName, true);
-		jiufenRateChart = ChartCreator.getFileDir() + fileName;
+		int width = 350;
+		int height = 60 + 25 * orderStatZhs.size(); 
+		jiufenRateChart = ChartCreator.createBarChart(dataset, headerTitle, PlotOrientation.HORIZONTAL, 
+				width, height, true, Struts2Utils.getSession());
 	}
 	
 	public String doStatistic() {

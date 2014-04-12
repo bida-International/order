@@ -7,6 +7,20 @@ import java.util.Date;
 
 public class DateUtils {
 
+	public static Date parse(String dateStr, String pattern) {
+		try {
+			return new SimpleDateFormat(pattern).parse(dateStr);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static String format(Date date, String pattern) {
+		return new SimpleDateFormat(pattern).format(date);
+	}
+	
 	/**
 	 * 获取给定时间几天之后的时间
 	 * @param date
