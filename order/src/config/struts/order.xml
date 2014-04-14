@@ -19,6 +19,18 @@
 		<action name="statZhByMonth" class="order.statZhByMonthAction">
 			<result name="success">/inc/order/statZhByMonth.jsp</result>
 		</action>
+		<action name="statLm" class="order.statLmAction">
+			<result name="success">/inc/order/statLm.jsp</result>
+		</action>
+		<action name="statLmByDay" class="order.statLmByDayAction">
+			<result name="success">/inc/order/statLmByDay.jsp</result>
+		</action>
+		<action name="statLmByWeek" class="order.statLmByWeekAction">
+			<result name="success">/inc/order/statLmByWeek.jsp</result>
+		</action>
+		<action name="statLmByMonth" class="order.statLmByMonthAction">
+			<result name="success">/inc/order/statLmByMonth.jsp</result>
+		</action>
 	</package>
 	
 </struts>

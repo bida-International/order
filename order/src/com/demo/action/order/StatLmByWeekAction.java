@@ -7,39 +7,39 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.Week;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.demo.action.BaseAction;
-import com.demo.dao.OrderStatZhDao;
-import com.demo.dao.ZhangHaoDao;
-import com.demo.entity.ZhangHao;
-import com.demo.entity.order.OrderStatZh;
+import com.demo.dao.LeiMuDao;
+import com.demo.dao.OrderStatLmDao;
+import com.demo.entity.LeiMuTable;
+import com.demo.entity.order.OrderStatLm;
 import com.demo.utils.ChartCreator;
 import com.demo.utils.DateUtils;
 import com.demo.utils.Struts2Utils;
 
-@Controller("order.statZhByMonthAction")
+@Controller("order.statLmByWeekAction")
 @Scope("prototype")
-public class StatZhByMonthAction extends BaseAction {
-	
+public class StatLmByWeekAction extends BaseAction {
+
 	private static final long serialVersionUID = 1L;
 	@Resource
-	private OrderStatZhDao orderStatZhDao;
+	private OrderStatLmDao orderStatLmDao;
 	@Resource
-	private ZhangHaoDao zhangHaoDao;
+	private LeiMuDao leiMuDao;
 	
-	private Long zhanghaoId;
+	private Long leimuId;
 	private String statYear;
 	private Date statBeginTime;
 	private Date statEndTime;
 
 	private List<String> dates = new ArrayList<String>();
-	private List<OrderStatZh> statList;
-	private List<ZhangHao> zhangHaoList;
+	private List<OrderStatLm> statList;
+	private List<LeiMuTable> leimuList;
 	
 	private String totalMoneyChart;
 	private String orderAmountChart;
@@ -48,8 +48,8 @@ public class StatZhByMonthAction extends BaseAction {
 		this.initParams();
 		this.initDates();
 		
-		zhangHaoList = zhangHaoDao.getAllZhangHao();
-		statList = orderStatZhDao.getStatList(zhanghaoId, 3, statBeginTime, statEndTime);
+		leimuList = leiMuDao.getAllLeiMu();
+		statList = orderStatLmDao.getStatList(leimuId, 2, statBeginTime, statEndTime);
 
 		if (!statList.isEmpty()) {
 			this.createTotalMoneyChart();
@@ -70,10 +70,10 @@ public class StatZhByMonthAction extends BaseAction {
 	}
 	
 	private void initDates() {
-		Date minDate = orderStatZhDao.findEarliestOrderDate();
+		Date minDate = orderStatLmDao.findEarliestOrderDate();
 		Integer minYear = DateUtils.getYear(minDate);
 		
-		Date maxDate = orderStatZhDao.findNewestDayStatDate();
+		Date maxDate = orderStatLmDao.findNewestDayStatDate();
 		Integer maxYear = DateUtils.getYear(maxDate);
 		Integer nextYear = minYear;
 		while (nextYear <= maxYear) {
@@ -83,10 +83,10 @@ public class StatZhByMonthAction extends BaseAction {
 	}
 	
 	private void createOrderAmountChart() {
-		TimeSeries series = new TimeSeries("订单数量", Month.class);
+		TimeSeries series = new TimeSeries("订单数量", Week.class);
 		
-		for (OrderStatZh stat : statList) {
-			series.add(new Month(stat.getStatBeginDate()), stat.getOrderAmount());
+		for (OrderStatLm stat : statList) {
+			series.add(new Week(stat.getStatBeginDate()), stat.getOrderAmount());
 		}
 		
 		TimeSeriesCollection  dataset  = new TimeSeriesCollection();
@@ -96,14 +96,14 @@ public class StatZhByMonthAction extends BaseAction {
 		int height = 250;
 		String headerTitle = "订单数量统计";
 		orderAmountChart = ChartCreator.createTimeSeriesChart(dataset, headerTitle, 
-				new SimpleDateFormat("yyyy-MM"), width, height, Struts2Utils.getSession());
+				new SimpleDateFormat("yyyy-ww"), width, height, Struts2Utils.getSession());
 	}
 	
 	private void createTotalMoneyChart() {
-		TimeSeries series = new TimeSeries("订单金额", Month.class);
+		TimeSeries series = new TimeSeries("订单金额", Week.class);
 		
-		for (OrderStatZh stat : statList) {
-			series.add(new Month(stat.getStatBeginDate()), stat.getTotalMoney());
+		for (OrderStatLm stat : statList) {
+			series.add(new Week(stat.getStatBeginDate()), stat.getTotalMoney());
 		}
 		
 		TimeSeriesCollection  dataset  = new TimeSeriesCollection();
@@ -113,19 +113,15 @@ public class StatZhByMonthAction extends BaseAction {
 		int height = 250;
 		String headerTitle = "订单金额统计";
 		totalMoneyChart = ChartCreator.createTimeSeriesChart(dataset, headerTitle, 
-				new SimpleDateFormat("yyyy-MM"), width, height, Struts2Utils.getSession());
+				new SimpleDateFormat("yyyy-ww"), width, height, Struts2Utils.getSession());
 	}
 	
-	public String getFormatMonth(Date date) {
-		return new SimpleDateFormat("yyyy年MM月").format(date);
-	}
-	
-	public Long getZhanghaoId() {
-		return zhanghaoId;
+	public Long getLeimuId() {
+		return leimuId;
 	}
 
-	public void setZhanghaoId(Long zhanghaoId) {
-		this.zhanghaoId = zhanghaoId;
+	public void setLeimuId(Long leimuId) {
+		this.leimuId = leimuId;
 	}
 
 	public String getStatYear() {
@@ -136,20 +132,20 @@ public class StatZhByMonthAction extends BaseAction {
 		this.statYear = statYear;
 	}
 
-	public List<OrderStatZh> getStatList() {
+	public List<OrderStatLm> getStatList() {
 		return statList;
 	}
 
-	public void setStatList(List<OrderStatZh> statList) {
+	public void setStatList(List<OrderStatLm> statList) {
 		this.statList = statList;
 	}
 
-	public List<ZhangHao> getZhangHaoList() {
-		return zhangHaoList;
+	public List<LeiMuTable> getLeimuList() {
+		return leimuList;
 	}
 
-	public void setZhangHaoList(List<ZhangHao> zhangHaoList) {
-		this.zhangHaoList = zhangHaoList;
+	public void setLeimuList(List<LeiMuTable> leimuList) {
+		this.leimuList = leimuList;
 	}
 
 	public String getTotalMoneyChart() {

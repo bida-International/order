@@ -13,25 +13,25 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.demo.action.BaseAction;
-import com.demo.biz.OrderStatZhBiz;
-import com.demo.dao.OrderStatZhDao;
-import com.demo.entity.order.OrderStatZh;
+import com.demo.biz.OrderStatLmBiz;
+import com.demo.dao.OrderStatLmDao;
+import com.demo.entity.order.OrderStatLm;
 import com.demo.utils.ChartCreator;
 import com.demo.utils.DateUtils;
 import com.demo.utils.Struts2Utils;
 
-@Controller("order.statZhAction")
+@Controller("order.statLmAction")
 @Scope("prototype")
-public class StatZhAction extends BaseAction {
+public class StatLmAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;
 
 	@Resource
-	private OrderStatZhDao orderStatZhDao;
+	private OrderStatLmDao orderStatLmDao;
 	@Resource
-	private OrderStatZhBiz orderStatZhBiz;
+	private OrderStatLmBiz orderStatLmBiz;
 	
-	private List<OrderStatZh> orderStatZhs;
+	private List<OrderStatLm> orderStatLms;
 	private List<String> dates = new ArrayList<String>();
 	private String beginDate;
 	private String endDate;
@@ -43,11 +43,11 @@ public class StatZhAction extends BaseAction {
 		initDates();
 		
 		@SuppressWarnings("rawtypes")
-		List statObjs = orderStatZhDao.getGroupListByZhangHao(
+		List statObjs = orderStatLmDao.getGroupListByLeimu(
 				Integer.parseInt(beginDate), 
 				Integer.parseInt(endDate));
 		if (statObjs != null && !statObjs.isEmpty()) {
-			orderStatZhs = new ArrayList<OrderStatZh>();
+			orderStatLms = new ArrayList<OrderStatLm>();
 		}
 		
 		Integer sumOrderAmount = 0; // 合计订单数
@@ -63,13 +63,13 @@ public class StatZhAction extends BaseAction {
 			sumJiufenAmount += jiufenAmount;
 			sumTotalMoney += totalMoney;
 			
-			OrderStatZh stat = new OrderStatZh();
+			OrderStatLm stat = new OrderStatLm();
 			stat.setOrderAmount(orderAmount);
 			stat.setTotalMoney(totalMoney);
 			stat.setTotalMoney(Double.parseDouble(new DecimalFormat("#0.00").format(stat.getTotalMoney())));
 			stat.setJiufenAmount(jiufenAmount);
-			stat.setZhanghaoId((Long) objArray[3]);
-			stat.setZhanghaoAccount((String) objArray[4]);
+			stat.setLeimuId((Long) objArray[3]);
+			stat.setLeimuName((String) objArray[4]);
 			
 			Double jiufenRate = 0.0d;
 			if (stat.getOrderAmount() > 0) {
@@ -78,22 +78,21 @@ public class StatZhAction extends BaseAction {
 			}
 			jiufenRate = Double.parseDouble(new DecimalFormat("#0.00").format(jiufenRate));
 			stat.setJiufenRate(jiufenRate);
-			orderStatZhs.add(stat);
+			orderStatLms.add(stat);
 		}
 		
-		if (!orderStatZhs.isEmpty()) {
+		if (!orderStatLms.isEmpty()) {
 			this.createTotalMoneyChart();
 			this.createOrderAmountChart();
-			this.createJiufenRateChart();
+//			this.createJiufenRateChart();
 			
 			// 合计
-			OrderStatZh stat = new OrderStatZh();
+			OrderStatLm stat = new OrderStatLm();
 			stat.setOrderAmount(sumOrderAmount);
 			stat.setTotalMoney(sumTotalMoney);
 			stat.setTotalMoney(Double.parseDouble(new DecimalFormat("#0.00").format(stat.getTotalMoney())));
 			stat.setJiufenAmount(sumJiufenAmount);
-			stat.setZhanghaoId(0l);
-			
+			stat.setLeimuId(0l);
 			Double jiufenRate = 0.0d;
 			if (stat.getOrderAmount() > 0) {
 				jiufenRate = Double.parseDouble(stat.getJiufenAmount().toString()) /
@@ -101,14 +100,14 @@ public class StatZhAction extends BaseAction {
 			}
 			jiufenRate = Double.parseDouble(new DecimalFormat("#0.00").format(jiufenRate));
 			stat.setJiufenRate(jiufenRate);
-			stat.setZhanghaoAccount("合计");
-			orderStatZhs.add(stat);
+			stat.setLeimuName("合计");
+			orderStatLms.add(stat);
 		}
 		return SUCCESS;
 	}
 	
 	private void initDates() {
-		Date minDate = orderStatZhDao.findEarliestOrderDate();
+		Date minDate = orderStatLmDao.findEarliestOrderDate();
 		Integer minYear = DateUtils.getYear(minDate);
 		Integer minMonth = DateUtils.getMonth(minDate);
 		if (beginDate == null) {
@@ -120,7 +119,7 @@ public class StatZhAction extends BaseAction {
 			nextMonth++;
 		}
 		
-		Date maxDate = orderStatZhDao.findNewestDayStatDate();
+		Date maxDate = orderStatLmDao.findNewestDayStatDate();
 		Integer maxYear = DateUtils.getYear(maxDate);
 		Integer maxMonth = DateUtils.getMonth(maxDate);
 		if (endDate == null) {
@@ -150,13 +149,13 @@ public class StatZhAction extends BaseAction {
 	// 生成订单数据统计图表
 	private void createOrderAmountChart() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for (OrderStatZh orderStatZh : orderStatZhs) {
-			dataset.setValue(orderStatZh.getOrderAmount(), "总数", orderStatZh.getZhanghaoAccount());
+		for (OrderStatLm orderStatLm : orderStatLms) {
+			dataset.setValue(orderStatLm.getOrderAmount(), "总数", getLeiMuEnName(orderStatLm.getLeimuName()));
 		}
 		// 设置标题文字
 		String headerTitle = "订单数量统计";
-		int width = 350;
-		int height = 60 + 25 * orderStatZhs.size(); 
+		int width = 520;
+		int height = 60 + 25 * orderStatLms.size(); 
 		orderAmountChart = ChartCreator.createBarChart(dataset, headerTitle, PlotOrientation.HORIZONTAL, 
 				width, height, false, Struts2Utils.getSession());
 	}
@@ -164,14 +163,14 @@ public class StatZhAction extends BaseAction {
 	// 生成订单金额统计图表
 	private void createTotalMoneyChart() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for (OrderStatZh orderStatZh : orderStatZhs) {
-			dataset.setValue(orderStatZh.getTotalMoney(), "总金额", orderStatZh.getZhanghaoAccount());
+		for (OrderStatLm orderStatLm : orderStatLms) {
+			dataset.setValue(orderStatLm.getTotalMoney(), "总金额", getLeiMuEnName(orderStatLm.getLeimuName()));
 		}
 		
 		// 设置标题文字
 		String headerTitle = "订单总金额统计";
-		int width = 350;
-		int height = 60 + 25 * orderStatZhs.size(); 
+		int width = 530;
+		int height = 60 + 25 * orderStatLms.size(); 
 		totalMoneyChart = ChartCreator.createBarChart(dataset, headerTitle, PlotOrientation.HORIZONTAL, 
 				width, height, false, Struts2Utils.getSession());
 	}
@@ -179,31 +178,38 @@ public class StatZhAction extends BaseAction {
 	// 生成订单纠纷率统计图表
 	private void createJiufenRateChart() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for (OrderStatZh orderStatZh : orderStatZhs) {
-			dataset.setValue(orderStatZh.getJiufenRate() / 100, "纠纷率", orderStatZh.getZhanghaoAccount());
+		for (OrderStatLm orderStatLm : orderStatLms) {
+			dataset.setValue(orderStatLm.getJiufenRate() / 100, "纠纷率", getLeiMuEnName(orderStatLm.getLeimuName()));
 		}
 
 		// 设置标题文字
 		String headerTitle = "订单纠纷率统计";
-		int width = 350;
-		int height = 60 + 25 * orderStatZhs.size(); 
+		int width = 530;
+		int height = 60 + 25 * orderStatLms.size(); 
 		jiufenRateChart = ChartCreator.createBarChart(dataset, headerTitle, PlotOrientation.HORIZONTAL, 
 				width, height, true, Struts2Utils.getSession());
 	}
 	
+	private String getLeiMuEnName(String leimuName) {
+		if (leimuName.contains("(")) {
+			return leimuName.substring(leimuName.indexOf("(") + 1, leimuName.length() - 1);
+		}
+		return leimuName;
+	}
+	
 	public String doStatistic() {
-		orderStatZhBiz.doStatistic();
+		orderStatLmBiz.doStatistic();
 		Struts2Utils.renderJson("数据统计请求发送成功", true);
 		
 		return null;
 	}
 	
-	public List<OrderStatZh> getOrderStatZhs() {
-		return orderStatZhs;
+	public List<OrderStatLm> getOrderStatLms() {
+		return orderStatLms;
 	}
 
-	public void setOrderStatZhs(List<OrderStatZh> orderStatZhs) {
-		this.orderStatZhs = orderStatZhs;
+	public void setOrderStatLms(List<OrderStatLm> orderStatLms) {
+		this.orderStatLms = orderStatLms;
 	}
 
 	public List<String> getDates() {

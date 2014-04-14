@@ -10,27 +10,26 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.biz.aliexpress.AliCommonApiBiz;
-import com.demo.dao.OrderStatZhDao;
-import com.demo.dao.ZhangHaoDao;
-import com.demo.entity.ZhangHao;
-import com.demo.entity.order.OrderStatZh;
+import com.demo.dao.LeiMuDao;
+import com.demo.dao.OrderStatLmDao;
+import com.demo.entity.LeiMuTable;
+import com.demo.entity.order.OrderStatLm;
 import com.demo.utils.DateUtils;
 
 /**
- * 账号订单统计数据服务
+ * 类目订单统计数据服务
  *
  */
 @Service
 @Transactional
-public class OrderStatZhBiz {
+public class OrderStatLmBiz {
 
 	private static int statActionflag = 0; // 1.表示正在执行统计任务
 	
 	@Resource
-	private OrderStatZhDao orderStatZhDao;
+	private OrderStatLmDao orderStatLmDao;
 	@Resource
-	private ZhangHaoDao zhangHaoDao;
+	private LeiMuDao leiMuDao;
 	
 	private Double totalMoney;
 	private Integer orderAmount;
@@ -38,7 +37,7 @@ public class OrderStatZhBiz {
 	private Double jiufenRate;
 	
 	/**
-	 * 更新所有账号统计数据
+	 * 更新所有类目统计数据
 	 */
 	public void doStatistic() {
 		if (statActionflag == 1) {
@@ -46,29 +45,30 @@ public class OrderStatZhBiz {
 		}
 		
 		Date curDate = new Date();
+
 		/**
 		 * 统计起始日期
 		 * 初始从订单表里最早一条订单的上传日期开始,
 		 * 之后从统计表的最新一条数据统计的日期开始
 		 */
 		Date statDate = null;
-		statDate = orderStatZhDao.findNewestDayStatDate();
+		statDate = orderStatLmDao.findNewestDayStatDate();
 		if (statDate == null) {
-			statDate = orderStatZhDao.findEarliestOrderDate();
+			statDate = orderStatLmDao.findEarliestOrderDate();
 		}
 		
 		Date endDate = curDate;
 		
-		System.out.println("----执行账号订单数据统计----");
+		System.out.println("----执行类目订单数据统计----");
 		statActionflag = 1;
 		try {
-			List<ZhangHao> zhangHaos = zhangHaoDao.getAllZhangHao();
+			List<LeiMuTable> leimus = leiMuDao.getAllLeiMu();
 			while (DateUtils.getIntervalDays(statDate, endDate) >= 0
 					&& statDate.getTime() <= endDate.getTime()) {
 				System.out.println("正在统计" + new SimpleDateFormat("yyyy-MM-dd").format(statDate)
-						+ "的账号订单数据...");
-				for (ZhangHao zhangHao : zhangHaos) {
-					this.updateStatData(statDate, zhangHao);
+						+ "的类目订单数据...");
+				for (LeiMuTable leimu : leimus) {
+					this.updateStatData(statDate, leimu);
 				}
 				statDate = DateUtils.getAfterDaysDate(statDate, 1);
 			}
@@ -80,38 +80,36 @@ public class OrderStatZhBiz {
 	}
 	
 	/**
-	 * 更新一个账号某一天(相关日周月)的订单统计数据
+	 * 更新一个类目某一天(相关日周月)的订单统计数据
 	 * @param statDate
-	 * @param zhanghaoId
-	 * @param accountType
+	 * @param leiMuTable
 	 */
-	public void updateStatData(Date statDate, ZhangHao zhangHao) {
-		this.statByDay(statDate, zhangHao);
-		this.statByWeek(statDate, zhangHao);
-		this.statByMonth(statDate, zhangHao);
+	public void updateStatData(Date statDate, LeiMuTable leiMuTable) {
+		this.statByDay(statDate, leiMuTable);
+		this.statByWeek(statDate, leiMuTable);
+		this.statByMonth(statDate, leiMuTable);
 	}
 	
 	/**
-	 * 统计一个账号一天的订单数据
+	 * 统计一个类目一天的订单数据
 	 * @param statDate
-	 * @param zhanghaoId
-	 * @param accountType
+	 * @param leiMuTable
 	 */
-	private void statByDay(Date statDate, ZhangHao zhangHao) {
+	private void statByDay(Date statDate, LeiMuTable leiMuTable) {
 		Date statBeginTime = DateUtils.getDayStart(statDate);
 		Date statEndTime = DateUtils.getDayEnd(statDate);
 		
 		// 统计数据
 		this.initStatParams();
-		this.setStatResult(zhangHao, statBeginTime, statEndTime);
+		this.setStatResult(leiMuTable, statBeginTime, statEndTime);
 		
 		// 保存更新
-		OrderStatZh dayStat = orderStatZhDao.findDayStat(zhangHao.getId(), statBeginTime);
+		OrderStatLm dayStat = orderStatLmDao.findDayStat(leiMuTable.getId(), statBeginTime);
 		if (dayStat == null) {
-			dayStat = new OrderStatZh();
+			dayStat = new OrderStatLm();
 			dayStat.setStatType(1);
-			dayStat.setZhanghaoId(zhangHao.getId());
-			dayStat.setZhanghaoAccount(zhangHao.getAccount());
+			dayStat.setLeimuId(leiMuTable.getId());
+			dayStat.setLeimuName(leiMuTable.getLeimu());
 			dayStat.setStatYear(DateUtils.getYear(statDate));
 			dayStat.setStatDate(statBeginTime);
 			dayStat.setStatBeginDate(statBeginTime);
@@ -121,32 +119,31 @@ public class OrderStatZhBiz {
 		dayStat.setOrderAmount(orderAmount);
 		dayStat.setJiufenAmount(jiufenAmount);
 		dayStat.setJiufenRate(jiufenRate);
-		orderStatZhDao.merge(dayStat);
+		orderStatLmDao.merge(dayStat);
 	}
 	
 	/**
-	 * 统计一个账号一周的订单数据
+	 * 统计一个类目一周的订单数据
 	 * @param statDate
-	 * @param zhanghaoId
-	 * @param accountType
+	 * @param leiMuTable
 	 */
-	private void statByWeek(Date statDate, ZhangHao zhangHao) {
+	private void statByWeek(Date statDate, LeiMuTable leiMuTable) {
 		Date statBeginTime = DateUtils.getDayStart(DateUtils.getFirstDayOfWeek(statDate));
 		Date statEndTime = DateUtils.getDayEnd(DateUtils.getLastDayOfWeek(statDate));
 		
 		// 统计数据
 		this.initStatParams();
-		this.setStatResult(zhangHao, statBeginTime, statEndTime);
+		this.setStatResult(leiMuTable, statBeginTime, statEndTime);
 		
 		// 更新数据
 		Integer year = DateUtils.getYear(statDate);
 		Integer week = DateUtils.getWeek(statDate);
-		OrderStatZh weekStat = orderStatZhDao.findWeekStat(zhangHao.getId(), year, week);
+		OrderStatLm weekStat = orderStatLmDao.findWeekStat(leiMuTable.getId(), year, week);
 		if (weekStat == null) {
-			weekStat = new OrderStatZh();
+			weekStat = new OrderStatLm();
 			weekStat.setStatType(2);
-			weekStat.setZhanghaoId(zhangHao.getId());
-			weekStat.setZhanghaoAccount(zhangHao.getAccount());
+			weekStat.setLeimuId(leiMuTable.getId());
+			weekStat.setLeimuName(leiMuTable.getLeimu());
 			weekStat.setStatYear(year);
 			weekStat.setStatWeek(week);
 			weekStat.setStatBeginDate(statBeginTime);
@@ -156,22 +153,21 @@ public class OrderStatZhBiz {
 		weekStat.setOrderAmount(orderAmount);
 		weekStat.setJiufenAmount(jiufenAmount);
 		weekStat.setJiufenRate(jiufenRate);
-		orderStatZhDao.merge(weekStat);
+		orderStatLmDao.merge(weekStat);
 	}
 	
 	/**
-	 * 统计一个账号一月的订单数据
+	 * 统计一个类目一月的订单数据
 	 * @param statDate
-	 * @param zhanghaoId
-	 * @param accountType
+	 * @param leiMuTable
 	 */
-	private void statByMonth(Date statDate, ZhangHao zhangHao) {
+	private void statByMonth(Date statDate, LeiMuTable leiMuTable) {
 		Date statBeginTime = DateUtils.getDayStart(DateUtils.getFirstDayOfMonth(statDate));
 		Date statEndTime = DateUtils.getDayEnd(DateUtils.getLastDayOfMonth(statDate));
 
 		// 统计数据
 		this.initStatParams();
-		this.setStatResult(zhangHao, statBeginTime, statEndTime);
+		this.setStatResult(leiMuTable, statBeginTime, statEndTime);
 		
 		// 更新数据
 		Integer year = DateUtils.getYear(statDate);
@@ -182,12 +178,12 @@ public class OrderStatZhBiz {
 		} else {
 			statMonth = Integer.parseInt(year.toString() + month.toString());
 		}
-		OrderStatZh monthStat = orderStatZhDao.findMonthStat(zhangHao.getId(), year, statMonth);
+		OrderStatLm monthStat = orderStatLmDao.findMonthStat(leiMuTable.getId(), year, statMonth);
 		if (monthStat == null) {
-			monthStat = new OrderStatZh();
+			monthStat = new OrderStatLm();
 			monthStat.setStatType(3);
-			monthStat.setZhanghaoId(zhangHao.getId());
-			monthStat.setZhanghaoAccount(zhangHao.getAccount());
+			monthStat.setLeimuId(leiMuTable.getId());
+			monthStat.setLeimuName(leiMuTable.getLeimu());
 			monthStat.setStatYear(year);
 			monthStat.setStatMonth(statMonth);
 			monthStat.setStatBeginDate(statBeginTime);
@@ -197,7 +193,7 @@ public class OrderStatZhBiz {
 		monthStat.setOrderAmount(orderAmount);
 		monthStat.setJiufenAmount(jiufenAmount);
 		monthStat.setJiufenRate(jiufenRate);
-		orderStatZhDao.merge(monthStat);
+		orderStatLmDao.merge(monthStat);
 	}
 	
 	private void initStatParams() {
@@ -209,8 +205,7 @@ public class OrderStatZhBiz {
 	
 	/**
 	 * 查询统计结果并设置
-	 * @param zhanghaoId
-	 * @param accountType
+	 * @param leiMuTable
 	 * @param statBeginTime
 	 * @param statEndTime
 	 * @param totalMoney
@@ -218,20 +213,16 @@ public class OrderStatZhBiz {
 	 * @param jiufenAmount
 	 * @param jiufenRate
 	 */
-	private void setStatResult(ZhangHao zhangHao, Date statBeginTime, 
+	private void setStatResult(LeiMuTable leiMuTable, Date statBeginTime, 
 			Date statEndTime) {
-		orderAmount = orderStatZhDao.getOrderAmount(zhangHao.getId(), statBeginTime, statEndTime);
+		orderAmount = orderStatLmDao.getOrderAmount(leiMuTable.getId(), statBeginTime, statEndTime);
 		if (orderAmount == 0) {
 			return;
 		}
 		
-		totalMoney = orderStatZhDao.getTotalMoney(zhangHao.getId(), statBeginTime, statEndTime);
-		if (zhangHao.getAccount_type().equals(AliCommonApiBiz.ACCOUNT_TYPE)) {
-			totalMoney = Double.parseDouble(new DecimalFormat("#0.000").format(totalMoney));
-		} else {
-			totalMoney = Double.parseDouble(new DecimalFormat("#0.00").format(totalMoney));
-		}
-		jiufenAmount = orderStatZhDao.getJiufenAmount(zhangHao.getId(), statBeginTime, statEndTime);
+		totalMoney = orderStatLmDao.getTotalMoney(leiMuTable.getId(), statBeginTime, statEndTime);
+		totalMoney = Double.parseDouble(new DecimalFormat("#0.00").format(totalMoney));
+		jiufenAmount = orderStatLmDao.getJiufenAmount(leiMuTable.getId(), statBeginTime, statEndTime);
 		jiufenRate = Double.parseDouble(jiufenAmount.toString()) /
 				Double.parseDouble(orderAmount.toString()) * 100;
 		jiufenRate = Double.parseDouble(new DecimalFormat("#0.00").format(jiufenRate));
