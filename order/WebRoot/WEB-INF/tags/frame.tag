@@ -27,8 +27,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="./CSS/jquery.ui.accordion.js"></script>
 	<script src="./CSS/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
 	<script src="./CSS/common.js?v=20140306" type="text/javascript"></script>
-	<script type="text/javascript"  src="My97DatePicker/WdatePicker.js"></script>
+
 	<!--  <link rel="stylesheet" href="./CSS/style3.css" type="text/css" media="screen" /> --> 
+	
 	<style>
 ul{list-style-type:none;margin:0px;}
 .div-menu { margin:0px ;float:left;clear:both;background-color: #EEF2FB; line-height:30px;margin-left: 0px;}

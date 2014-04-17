@@ -39,7 +39,12 @@
 		document.getElementById("pager.offset").value = (pageNumber*10-10);
 		document.forms.submit();
     }
-  
+    //返回待放区
+	  function returndaifangqu(){
+	  	var items=document.getElementsByTagName("input");
+		var lujing = "cangkuyuan!redaifangqus.do?pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
+		bianhao(items,lujing);
+	  }
 	   //导入已经完成
  	function yjwc(){
 	 	var items=document.getElementsByName("chkItems"); 
@@ -49,7 +54,7 @@
 </script>
 	${msg}
 <s:form action="cangkuyuan!ImportOrders.do" enctype="multipart/form-data" method="post" onsubmit="return as()">
-	  <table>
+	  <!-- <table>
 	  <tr>
 	  	<td align="right"><SPAN style="color:red">导入</SPAN></td>
 	  	<td colspan="1">
@@ -57,19 +62,24 @@
 		<s:submit value="导入"></s:submit>
 	  	</td>
 	  </tr>
-	  </table>
+	  </table> -->
   </s:form>
 	<form action="cangkuyuan!getReturnofgoods.do" method="post" onsubmit="return as()" name="forms" id="forms">
 	<table border="1" width="800px">
-        	<tr>
+        	<!-- <tr>
         	<td align="right"><SPAN style="color:red">导出</SPAN></td>
         	<td>
         	<input type="button" style="cursor:pointer"  value="选择导出订单" onClick="xuanzedaochu()">
         	<a href="ceshi.do?dc=0"  onclick="return confirm('确定要导出?')">导出全部订单</a>
         	<input type="button" onclick="updaifahuo()" style="cursor: pointer;" value="批量修改已经导出的状态"/>
         	</td>
+        	</tr> -->
+        	<tr>
+	        	<td>
+	        		 <input type="button" onclick="yjwc()" style="cursor: pointer;" value="已经完成"/>
+	        		<input type="button" onclick="returndaifangqu()" style="cursor: pointer;" value="待放区"/>
+	        	</td>
         	</tr>
-        	<tr><td><input type="button" onclick="yjwc()" style="cursor: pointer;" value="已经完成"/></td></tr>
 	</table>
 	
   <table border="1" cellspacing="0" width="1100px" style="float:left">
@@ -78,9 +88,8 @@
     </tr>
     <tr>
     	<td colspan="10">
-			国际运输单号： <input type="text" name="danhao" id="danhao" value="${param.danhao}"/>
+			国际运输单号 <input type="text" name="danhao" id="danhao" value="${param.danhao}"/>
         	<input type="submit" value="查询"/> 
-        	
         	 <s:hidden name="pageNumber" value="1"></s:hidden>
 			<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
 			<input type="hidden" value="${tit}" name="tit"> 
@@ -136,7 +145,7 @@
 	</td></tr>
   </table>
   <br>
-  <s:iterator value="#strsd" var="i">
+  <s:iterator value="#strb" var="i">
   ${i}
   </s:iterator>
   </form>

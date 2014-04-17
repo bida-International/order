@@ -170,7 +170,7 @@ public class TestAction extends BaseAction implements ServletRequestAware
     
         String[] dingdan = request.getParameterValues("dingdan");
         String[] jine = request.getParameterValues("jine");
-        String[] yunshu = request.getParameterValues("yunshu");
+        String[] yunshu = request.getParameterValues("category");
         String[] zhanghao = request.getParameterValues("zhId");
         String[] beizhu = request.getParameterValues("remark");
         String[] bianma = request.getParameterValues("bianma"); 
@@ -913,6 +913,8 @@ public class TestAction extends BaseAction implements ServletRequestAware
 		}    	
     	return getKanXin();
     }
+ 
+  
     public void setServletRequest(HttpServletRequest arg0)
     {
         request = arg0;

@@ -8,7 +8,7 @@
 	<dhgateApiUrl>http://api.dhgate.com/dop/router</dhgateApiUrl>
 	
 	<!-- 速卖通 -->
-	<aliRedirectUri>http://qiantingdi.gicp.net:14189/order/aliAuth.do</aliRedirectUri>
+	<aliRedirectUri>http://qiantingdi.gicp.net:49644/order/aliAuth.do</aliRedirectUri>
 	<aliApiUrl>https://gw.api.alibaba.com/openapi/</aliApiUrl>
 
 	<!-- 17track -->

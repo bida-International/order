@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd"
@@ -25,11 +25,11 @@
 		<property name="startupDelay" value="3" />
 	</bean>
 	
-	<!-- 定时同步订单和站内信数据 -->
+<!-- 定时同步订单和站内信数据 -->
 	<bean id="synchDataJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="synchDataJobDetail" />
-		<!-- 每一个小时执行一次 -->
-		<property name="cronExpression" value="0 0 0/1 * * ?"/>
+		<!-- 每10分钟执行一次 -->
+		<property name="cronExpression" value="0 0/50 * * * ?" />
 	</bean>
 	<bean id="synchDataJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="synchDataJob" />

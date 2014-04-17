@@ -27,10 +27,10 @@
 <table><tr><td><a href="caigou!addStock.do" onclick="return confirm('确定上传?')">上传SKU</a></td></tr></table>
   <table border="1"  width="700px" cellspacing="0" style="float:left" >
     <tr>
-      <td colspan="8" align="center"><strong>库存订单</strong></td>
+      <td colspan="10" align="center"><strong>库存订单</strong></td>
     </tr>
     <tr>
-    	<td colspan="8" align="center">
+    	<td colspan="10" align="center">
     	编码查询：<input type="text" name="bianma" id="bianma" value="${param.bianma}">
 	  	时间查询：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/> 至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>  
         <s:hidden name="pageNumber" value="1"></s:hidden>
@@ -48,7 +48,9 @@
       <td width="90"><span class="STYLE2">总价</span></td>
       <td width="90"><span class="STYLE2">单价</span></td>
       <td width="90"><span class="STYLE2">数量</span></td>
+      <td width="90"><span class="STYLE2">供运商</span></td>
        <td width="100"><span class="STYLE2">上传时间</span></td>
+       <td width="100"><span class="STYLE2">操作</span></td>
     </tr>
     <s:iterator value="pageBean.list" var="sd">
 	     <tr align="center" style="font-size:30px">
@@ -59,11 +61,13 @@
 			 <td>${sd.totalprice}</td>
 			 <td>${sd.unitprice}</td>
 			 <td>${sd.num}</td>
-			 <td>${sd.time}</td>	  	    
+			 <td>${sd.transportproviders}</td>
+			 <td>${sd.time}</td>
+			 <td><a href="caigou!upStock.do?kucuntable.id=${sd.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改库存</a></td>	  	  	    
 	     </tr>   
      </s:iterator> 
     <tr>     
-         <td colspan="8" align="center">
+         <td colspan="10" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
           <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>
@@ -89,10 +93,6 @@
     </tr>
   </table>
   ${msg}
-	<div id="dhgateAuthDialog" style="display:none;">
-		<p class="dialog_msg" style="color:#ff0000; padding-bottom:10px;"></p>
-		<p> <span class="authAccount"></span></p>
-	</div>
   <br>
   </form>
 </m:frame>

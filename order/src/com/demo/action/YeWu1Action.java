@@ -383,7 +383,7 @@ public class YeWu1Action extends BaseAction implements ServletRequestAware
                      ls.get(0).setTuihuo(2l);
                      ls.get(0).setChuli(1l);
                      ls.get(0).setDaochu(0l);
-                     ls.get(0).setDanhao(null);
+                     //ls.get(0).setDanhao(null);
                      ls.get(0).setWancheng(0l);
                      orderDao.merge(ls.get(0));
                      str[i] = i +".操作成功";
@@ -435,5 +435,17 @@ public class YeWu1Action extends BaseAction implements ServletRequestAware
           }
      
     	return getDispute();
+    }
+    //修改备注
+    public String upremarks(){
+    	return "upremarks";
+    }
+    //修改备注
+    public String updateRemarks(){
+    	String remark = ordertable.getRemark();
+    	ordertable = orderTableDao.get(ordertable.getId());
+    	ordertable.setRemark(remark);
+    	orderTableDao.merge(ordertable);
+    	return getProcessingReturns();
     }
 }

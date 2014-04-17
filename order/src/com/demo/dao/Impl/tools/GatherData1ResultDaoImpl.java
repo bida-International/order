@@ -1,6 +1,7 @@
 package com.demo.dao.Impl.tools;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -42,9 +43,13 @@ public class GatherData1ResultDaoImpl extends BaseDaoImpl<GatherData1Result, Lon
 	public void batchDelete(Long keyCreateTime) {
 		ht.bulkUpdate("delete from GatherData1Result where keyCreateTime = " + keyCreateTime);
 	}
+	//修改链接状态
+	public void updateLinkState(Long keyCreateTime, String currenttime){
+		ht.bulkUpdate("update GatherData1Result set sfexport = 1 , exporttime = '"+currenttime+"' where id in(from GatherData1Result where keyCreateTime = " + keyCreateTime+")");
+	}
 	//查询全部链接
-	public List<GatherData1Result> getAllLink() {			 
-		List<GatherData1Result> gather = ht.find("from GatherData1Result where (sfexport is null or sfexport = 0)");
+	public List<GatherData1Result> getAllLink(Long keyCreateTime) {			 
+		List<GatherData1Result> gather = ht.find("from GatherData1Result where keyCreateTime=" + keyCreateTime + " order by orderNum desc");
 		return gather;
 	}
 	public GatherData1Result findUnique(Long keyCreateTime, String link) {

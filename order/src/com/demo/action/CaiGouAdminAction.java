@@ -189,9 +189,7 @@ public class CaiGouAdminAction extends BaseAction implements ServletRequestAware
         ordertable.setHuokuan(huokuan);
         ordertable.setGuowaidizhi(dizhi);
         ordertable.setWuping(wuping);
-        if(huokuan!=null&&!"".equals(huokuan)){
-        	ordertable.setCaigoutime(shijian);
-        }
+        ordertable.setCaigoutime(shijian);
         ordertable.setGuoneiwangzhanId(caigou); 
        	ordertable.setKuaidifangshiId(kuaidi);
         ordertable.setGuojia(guojia);

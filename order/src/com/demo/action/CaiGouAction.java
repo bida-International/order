@@ -54,6 +54,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     @Resource
     private OrderTableDao orderTableDao;
     private OrderTable ordertable;
+    private KuCunTable kucuntable;
     public int pageindex;
     public String orderId;
     public String msg;
@@ -86,6 +87,14 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     private List<String> uploadFileContentType;
     private HttpServletRequest request;     
 
+
+	public KuCunTable getKucuntable() {
+		return kucuntable;
+	}
+
+	public void setKucuntable(KuCunTable kucuntable) {
+		this.kucuntable = kucuntable;
+	}
 
 	public List<File> getUploadFile() {
 		return uploadFile;
@@ -323,9 +332,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
         ordertable.setHuokuan(huokuan);
         ordertable.setGuowaidizhi(dizhi);
         ordertable.setWuping(wuping);
-        if(huokuan!=null&&!"".equals(huokuan)){
-        	ordertable.setCaigoutime(shijian);
-        }
+        ordertable.setCaigoutime(shijian);
         ordertable.setGuoneiwangzhanId(caigou); 
        	ordertable.setKuaidifangshiId(kuaidi);
         ordertable.setGuojia(guojia);
@@ -384,6 +391,19 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
         try
         {
             stu = (OrderTable)orderDao.get(ordertable.getId());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return stu;
+    }
+    public KuCunTable getKuCunIds()
+    {
+    	KuCunTable stu = null;
+        try
+        {
+            stu = kuCunDao.get(kucuntable.getId());
         }
         catch(Exception e)
         {
@@ -1078,6 +1098,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
             String[] unitprice = request.getParameterValues("unitprice");
             LoginInfo us = (LoginInfo)getFromSession("logininfo");
             String[] wuping = request.getParameterValues("wuping");
+            String[] transportproviders = request.getParameterValues("transportproviders");
             Date ds = new Date();
             SimpleDateFormat fs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String ffs = fs.format(ds);
@@ -1112,6 +1133,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
                         kk.setUnitprice(Double.parseDouble(unitprice[i]));
                         kk.setWuping(wuping[i]);
                         kk.setUserid(us.getUserId());
+                        kk.setTransportproviders(transportproviders[i]);
                         kk.setUploadFile("upload"+"/"+this.getUploadFileFileName().get(i));//+(System.currentTimeMillis())
                         kk.setTime(fs.parse(ffs));
                         stu[i] = i+"操作成功";
@@ -1123,6 +1145,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
        				cc.get(i).setTotalprice(Double.parseDouble(totalprice[i]));
        				cc.get(i).setUnitprice(Double.parseDouble(unitprice[i]));
        				cc.get(i).setUserid(us.getUserId());
+       				cc.get(i).setTransportproviders(transportproviders[i]);
        				cc.get(i).setUploadFile("upload"+"/"+this.getUploadFileFileName().get(i));//+(System.currentTimeMillis())
        				cc.get(i).setWuping(wuping[i]);
        				cc.get(i).setTime(fs.parse(ffs));
@@ -1197,9 +1220,32 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
         }
         return getIssuesOrders();
     }
+    //修改库存
+    public String upStock(){
+    	return "upstock";
+    }
+
 	//上传库存
     public String addStock(){
     	return "addStock";
+    }
+    //修改库存
+    public String updateStock(){
+    	   String bianma = kucuntable.getCoding();
+           Long num = kucuntable.getNum();
+           Double total = kucuntable.getTotalprice();
+           Double unitprice = kucuntable.getUnitprice();
+           String wuping = kucuntable.getWuping();
+           String transportproviders = kucuntable.getTransportproviders();
+           kucuntable = kuCunDao.get(kucuntable.getId());
+           kucuntable.setNum(num);
+           kucuntable.setCoding(bianma);
+           kucuntable.setTotalprice(total);
+           kucuntable.setUnitprice(unitprice);
+           kucuntable.setWuping(wuping);
+           kucuntable.setTransportproviders(transportproviders);
+           kuCunDao.merge(kucuntable);
+           return getStockOrder();
     }
     public void setServletRequest(HttpServletRequest arg0)
     {

@@ -1,11 +1,14 @@
 package com.demo.action;
 
+import com.demo.biz.OrderStatZhBiz;
 import com.demo.dao.GuoJiaDao;
 import com.demo.dao.LeiMuDao;
 import com.demo.dao.OrderDao;
 import com.demo.dao.OrderTableDao;
 import com.demo.dao.Order_DetailDao;
+import com.demo.dao.ZhangHaoDao;
 import com.demo.entity.LeiMuTable;
+import com.demo.entity.ZhangHao;
 import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 import com.demo.entity.order.Order_Detail;
@@ -51,6 +54,11 @@ public class YewuAction extends BaseAction implements ServletRequestAware
     private Order_DetailDao order_DetailDao;
 	@Resource
     private LeiMuDao leiMuDao;
+	@Resource
+    private OrderStatZhBiz orderStatZhBiz;
+	@Resource
+    private ZhangHaoDao zhanghaodao;
+	
     private OrderTable ordertable;
     public List<OrderTable> orders;
     public String dhgatezhanghao;
@@ -109,53 +117,65 @@ public class YewuAction extends BaseAction implements ServletRequestAware
     //业务修改订单
     public String updatedingdanAll()
     {
-    	 Long cai = ordertable.getCaigouyuan();
-         String order = ordertable.getOrderId();
-         String yunshu = ordertable.getYunshu();
-         Double yunfei = ordertable.getYunfei();
-         String guojia = ordertable.getGuojia();
-         String remark = ordertable.getRemark();
-         Double huilv = ordertable.getHuilv();
-         Double tuikuan = ordertable.getTuikuan();
-         Long shangwang = ordertable.getShangwang();
-         Long qianshou = ordertable.getQianshou();
-         Long ruzhang = ordertable.getRuzhang();
-         String danhao = ordertable.getDanhao();
-         Long jiufen = ordertable.getJiufen();
-         Double huokuan = ordertable.getHuokuan();
-         Double jine = ordertable.getMoney();
-         Long tuihuo = ordertable.getTuihuo();
-         String bianma = ordertable.getBianma(); 
-         String gongyunshang = ordertable.getGongyunshang();
-         java.sql.Date time = ordertable.getJiufentime();
-         ordertable = (OrderTable)orderDao.get(ordertable.getId());
-         ordertable.setCaigouyuan(cai);
-         ordertable.setOrderId(order);
-         ordertable.setYunshu(yunshu);
-         ordertable.setYunfei(yunfei);
-         ordertable.setGuojia(guojia);
-         ordertable.setRemark(remark);
-         ordertable.setHuilv(huilv);
-         ordertable.setTuikuan(tuikuan);
-         ordertable.setShangwang(shangwang);
-         ordertable.setQianshou(qianshou);
-         ordertable.setRuzhang(ruzhang);
-         ordertable.setDanhao(danhao);
-         ordertable.setJiufen(jiufen);
-         ordertable.setHuokuan(huokuan);
-         ordertable.setTuihuo(tuihuo);
-         ordertable.setMoney(jine);
-         ordertable.setBianma(bianma);
-         ordertable.setGongyunshang(gongyunshang);
-         if(jiufen ==1 && (time == null || "".equals(time))){
-        	 ordertable.setJiufentime(new java.sql.Date(System.currentTimeMillis()));
-         }else if(jiufen ==1 && (time != null && !"".equals(time))){
-        	    ordertable.setJiufentime(time);
-         }
-     
-         ordertable.setXiugai(1l);
-         orderDao.merge(ordertable);
-         msg = "修改成功";
+    	try {
+    		 Long cai = ordertable.getCaigouyuan();
+             String order = ordertable.getOrderId();
+             String yunshu = ordertable.getYunshu();
+             Double yunfei = ordertable.getYunfei();
+             String guojia = ordertable.getGuojia();
+             String remark = ordertable.getRemark();
+             Double huilv = ordertable.getHuilv();
+             Double tuikuan = ordertable.getTuikuan();
+             Long shangwang = ordertable.getShangwang();
+             Long qianshou = ordertable.getQianshou();
+             Long ruzhang = ordertable.getRuzhang();
+             String danhao = ordertable.getDanhao();
+             Long jiufen = ordertable.getJiufen();
+             Double huokuan = ordertable.getHuokuan();
+             Double jine = ordertable.getMoney();
+             Long tuihuo = ordertable.getTuihuo();
+             String bianma = ordertable.getBianma(); 
+             String gongyunshang = ordertable.getGongyunshang();
+             java.sql.Date time = ordertable.getJiufentime();            
+             ordertable = (OrderTable)orderDao.get(ordertable.getId());
+             ZhangHao zh = zhanghaodao.get(ordertable.getZhanghaoId());
+             System.out.println("+++zhanghaoid++"+ordertable.getZhanghaoId());
+             ordertable.setCaigouyuan(cai);
+             ordertable.setOrderId(order);
+             ordertable.setYunshu(yunshu);
+             ordertable.setYunfei(yunfei);
+             ordertable.setGuojia(guojia);
+             ordertable.setRemark(remark);
+             ordertable.setHuilv(huilv);
+             ordertable.setTuikuan(tuikuan);
+             ordertable.setShangwang(shangwang);
+             ordertable.setQianshou(qianshou);
+             ordertable.setRuzhang(ruzhang);
+             ordertable.setDanhao(danhao);
+             ordertable.setJiufen(jiufen);
+             ordertable.setHuokuan(huokuan);
+             ordertable.setTuihuo(tuihuo);
+             ordertable.setMoney(jine);
+             ordertable.setBianma(bianma);
+             ordertable.setGongyunshang(gongyunshang);
+             if(jiufen ==1 && (time == null || "".equals(time))){
+            	 
+            	 ordertable.setJiufentime(new java.sql.Date(System.currentTimeMillis()));
+            	 orderStatZhBiz.updateStatData(ordertable.getTime(), zh); 
+             }else if(jiufen ==1 && (time != null && !"".equals(time))){
+            	    ordertable.setJiufentime(time);
+            	    orderStatZhBiz.updateStatData(ordertable.getTime(),zh); 
+             }
+         
+             ordertable.setXiugai(1l);
+             orderDao.merge(ordertable);
+             msg = "修改成功";
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	
+    
         return getDeDaoOrderAll();
     }
     //业务得到修改订单
@@ -455,55 +475,50 @@ public class YewuAction extends BaseAction implements ServletRequestAware
 		}	
     	return "test";
     }
-    //修改类目
+    //查询全部类目
     public String getModifyCategory(){
-    
-    	try {
-    		int pageSize = 10;
-        	pageBean = pageBiz.selAllCgs(pageSize, pageNumber);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			
-		}
-    	
+    	int pageSize = 10;
+    	pageBean = pageBiz.getCategory(pageSize, pageNumber);
     	return "ModifyCategory";
     }
-	public String upCategory()
-	{
-	
-		   try
-	        {
-	            String ch[] = request.getParameter("bulletinId").split("-");
-	            String sel[] = request.getParameter("seluserid").split("-");
-	            String str[] = new String[ch.length];
-	            for(int i = 0; i < ch.length; i++)
-	            {
-	                List<Order_Detail> ls = order_DetailDao.getAllSelId(Long.parseLong(ch[i]));
-	                List<LeiMuTable> lei = leiMuDao.getSelId(Long.parseLong(sel[i]));
-	                if(sel.length != ch.length)
-	                    str[i] = i+".操作失败";
-	                else
-	                if("".equals(sel[i]) || sel[i] == null)
-	                    str[i] = i+".操作失败";
-	                else
-	                if(ls.size() != 0)
-	                {
-	                    ls.get(0).setId(Long.parseLong(ch[i]));     
-	                    ls.get(0).setSfModify(1l);
-	                    ls.get(0).setCat_name(lei.get(0).getLeimu());
-	                    order_DetailDao.merge(ls.get(0));
-	                    str[i] = i+".修改成功！";
-	                }
-	            }
-	            ActionContext.getContext().put("strsd", str);
-	        }
-	        catch(Exception e)
-	        {
-	            e.printStackTrace();
-	        }
-		return getModifyCategory();
-	}
+    //修改类目 
+    public String update_category(){
+	 try
+     {
+         String ch[] = request.getParameter("bulletinId").split("-");
+         String sel[] = request.getParameter("seluserid").split("-");
+         String str[] = new String[ch.length];
+         for(int i = 0; i < ch.length; i++)
+         {
+        	 System.out.println("++类目id++++"+sel[i]);
+        	 List<LeiMuTable> ss = leiMuDao.getSelId(Long.parseLong(sel[i]));
+             List<OrderTable> ls = orderDao.getSelId(Long.parseLong(ch[i]));
+             if(sel.length != ch.length)
+                 str[i] = i+".操作失败";
+             else
+             if("".equals(sel[i]) || sel[i] == null)
+                 str[i] = i+".操作失败";
+             else
+             if(ls.size() != 0)
+             {
+                 ls.get(0).setId(Long.parseLong(ch[i]));
+                 if(ss.size()!=0){
+                 	ls.get(0).setCaigouyuan(ss.get(0).getUserid());
+                 }
+                 ls.get(0).setLeimuid(Long.parseLong(sel[i]));
+                 orderDao.merge((OrderTable)ls.get(0));
+                 str[i] = i+".分配成功！";
+             }
+         }
+
+         ActionContext.getContext().put("strsd", str);
+     }
+     catch(Exception e)
+     {
+         e.printStackTrace();
+     }
+     return getModifyCategory();
+    }
     public void setServletRequest(HttpServletRequest arg0)
     {
         request = arg0;

@@ -85,7 +85,7 @@ function as(){
 			<td><span style="color:red">传给仓库:</span></td>
 			<td>
 				<input type="button" style="cursor: pointer;" value="把库存订单全部传给仓库" onclick="daifaqu()"/>  
-				<!--  <input type="button" style="cursor:pointer" value="待发货 " onClick="myfenpei()">-->
+				<input type="button" style="cursor:pointer" value="待发货 " onClick="myfenpei()">
 			</td>
 			<td><span style="color:red">采购导出:</span></td>
 			<td>
@@ -103,11 +103,11 @@ function as(){
 	
   <table border="1"  width="1180" cellspacing="0" style="float:left" >
     <tr>
-      <td colspan="15" align="center"><strong>得到订单</strong>
+      <td colspan="16" align="center"><strong>得到订单</strong>
      <a href="caigou!weiwancheng.do">导出全部未完成订单</a></td>
     </tr>
     <tr>
-    	<td colspan="15" align="center">
+    	<td colspan="16" align="center">
 	  	时间查询：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/> 至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>  
 	  	订单号: <input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
 	  	类目：
@@ -146,6 +146,7 @@ function as(){
       <td width="130"><span class="STYLE2">订单金额</span></td>
        <td width="100"><span class="STYLE2">供运商</span></td>
         <td width="100"><span class="STYLE2">备注</span></td>
+        <td width="100"><span class="STYLE2">物品</span></td>
         <td width="100"><span class="STYLE2">完成情况</span></td>
       <td width="163"><span class="STYLE2">操作</span></td>
         <td width="80"><span class="STYLE2">运输单号</span></td>
@@ -192,6 +193,7 @@ function as(){
 	   		 <td>${sd.money}</td>
 	   		<td><textarea rows="5" cols="10">${sd.gongyunshang}</textarea></td>     
 	   		 <td><textarea rows="5" cols="10">${sd.remark}</textarea></td> 
+	   		  <td><textarea rows="5">${sd.wuping}</textarea></td>
 	   		 <td>${(sd.wancheng==0 || sd.wancheng==null)?('未完成'):('已完成')}</td>
 		     <td>
 		     	<a href="caigou!updedao.do?ordertable.id=${sd.id}&category=${param.category}&zhanghaoId=${param.zhanghaoId}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}" onclick="return confirm('是否返回给管理员?')">未完成</a>
@@ -202,7 +204,7 @@ function as(){
 	     </tr>   
      </s:iterator> 
     <tr>     
-         <td colspan="15" align="center">
+         <td colspan="16" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
           <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>
@@ -226,8 +228,16 @@ function as(){
 	</pg:pager> 
 	    </td>   		
     </tr>
+      <tr>
+			<td colspan="16" style="color:#ff0000;">
+					注：
+					<ol>
+						<li>物品最后面有写买家选择的属性,需要注意哦 </li>
+						<li>备注里面有写买家留言 </li>
+					</ol>
+				</td>
+			</tr>
   </table>
-
   </form>
   ${fanhui}
   <s:iterator value="#str" var="d">

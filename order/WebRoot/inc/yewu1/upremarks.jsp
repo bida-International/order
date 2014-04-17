@@ -3,8 +3,8 @@
 <%@ taglib prefix="m" tagdir="/WEB-INF/tags" %>
 <m:frame>
 ${msg}
-  <form action="yewu1!updateWenTiRemark.do?ordertable.id=${updateId.id}&dhgatezhanghao=${param.dhgatezhanghao}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}" method="post" id="myform" onsubmit="return as()">
-  
+  <form action="yewu1!updateRemarks.do?ordertable.id=${updateId.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}" method="post" id="myform" onsubmit="return as()">
+ 
   <table border="1" width="200px" cellspacing="0" style="float:left">
     <tr>
       <td colspan="4" align="center"><strong>修改订单</strong></td>

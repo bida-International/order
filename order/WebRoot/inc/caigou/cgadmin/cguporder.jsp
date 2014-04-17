@@ -87,7 +87,6 @@ ${msg}
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
 		<input type="hidden" value="${tit}" name="tit">  
 	  	<input type="submit" value="查询"/>
-	  	
 	  	</td>
     </tr>
     <tr align="center">
@@ -144,7 +143,6 @@ ${msg}
 	   		  <td>${sd.jiufentime}</td>
 	   		  <td>
 	   		   <s:if test="#sd.time==null || #sd.caigoutime == null">
-		    	
 		    </s:if>
 		    <s:if test="#sd.time!=null && #sd.caigoutime != null">
 		    	<s:property value="getTime(#sd.time,#sd.caigoutime)"/>

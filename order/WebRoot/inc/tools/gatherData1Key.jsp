@@ -5,21 +5,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <m:frame>
-<script>
-
-</script>
 	<s:form action="./tools/gatherData1Key.do" method="post">
-	<table><tr><td>
-		 <a href="./tools/gatherData1Key!getAllLink.do" onclick="return confirm('确定导出?')">导出链接</a>
-	</td></tr></table>
 		 <table border="1" cellspacing="0" style="width: 100%; float: left">
 			<tr>
-				<th colspan="4" align="center">采集记录</th>
+				<th colspan="6" align="center">采集记录</th>
 			</tr>
 			<tr align="center" style="font-weight: bold;">
-				<td width="70%">采集网址</td>
+				<td width="58%">采集网址</td>
 				<td width="10%">采集条件</td>
 				<td width="12%">采集时间</td>
+				<td width="12%">是否被导出</td>
+				<td width="12%">导出</td>
 				<td width="8%">操作</td>
 			</tr>
 			<s:iterator value="pageBean.list" var="i">
@@ -27,13 +23,16 @@
 					<td>${i.gatherKey }</td>
 					<td>订单数大于 ${i.queryParam }</td>
 					<td><s:property value="getFormatTime(updateTime)" /></td>
-					<td><a href="./tools/gatherData1Result.do?keyCreateTime=${i.createTime }">详细</a>
+					<td>${(i.sfexported == 0 || i.sfexported == null)?('否'):('是')}</td>
+					<td>
+					<a href="./tools/gatherData1Key!getAllLink.do?id=${i.id}&keyCreateTime=${i.createTime}" onclick="return confirm('确定导出?')">导出</a></td>
+					<td><a href="./tools/gatherData1Result.do?keyCreateTime=${i.createTime}">详细</a>
 						<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
 						<a href="./tools/gatherData1Key!delete.do?id=${i.id}&keyCreateTime=${i.createTime}&pageNumber=${pageNumber}">删除</a></td>
 				</tr>
 			</s:iterator>
 			<tr>
-				<td colspan="4" align="center">总记录数：${pageBean.allRow}
+				<td colspan="6" align="center">总记录数：${pageBean.allRow}
 					共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页 <span
 					style="margin-left: 50px;">&nbsp;</span> 
 					<pg:pager

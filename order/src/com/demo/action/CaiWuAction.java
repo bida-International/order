@@ -779,9 +779,9 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
          Long tuihuo = ordertable.getTuihuo();
          String bianma = ordertable.getBianma(); 
          String gongyunshang = ordertable.getGongyunshang();
+         Double zl = ordertable.getZhongliang();
          java.sql.Date time = ordertable.getJiufentime();
          ordertable = (OrderTable)orderDao.get(ordertable.getId());
-      
          ordertable.setOrderId(order);
          ordertable.setYunshu(yunshu);
          ordertable.setYunfei(yunfei);
@@ -798,6 +798,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
          ordertable.setTuihuo(tuihuo);
          ordertable.setMoney(jine);
          ordertable.setBianma(bianma);
+         ordertable.setZhongliang(zl);
          ordertable.setGongyunshang(gongyunshang);
          if(jiufen ==1 && (time == null || "".equals(time))){
         	 ordertable.setJiufentime(new java.sql.Date(System.currentTimeMillis()));
@@ -1416,6 +1417,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 		}
   	  return tt;
     }
+  
     //≤‚ ‘
     public String ceshi(){
     	return "ceshi";

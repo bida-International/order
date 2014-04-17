@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import com.demo.action.BaseAction;
 import com.demo.dao.tools.GatherData1KeyDao;
 import com.demo.dao.tools.GatherData1ResultDao;
+import com.demo.entity.order.OrderTable;
 import com.demo.entity.tools.GatherData1Key;
 import com.demo.entity.tools.GatherData1Result;
 import com.demo.page.PageBean;
@@ -38,6 +39,7 @@ public class GatherData1KeyAction extends BaseAction  implements ServletRequestA
 	public List<GatherData1Result> gatherdata1result; 
 	private PageBean pageBean;
 	private HttpServletRequest request;
+    private GatherData1Key gatherdata1key;
 	public void setServletRequest(HttpServletRequest arg0)
     {
         request = arg0;
@@ -55,20 +57,20 @@ public class GatherData1KeyAction extends BaseAction  implements ServletRequestA
 	}
 	//查询全部链接
 	public String getAllLink() throws Exception{
-		
-        gatherdata1result = gatherData1ResultDao.getAllLink();
-        java.util.Date ds = new java.util.Date();
-        SimpleDateFormat fs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String ffs = fs.format(ds);
-		if (gatherdata1result.size() != 0) {		
-		  for(int i = 0; i < gatherdata1result.size(); i++)
-          {
-			  gatherdata1result.get(i).setId(gatherdata1result.get(i).getId());
-			  gatherdata1result.get(i).setExporttime(fs.parse(ffs));
-			  gatherdata1result.get(i).setSfexport(1l);
-			  gatherData1ResultDao.merge(gatherdata1result.get(i));
-          }
+		try {
+		    gatherdata1result = gatherData1ResultDao.getAllLink(keyCreateTime);
+	        java.util.Date ds = new java.util.Date();
+	        SimpleDateFormat fs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        String ffs = fs.format(ds); 
+	        gatherdata1key = gatherData1KeyDao.get(id);
+	        gatherdata1key.setSfexported(1l);
+	        gatherData1KeyDao.merge(gatherdata1key);
+			gatherData1ResultDao.updateLinkState(keyCreateTime,ffs);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
+   
 		return "export";
 	}
 	public Integer getPageSize() {

@@ -129,6 +129,15 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	    			>${i.leimu}</option>
 	    		</s:iterator>
 	    	</select>
+	    	国家查询:
+	    	<select name="country" id="country" title="国家">
+	    		<option value="">-请选择 -</option>
+	    		<s:iterator value="getAllGuoJia()" id="i">
+	    			<option value="${i.guojia}"
+	    					${i.guojia==country?('selected="selected"'):('')}
+	    			>${i.guojia}</option>
+	    		</s:iterator>
+	    	</select>
     	<input type="submit" value="查询"/>
     </td>
     </tr>
@@ -205,18 +214,18 @@ scrollbar-darkshadow-color: #FFFFFF;">
  <tr>
    	<td colspan="19">
    
-   		总金额($)：<s:property value="getMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"></s:property>
-   		总运费：<s:property value="getYunFei(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
-   		总采购货款：<s:property value="getHuoKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
-   		退款总额($)：<s:property value="getTuiKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/><br>
-   		纠纷个数：<a href="admin!jiufen.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getJiuFen(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/></a>
-   		运费为空：<a href="admin!getYunFeiNull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getYunFeiNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/></a>
-   		货款为空：<a href="admin!huokuannull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getHuoKuanNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/></a>
-   		纠纷总额($): <s:property value="getCaiGouAllJiuFenMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
+   		总金额($)：<s:property value="getMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"></s:property>
+   		总运费：<s:property value="getYunFei(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
+   		总采购货款：<s:property value="getHuoKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
+   		退款总额($)：<s:property value="getTuiKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/><br>
+   		纠纷个数：<a href="admin!jiufen.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getJiuFen(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/></a>
+   		运费为空：<a href="admin!getYunFeiNull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getYunFeiNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/></a>
+   		货款为空：<a href="admin!huokuannull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getHuoKuanNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/></a>
+   		纠纷总额($): <s:property value="getCaiGouAllJiuFenMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
    		<a href="admin!adminlirun.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}">利润小于0</a> /<a href="admin!liruninterval.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}">利润大于0小于30</a>
-   		总利润:<s:property value="getZongLiRun(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
-   		未入账：<a href="admin!weiruzhang.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}&dhgatezhanghao=${param.dhgatezhanghao}&danhao=${param.danhao}"><s:property value="getRuZhang(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/></a>
-   		平均采购速度(小时)<s:property value="getCaiGouTimed(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category)"/>
+   		总利润:<s:property value="getZongLiRun(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
+   		未入账：<a href="admin!weiruzhang.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}&dhgatezhanghao=${param.dhgatezhanghao}&danhao=${param.danhao}"><s:property value="getRuZhang(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/></a>
+   		平均采购速度(小时)<s:property value="getCaiGouTimed(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
   
    		<br>
    	</td>

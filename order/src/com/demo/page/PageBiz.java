@@ -3,7 +3,7 @@ package com.demo.page;
 public interface PageBiz
 {
 
-    public abstract PageBean selForPage(int pageSize, int page, String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu);
+    public abstract PageBean selForPage(int pageSize, int page, String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country);
    
     //采购管理员得到订单
     public abstract PageBean selCaiGouAdminWanChengOrder(int pageSize, int page, Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma,String gongyunshang,String wuping);
@@ -152,4 +152,6 @@ public interface PageBiz
     public PageBean selStockOrderAll(int pageSize,int page,String time,String time1);
     //采购查看问题订单
     public PageBean selIssuesOrders(int pageSize,int page,String orderid,Long userid);
+    //查询全部类目 
+    public PageBean getCategory(int pageSize,int page);
 }

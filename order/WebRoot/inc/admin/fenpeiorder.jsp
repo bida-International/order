@@ -123,11 +123,7 @@ ${msg}
 	   		 <td>${sd.time}</td>
 	   		 <td>${sd.money}</td>		
 	         	<td>
-	         	<textarea rows="5" cols="10"> 
-	         <s:if test="#sd.leimuid != null">
-	         	<s:property value="getSelLeiMu(#sd.leimuid)"/>
-	         </s:if>
-	          </textarea>
+	         	<textarea rows="5" cols="10"> <s:if test="#sd.leimuid != null"><s:property value="getSelLeiMu(#sd.leimuid)"/> </s:if></textarea>
 	         </td>
 	   		 <td>${sd.remark}</td>
 		     <td>

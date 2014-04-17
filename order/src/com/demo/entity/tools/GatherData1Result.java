@@ -19,11 +19,12 @@ public class GatherData1Result implements Serializable {
 	private String link; // 产品链接
 	private Integer orderNum; // 订单数
 	private Long sfexport;//是否导出 0或NULL 没有导出, 1.导出
-	private Date exporttime;//导出时间
-	public Date getExporttime() {
+	private String exporttime;//导出时间
+	
+	public String getExporttime() {
 		return exporttime;
 	}
-	public void setExporttime(Date exporttime) {
+	public void setExporttime(String exporttime) {
 		this.exporttime = exporttime;
 	}
 	public Long getSfexport() {

@@ -8,6 +8,7 @@ import com.demo.dao.user.CaiWuDao;
 import com.demo.dao.user.CangKuYuanDao;
 import com.demo.dao.user.ClipArtDao;
 import com.demo.dao.user.GuKeDao;
+import com.demo.dao.user.PuchasingAssistantDao;
 import com.demo.dao.user.TechnicianDao;
 import com.demo.dao.user.UserDao;
 import com.demo.dao.user.YeWu1Dao;
@@ -23,6 +24,7 @@ import com.demo.entity.user.Technician;
 import com.demo.entity.user.UserInfo;
 import com.demo.entity.user.YeWu;
 import com.demo.entity.user.YeWu1;
+import com.demo.entity.user.PurchasingAssistant;
 import com.demo.utils.AppException;
 import com.demo.vo.LoginInfo;
 import com.opensymphony.xwork2.ActionContext;
@@ -62,6 +64,8 @@ public class SystemAction extends BaseAction  implements ServletRequestAware
     private ClipArtDao clipArtDao;
 	@Resource
     private TechnicianDao technicianDao;
+	@Resource
+    private PuchasingAssistantDao puchasingassistantdao;
     public String username;
     public String pwd;
     public String msg;
@@ -100,6 +104,7 @@ public class SystemAction extends BaseAction  implements ServletRequestAware
 	        YeWu1 yy = yeWu1Dao.getByUserId(info.getUserId());
 	        ClipArt hh = clipArtDao.getByUserId(info.getUserId());
 	        Technician js = technicianDao.getByUserId(info.getUserId());
+	        com.demo.entity.user.PurchasingAssistant pp =  puchasingassistantdao.getByUserId(info.getUserId());
 	        if(Boolean.TRUE.equals(user.getAdmin())){
 	            info.setRole(Integer.valueOf(1));
 	             
@@ -145,6 +150,10 @@ public class SystemAction extends BaseAction  implements ServletRequestAware
 	        else if(js != null){
 	        	info.setRole(10);
 	        	info.setTechnicianId(js.getId());
+	        }
+	        else if(pp != null){
+	        	info.setRole(11);
+	        	info.setTechnicianId(pp.getId());
 	        }
 	        else
 	        {

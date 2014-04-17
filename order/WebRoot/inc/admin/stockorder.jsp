@@ -26,10 +26,10 @@
 	
   <table border="1"  width="700px" cellspacing="0" style="float:left" >
     <tr>
-      <td colspan="8" align="center"><strong>SKU订单</strong></td>
+      <td colspan="11" align="center"><strong>SKU订单</strong></td>
     </tr>
     <tr>
-    	<td colspan="9" align="center">
+    	<td colspan="11" align="center">
 	  	时间查询：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/> 至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>  
         <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
@@ -46,8 +46,10 @@
       <td width="90"><span class="STYLE2">总价</span></td>
       <td width="90"><span class="STYLE2">单价</span></td>
       <td width="90"><span class="STYLE2">数量</span></td>
+        <td width="90"><span class="STYLE2">供运商</span></td>
        <td width="100"><span class="STYLE2">上传时间</span></td>
        <td width="100"><span class="STYLE2">采购员</span></td>
+       <td width="100"><span class="STYLE2">操作</span></td>
     </tr>
     <s:iterator value="pageBean.list" var="sd">
 	     <tr align="center" style="font-size:30px">
@@ -58,17 +60,19 @@
 			 <td>${sd.totalprice}</td>
 			 <td>${sd.unitprice}</td>
 			 <td>${sd.num}</td>
+			  <td>${sd.transportproviders}</td>
 			 <td>${sd.time}</td>	  
-			 <td><s:property value="getUserId(#sd.caigouyuan)"/></td>	    
+			 <td><s:property value="getUserId(#sd.caigouyuan)"/></td>	  
+			  <td><a href="admin!upStock.do?kucuntable.id=${sd.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改库存</a></td>  
 	     </tr>   
      </s:iterator>
      <tr>
-     	<td colspan="8">
+     	<td colspan="11">
      		总金额：<s:property value="getTheTotalAmount(time,time1)"/> 
      	</td>
      </tr> 
     <tr>     
-         <td colspan="9" align="center">
+         <td colspan="11" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
           <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>

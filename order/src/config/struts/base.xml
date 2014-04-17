@@ -77,6 +77,7 @@
 		            <result name="getCompleted">/inc/admin/getCompleted.jsp</result>
 		             <result name="stockorder">/inc/admin/stockorder.jsp</result>
 		             <result name="exportorder">/inc/admin/exportOrder.jsp</result>
+		             <result name="upstock">/inc/admin/upStock.jsp</result>
 		</action>
 		<action name="test" class="testAction">
 		<result name="addorder">/inc/admin/addorder.jsp</result>

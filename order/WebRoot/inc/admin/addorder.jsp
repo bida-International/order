@@ -1,7 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="m" tagdir="/WEB-INF/tags" %>
+ <%@ taglib prefix="pg" uri="http://jsptags.com/tags/navigation/pager" %> 
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+  <script type="text/javascript" src="./inc/js/bianhao.js"></script>
+  
 	<script type="text/javascript">
 	function onlyNumber(obj){
    
@@ -16,6 +20,7 @@
        //保证.只出现一次，而不能出现两次以上   
        obj.value = obj.value.replace('.','$#$').replace(/\./g,'').replace('$#$','.');      
 }	
+ 	
 	</script>
 <m:frame>
   <form action="test!adddingdanorder.do" method="post">
@@ -36,7 +41,7 @@
         <td><input name="dingdan" type="text" id="dingdan" title="订单号" style="ime-mode:disabled" onkeydown="if(event.keyCode==13)event.keyCode=9" onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"></td>
 	    <td><input name="jine" type="text" id="jine" size="7" title="金额" style="ime-mode:disabled" onkeyup="onlyNumber(this)" onblur="onlyNumber(this)" onKeyPress="if((event.keyCode<48 || event.keyCode>57) && event.keyCode!=46 || /\.\d\d$/.test(value))event.returnValue=false"></td>
 	    <td>
-	    	<select name="yunshu" id="yunshu" title="类目">
+	    	<select name="category" id="category" title="类目">
 	    		<option value="0">-请选择 -</option>
 	    		<s:iterator value="getAllLeiMu()" id="i">
 	    			<option value="${i.id}">${i.leimu}</option>
@@ -64,6 +69,7 @@
 
   <br>
   </form>
+ 
     <s:iterator value="#insert" var="d">
   	${d }<br>
   </s:iterator>

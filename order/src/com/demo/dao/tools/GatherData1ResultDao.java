@@ -1,5 +1,6 @@
 package com.demo.dao.tools;
 
+import java.util.Date;
 import java.util.List;
 
 import com.demo.dao.BaseDao;
@@ -14,5 +15,9 @@ public interface GatherData1ResultDao extends BaseDao<GatherData1Result, Long> {
 	public GatherData1Result findUnique(Long keyCreateTime, String link);
 
 	//查询全部链接
-	public List<GatherData1Result> getAllLink();
+	public List<GatherData1Result> getAllLink(Long keyCreateTime);
+	//修改链接状态
+	public void updateLinkState(Long keyCreateTime, String currenttime);
+	
+
 }

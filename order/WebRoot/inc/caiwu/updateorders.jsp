@@ -136,7 +136,14 @@ ${msg}
 	       	<td>
 	       	<input name="ordertable.bianma" value="${updateIds.bianma}" type="text" id="huokuan" size="7"  title="产品编码" style="ime-mode:disabled">
 	      </td>
+	      
      </tr>
+     <tr> 
+     	<td width="64"   align="right"><span class="STYLE2">重量</span></td>
+	       	<td>
+	       	<input name="ordertable.zhongliang" value="${updateIds.zhongliang}" type="text" id="zhongliang" size="7"  title="重量" style="ime-mode:disabled">
+	      </td>
+	   </tr>
     <tr>   
      
         <td colspan="9" align="center">

@@ -47,7 +47,13 @@ public class LoginInfo implements Serializable{
 	private String pwd;//密码
 	private Long id;//用户编号
 	private Long yewu1Id;//业务编号
-	
+	private Long psa;//采购助理
+	public Long getPsa() {
+		return psa;
+	}
+	public void setPsa(Long psa) {
+		this.psa = psa;
+	}
 	public Long getTechnicianId() {
 		return TechnicianId;
 	}

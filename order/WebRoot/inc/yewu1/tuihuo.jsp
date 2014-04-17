@@ -58,7 +58,6 @@
       <td width="80"><span class="STYLE2">国内运输方式</span></td>
       <td width="100"><span class="STYLE2">国内运输单号</span></td>
      <td width="80"><span class="STYLE2">物品</span></td>
-      <td width="100"><span class="STYLE2">地址</span></td>
        <td width="100"><span class="STYLE2">备注</span></td>
         <td width="100"><span class="STYLE2">上传时间</span></td>
       <td width="80"><span class="STYLE2">国际运输方式</span></td>
@@ -67,6 +66,7 @@
       <td width="80"><span class="STYLE2">是否退货</span></td>
       <td width="80"><span class="STYLE2">是否处理 </span></td>
        <td width="100"><span class="STYLE2">退货时间</span></td>
+       <td width="80"><span class="STYLE2">操作</span></td>
     </tr>
     <s:iterator value="pageBean.list" var="sd">
 	     <tr align="center" style="font-size:30px">
@@ -81,7 +81,6 @@
 	         <td><s:property value="getGuoNeiKuaiDiFangShi(#sd.guoneikuaidiId)"/></td>
 	   		 <td>${sd.guoneidanhao}</td>	  
 	   		 <td><textarea cols="10" rows="5">${sd.wuping}</textarea></td>
-	   		<td><textarea cols="10" rows="5">${sd.guowaidizhi}</textarea></td>     
 	   		 <td><textarea cols="10" rows="5">${sd.remark}</textarea></td> 
 	   		 <td>${sd.time}</td>
 		    <td><s:property value="getKuaiDiFangShi(#sd.kuaidifangshiId)"/></td>
@@ -92,6 +91,7 @@
 		     </td>
 		     <td>${(sd.chuli==0 || sd.chuli==null)?('否'):('是')}</td>
 		     <td>${sd.returnTime}</td>
+		     <td><a href="yewu1!upremarks.do?ordertable.id=${sd.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改备注</a></td>
 	     </tr>   
      </s:iterator> 
       <tr>     

@@ -115,18 +115,13 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         
         try
-        {
-        	java.util.Date d = new java.util.Date();
-            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String ff = f.format(d);
-            for(int i = 0; i < orders.size(); i++)
-            {
-                orders.get(i).setId(orders.get(i).getId());
-                orders.get(i).setDaochu(1l);
-                orders.get(i).setDcsj(ff);
-                orderTableDao.merge(orders.get(i));
-            }
-
+        {	
+        	if (dc != 2) {
+        		java.util.Date d = new java.util.Date();
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String ff = f.format(d);
+                orderTableDao.updateExportOrders(ff);
+			}
         }
         catch(Exception e)
         {

@@ -118,7 +118,7 @@
 			<td><span style="color:red">传给仓库:</span></td>
 			<td>
 				<input type="button" style="cursor: pointer;" value="把库存订单全部传给仓库"  onclick="daifaqu()"/>  
-				<!-- <input type="button" style="cursor:pointer" value="待发货 " onClick="wancheng()"> -->
+				<input type="button" style="cursor:pointer" value="待发货 " onClick="wancheng()"> 
 			</td>
 			<td><span style="color:red">采购导出:</span></td>
 			<td>
@@ -128,9 +128,9 @@
 			<td> <input type="button" style="cursor:pointer" onclick="getPayment()" value="给财务付款订单"/></td>
 			</tr>
 			<tr>
-			<td><span style="color:red">传给业务:</span></td>
+			<!-- <td><span style="color:red">传给业务:</span></td>
 			<td> <input type="button" style="cursor:pointer" value="将代发产品传给业务" onClick="daifa()"></td>
-			
+			 -->
 			<td><span style="color:red">速卖通下单:</span></td>
 			<td> <input type="button" style="cursor:pointer" value="速卖通下单审核" onclick="mysumaitong()"/></td>
 			</tr>
@@ -138,12 +138,12 @@
 	</table>
   <table border="1" width="1180" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="14" align="center"><strong>采购管理员得到订单</strong> 
+      <td colspan="16" align="center"><strong>采购管理员得到订单</strong> 
       <a href="caigouadmin!adminweiwancheng.do">导出全部未完成订单</a>
      </td>
     </tr>
       <tr>
-    	<td colspan="14" align="center">
+    	<td colspan="16" align="center">
 	  	订单号 <input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
 	  	时间：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/>至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>
 	    	类目查询：
@@ -182,6 +182,7 @@
       <td width="130"><span class="STYLE2">订单金额</span></td>
        <td width="100"><span class="STYLE2">供运商</span></td>
         <td width="100"><span class="STYLE2">备注</span></td>
+        <td width="100"><span class="STYLE2">物品</span></td>
         <td width="100"><span class="STYLE2">完成情况</span></td>
       <td width="163"><span class="STYLE2">操作</span></td>
         <td width="100"><span class="STYLE2">运输单号</span></td>
@@ -191,18 +192,20 @@
 	     <tr align="center" style="cursor:pointer">
 	     <td><input name="chkItems" value="${sd.id}" onclick="chkItems_click(this)" type="checkbox"  id="chk_${sd.id}" readonly="readonly"  style="cursor:pointer"/></td>
 	         <td><s:property value="getZhangHaoId(#sd.zhanghaoId)"/></td>
-	       <s:if test="#sd.jingji==2">
-	     	<td><font color="blue">${sd.orderId}</font></td>
-	     </s:if>
-	     	<s:if test="#sd.jingji==1">
-	     		<td><font color="red">${sd.orderId}</font></td>
-	     	</s:if>
-	     	<s:if test="#sd.jingji!=1 && #sd.jingji!=2">
-	          <td>${sd.orderId}</td>
-	         </s:if>
-	         <s:if test="#sd.fawan == 2">
-	         <font color="#00cc00">${sd.orderId}</font> 
-	         </s:if>
+	       <td>
+		     	<s:if test="#sd.jingji==2 && #sd.fenpei != 2">
+		     		<font color="blue">${sd.orderId}</font>
+		     	</s:if>
+		     	<s:if test="#sd.jingji==1 && #sd.fenpei != 2">
+		     		<font color="red">${sd.orderId}</font>
+		     	</s:if>
+		     	<s:if test="#sd.jingji!=1 && #sd.jingji!=2 && #sd.fenpei != 2">
+		          ${sd.orderId}
+		         </s:if>
+		      	<s:if test="#sd.fawan == 2">
+		        	 <font color="#00cc00">${sd.orderId}</font> 
+		         </s:if>
+	         </td>
 	         <td>
           		 <s:if test="getCoding(#sd.bianma) != null">
 	          		<font color="red">${sd.bianma}</font>
@@ -224,6 +227,7 @@
 	   		 <td>${sd.money}</td>
 	   		 <td><textarea rows="5" cols="10">${sd.gongyunshang}</textarea></td>     
 	   		 <td><textarea rows="5" cols="10">${sd.remark}</textarea></td> 
+	   		  <td><textarea rows="5">${sd.wuping}</textarea></td>
 	   		  <td>${(sd.wancheng==0 || sd.wancheng==null)?('未完成'):('已完成')}</td>       
 		     <td>
 		     	<a href="caigouadmin!fanhuiorder.do?ordertable.id=${sd.id}&category=${param.category}&zhanghaoId=${param.zhanghaoId}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}" onclick="confirm('确定？')">返回</a>
@@ -234,7 +238,7 @@
 	     </tr>   
      </s:iterator> 
 	     <tr>     
-         <td colspan="14" align="center"> 	
+         <td colspan="16" align="center"> 	
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
         <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	  <a href="javascript:page(1)">首页</a>
@@ -259,6 +263,15 @@
 	</pg:pager> 
 	    </td>   		
     </tr>
+       <tr>
+			<td colspan="16" style="color:#ff0000;">
+				注：
+				<ol>
+					<li>物品最后面有写买家选择的属性,需要注意哦 </li>
+					<li>备注里面有写买家留言 </li>
+				</ol>
+			</td>
+		</tr>
   </table>
   ${msg}
   </form>

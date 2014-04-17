@@ -483,7 +483,7 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
         {
             e.printStackTrace();
         }
-        return "daifahuo";
+        return getDaiFaHuo();
     }
 
 
@@ -869,6 +869,35 @@ public void setExcelfile(File excelfile) {
 		} 
 		return getWeiKong();
 	}
+	  //管理员把完成订单返回到待放区
+    public String redaifangqus(){
+   	  try
+         {
+             String[] ch = request.getParameter("bulletinId").split("-");
+             String[] str = new String[ch.length];
+             for(int i = 0; i < ch.length; i++)
+             {
+                 List<OrderTable> ls = orderDao.getSelId(Long.parseLong(ch[i]));
+                 if(ls.size() != 0)
+                 {
+                     ls.get(0).setId(Long.parseLong(ch[i]));
+                     ls.get(0).setDaifahuo(2l);
+                     ls.get(0).setWancheng(0l);
+                     ls.get(0).setGetordersId(0l);
+                     ls.get(0).setDaochu(0l);
+                     ls.get(0).setTuihuo(1l);
+                     orderDao.merge(ls.get(0));
+                     str[i] = i +".操作成功";
+                 }
+             }
+             ActionContext.getContext().put("strb", str);
+         }
+         catch(Exception e)
+         {
+             e.printStackTrace();
+         }
+         return getReturnofgoods();
+    }
     public void setServletRequest(HttpServletRequest arg0)
     {
         request = arg0;

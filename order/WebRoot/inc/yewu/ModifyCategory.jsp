@@ -10,22 +10,23 @@
 <!--
 
 //-->
-	 function page(pageNumber) 
+	function page(pageNumber) 
 	 {
 		document.getElementById("pageNumber").value = pageNumber;
 		document.getElementById("pager.offset").value = (pageNumber*10-10);
 		document.forms.submit();
 	 }
+	 //全选
 	 function quan()
 	 {
 		 var h=document.getElementsByName("checkbox");
 		 var da=document.getElementsByName("chkItems");
 		 quan1(h,da);
-	  }
-	 function upCategory(){
+	 }
+	 function mytest(){
 	 	var items=document.getElementsByTagName("input"); 
-	 	var userid = document.getElementsByName("yunshu");
-	    var lujing = "yewu!upCategory.do?pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
+	 	var userid = document.getElementsByName("category");
+	    var lujing = "yewu!update_category.do?pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
 	    fenpei(items,userid,lujing);
 	 }
 	  function checkedSel(){
@@ -41,42 +42,47 @@
 	 }
 </script>
 <m:frame>
-<form action="yewu!getModifyCategory.do" method="post"  name="forms" id="forms" onsubmit="return as()">
-<table><tr><td><input type="button" value="修改类目" onclick="upCategory()"> </td></tr></table>
-  <table border="1" width="600px" cellspacing="0" style="float:left">
-    <tr>
-      <td colspan="4" align="center" style="cursor: pointer;"><strong>修改类目</strong>
-       	<s:hidden name="pageNumber" value="1"></s:hidden>
-	<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
-	<input type="hidden" value="${tit}" name="tit">  
-	</td>
-    </tr>
+ <form action="yewu!getModifyCategory.do" method="post" name="forms" id="forms">
+  <table><tr><td><input type="button" value="修改类目" style="cursor: pointer;" onclick="mytest()"></td></tr></table>
+   <table border="1"  width="700px" cellspacing="0" style="float:left" >
+   <tr><td colspan="6" align="center">修改类目</td></tr>
+   <tr><td colspan="6"> 
+   		<s:hidden name="pageNumber" value="1"></s:hidden>
+		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
+		<input type="hidden" value="${tit}" name="tit"> 
+	</td></tr>
     <tr align="center">
      <td width="34" height="25">
-		<input name="checkbox" onclick="quan()" type="checkbox" style="cursor:pointer"/></td>
-     <td width="120"><span class="STYLE2">订单号</span></td>
-      <td width="100"><span class="STYLE2">编码</span></td>
-      <td width="100"><span class="STYLE2">类目</span></td>
+	<input name="checkbox" onclick="quan()" type="checkbox" style="cursor:pointer"/></td>
+     <td width="54"><span class="STYLE2">账号</span></td>
+       <td width="90"><span class="STYLE2">订单号</span></td>
+        <td width="90"><span class="STYLE2">编码</span></td>
+     <td width="163"><span class="STYLE2">类目</span></td>
+       <td width="100"><span class="STYLE2">上传时间</span></td>
     </tr>
-    <s:iterator value="pageBean.list" var="i">
-      <tr align="center">
-        <td><input name="chkItems" value="${i.id}" onclick="chkItems_click(this)" type="checkbox"  id="chk_${i.id}" readonly="readonly"  style="cursor:pointer"/></td>
-        <td>${i.orderId}</td>
-        <td>${i.itemcode}</td>
-         <td>	     
-			   	<select name="yunshu" id="yunshu" title="类目"  onchange="checkedSel()">
-			    		<option value="0">-请选择 -</option>
-			    		<s:iterator value="getAllLeiMu()" id="i">
-			    			<option value="${i.id}">${i.leimu}</option>
-			    		</s:iterator>
-			    	</select>			
-	    </td>    
-     </tr>    
-   </s:iterator>
-     <tr>     
-         <td colspan="4" align="center">
+    <s:iterator value="pageBean.list" var="sd">
+	     <tr align="center" style="font-size:30px">
+		      <td><input name="chkItems" value="${sd.id}" onclick="chkItems_click(this)" type="checkbox"  id="chk_${sd.id}" readonly="readonly"  style="cursor:pointer"/></td>
+		     <td>	
+		     	<s:property value="getZhangHaoId(#sd.zhanghaoId)"/> 	  
+		     </td>
+		     <td>${sd.orderId}</td>
+		      <td>${sd.bianma}</td>
+	          <td>
+	         	<select name="category" id="category" title="类目">
+		    		<option value="0">-请选择 -</option>
+		    		<s:iterator value="getAllLeiMu()" id="i">
+		    			<option value="${i.id}">${i.leimu}</option>
+		    		</s:iterator>
+	    		</select>
+	         </td>
+			  <td>${sd.time}</td>	    
+	     </tr>   
+     </s:iterator> 
+      <tr> 
+	    <td colspan="19" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
-         <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
+       <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>
             <s:if test="%{pageBean.currentPage>1}">
              <a href ="javascript:page(${pageBean.currentPage-1})">上一页</a> 
@@ -99,7 +105,6 @@
 	    </td>   		
     </tr>
   </table>
-  <br>
   </form>
   <s:iterator value="strsd" var="i">${i}</s:iterator>
 </m:frame>

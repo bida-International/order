@@ -11,9 +11,8 @@
 	<constant name="struts.multipart.maxSize" value="1000000000"></constant>
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.action.extension" value="do" />
-	<constant name="struts.multipart.maxSize" value="10485761"/>
 	<package name="sysdefault" extends="struts-default" abstract="true">
-	
+		
 	</package>
 	
 	<include file="config/struts/base.xml"></include>
@@ -28,9 +27,9 @@
 	<include file="config/struts/msg.xml"></include>
 	<include file="config/struts/order.xml"></include>
 	<include file="config/struts/account.xml"></include>
-	<include file="config/struts/ClipArt.xml"></include>
-	<include file="config/struts/technician.xml"></include>
 	<include file="config/struts/tools.xml"></include>
-	
+	<include file="config/struts/technician.xml"></include>
+	<include file="config/struts/ClipArt.xml"></include>
+	<include file="config/struts/puchasingassistant.xml"></include>
 </struts>
 

@@ -29,10 +29,10 @@ function as(){
 <form action="caiwu!getDeDaoOrderAll.do" method="post"  name="forms" id="forms" onsubmit="return as()">
   <table border="1" width="1143px" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="16" align="center"><strong>显示全部订单</strong></td>
+      <td colspan="17" align="center"><strong>显示全部订单</strong></td>
     </tr>
     <tr>
-    <td colspan="16">
+    <td colspan="17">
     	账号查询：	
     		<select name="selzhanghao" id="selzhanghao"> 
 	      	<option value="">-请选择-</option>
@@ -64,6 +64,7 @@ function as(){
        <td width="64"><span class="STYLE2">汇率</span></td>
        <td width="80"><span class="STYLE2">备注</span></td>
        <td width="120"><span class="STYLE2">账号</span></td>
+       <td width="70"><span class="STYLE2">重量</span></td>
        <td width="80"><span class="STYLE2">纠纷时间</span></td>
       <td width="80"><span class="STYLE2">采购员</span></td>
         <td width="80"><span class="STYLE2">操作</span></td>
@@ -90,13 +91,14 @@ function as(){
 	    <td>${i.huilv}</td>
 	     <td><textarea rows="5" cols="10">${i.remark}</textarea></td> 
 	    <td><s:property value="getZhangHaoId(#i.zhanghaoId)"/></td>
+	    <td>${i.zhongliang}</td>
 	    <td>${i.jiufentime}</td>
 	   	 <td><s:property value="(#i.caigouyuan==0 || #i.caigouyuan==null)?('未分配'):(getUserId(#i.caigouyuan))"/></td>
 	   	 <td><a href="caiwu!getorderIdAll.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改</a></td>	      
      </tr>    
    </s:iterator>
      <tr>     
-         <td colspan="16" align="center">
+         <td colspan="17" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
     	<pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	  	<a href="javascript:page(1)">首页</a>

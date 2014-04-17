@@ -19,21 +19,25 @@ function addMoreFiles(){
     var newTd9 = newTr.insertCell();
     var newTd10 = newTr.insertCell();
     var newTd11 = newTr.insertCell();
-    var newTd12 = newTr.insertCell();        
+    var newTd12 = newTr.insertCell();      
+    var newTd13 = newTr.insertCell();
+    var newTd14 = newTr.insertCell();    
     //设置列内容和属性  
-    newTd12.innerText = '图片';   
-    newTd11.innerHTML= '<input type="file" name="uploadFile" value="" id="uploadFile"/>';  
-    newTd10.innerHTML='<input type="button" name="delete" value="删除" style="cursor: pointer;" id="delete" onclick="delFile();"/>'
-    newTd9.innerText = '编码';
-    newTd8.innerHTML= '<input type="text" name="bianma" value="" id="bianma"/>';
-    newTd7.innerText = '库存数量';
-    newTd6.innerHTML= '<input type="text" name="num" value="" id="num"/>';
-    newTd5.innerText = '总价';
-    newTd4.innerHTML= '<input type="text" name="totalprice" value="" id="totalprice"/>';
-    newTd3.innerText = '单价';
-    newTd2.innerHTML= '<input type="text" name="unitprice" value="" id="unitprice"/>';
-    newTd1.innerText = '物品';
-    newTd0.innerHTML= '<input type="text" name="wuping" value="" id="wuping"/>';
+    newTd14.innerText = '图片';   
+    newTd13.innerHTML= '<input type="file" name="uploadFile" value="" id="uploadFile"/>';  
+    newTd12.innerHTML='<input type="button" name="delete" value="删除" style="cursor: pointer;" id="delete" onclick="delFile();"/>'
+    newTd11.innerText = '编码';
+    newTd10.innerHTML= '<input type="text" name="bianma" value="" id="bianma"  size="9"/>';
+    newTd9.innerText = '库存数量';
+    newTd8.innerHTML= '<input type="text" name="num" value="" id="num"  size="4"/>';
+    newTd7.innerText = '总价';
+    newTd6.innerHTML= '<input type="text" name="totalprice" value="" id="totalprice"  size="4"/>';
+    newTd5.innerText = '单价';
+    newTd4.innerHTML= '<input type="text" name="unitprice" value="" id="unitprice"  size="4"/>';
+    newTd3.innerText = '物品';
+    newTd2.innerHTML= '<input type="text" name="wuping" value="" id="wuping"/>';
+    newTd1.innerText = '供运商';
+    newTd0.innerHTML= '<input type="text" name="transportproviders" value="" id="transportproviders"/>';
     num++;  
 }  
   
@@ -54,10 +58,26 @@ function as(){
 </script>
 <m:frame>
   <form action="caigou!uploadInventoryOrders.do"  enctype="multipart/form-data" method="post">
-   
     <table id="myTable">  
-    	<tr>
-				<td colspan="6" style="color:#ff0000;">
+        <tr>  
+            <td width="50px;">图片</td>  
+            <td><input type="file" name="uploadFile" value="" id="file"/></td>  
+            <td><input type="button" name="delete" value="删除" style="cursor: pointer;" id="delete" onclick="delFile();"/></td>
+            <td width="30px">编码:</td>
+        	<td><input type="text" name="bianma" id="bianma" title="编码" size="9"></td>
+            <td  width="60px">库存数量:</td>
+        	<td><input type="text" name="num" id="num" title="库存数量 " size="4"></td>
+        	<td  width="30px">总价:</td>
+        	<td><input type="text" name="totalprice" id="totalprice" title="总价" size="4"></td>
+        	<td  width="30px">单价:</td>
+        	<td><input type="text" name="unitprice" id="unitprice" title="单价" size="4"></td>
+        	<td width="30px">物品:</td>
+        	<td><input type="text" name="wuping" id="wuping" title="物品"></td>
+        	<td width="50px">供运商:</td>
+        	<td><input type="text" name="transportproviders" id="transportproviders" title="供运商"></td>
+        </tr>  
+        <tr>
+			<td colspan="15" style="color:#ff0000;">
 					注：
 					<ol>
 						<li>上传图片时,图片名称要改一下</li>
@@ -66,21 +86,6 @@ function as(){
 					</ol>
 				</td>
 			</tr>
-        <tr>  
-            <td width="70px;">图片</td>  
-            <td><input type="file" name="uploadFile" value="" id="file"/></td>  
-            <td><input type="button" name="delete" value="删除" style="cursor: pointer;" id="delete" onclick="delFile();"/></td>
-            <td width="50px">编码:</td>
-        	<td><input type="text" name="bianma" id="bianma" title="编码"></td>
-            <td  width="50px">库存数量:</td>
-        	<td><input type="text" name="num" id="num" title="库存数量 "></td>  
-        	<td  width="50px">总价:</td>
-        	<td><input type="text" name="totalprice" id="totalprice" title="总价"></td>  
-        	<td  width="50px">单价:</td>
-        	<td><input type="text" name="unitprice" id="unitprice" title="单价"></td>   
-        	<td width="50px">物品:</td>
-        	<td><input type="text" name="wuping" id="wuping" title="物品"></td>
-        </tr>  
     </table>  
     <input type="submit" id="upload" name="upload" value="上传" style="cursor: pointer;"/>  
     <input type="button" value="上传更多" style="cursor: pointer;" onclick="addMoreFiles();">  

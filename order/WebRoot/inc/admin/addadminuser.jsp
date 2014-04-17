@@ -34,7 +34,7 @@ ${msg}
 <table border="1"  class="datagrid2" id="list" height="150" width="500" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="tableBorder_B"  align="right">用户类型:</td>
-		<td class="tableBorder_B" ><s:radio list="#{0:'业务助理',1:'采购',2:'采购管理员',3:'仓库员',4:'客户',5:'财务',6:'业务',7:'美工',8:'技术员'}" id="usertype" name="usertype" onclick="stu(this)" value="0" /></td>
+		<td class="tableBorder_B" ><s:radio list="#{0:'业务助理',1:'采购',2:'采购管理员',3:'仓库员',4:'客户',5:'财务',6:'业务',7:'美工',8:'技术员',9:'采购助理'}" id="usertype" name="usertype" onclick="stu(this)" value="0" /></td>
 	</tr>
 	<tr>
 		<td align="right">帐号:</td>

@@ -27,7 +27,13 @@ public class KuCunTable implements Serializable{
 	private Double unitprice;//单价 
 	private Date time;//上传时间
 	private Date sytime;//使用时间
-	
+	private String transportproviders;//供运商
+	public String getTransportproviders() {
+		return transportproviders;
+	}
+	public void setTransportproviders(String transportproviders) {
+		this.transportproviders = transportproviders;
+	}
 	public Date getSytime() {
 		return sytime;
 	}

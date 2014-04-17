@@ -37,7 +37,7 @@
 			<result name="addStock">/inc/caigou/cg/addStock.jsp</result>
 			<result name="stockorder">/inc/caigou/cg/stockorder.jsp</result>
 			<result name="issuesorders">/inc/caigou/cg/wentiorder.jsp</result>
-			
+			<result name="upstock">/inc/caigou/cg/upStock.jsp</result>
 			 <interceptor-ref name="fileUpload">  
                 <!-- 配置允许上传的文件大小300M 314572800-->  
                 <param name="maximumSize">31457280</param>     

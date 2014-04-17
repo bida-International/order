@@ -54,9 +54,9 @@ public class PageBizImpl extends PageBean implements PageBiz
 	@Resource
     private DocumentDao documentDao;
 	//管理员查看全部订单
-	public PageBean selForPage(int pageSize, int page, String orderId,String time, String time1, String dhgatezhanghao, String danhao,String sumaitong, String bianma, Long leimu)
+	public PageBean selForPage(int pageSize, int page, String orderId,String time, String time1, String dhgatezhanghao, String danhao,String sumaitong, String bianma, Long leimu,String country)
     {
-    	 String hql = orderDao.getAllOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu);
+    	 String hql = orderDao.getAllOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu,country);
          return getFenYe(hql, pageSize, page);
     }
 
@@ -430,6 +430,11 @@ public class PageBizImpl extends PageBean implements PageBiz
     //采购查看问题订单
     public PageBean selIssuesOrders(int pageSize,int page,String orderid,Long userid){
     	String hql = orderTableDao.getIssuesOrders(orderid, userid);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //查询全部类目 
+    public PageBean getCategory(int pageSize,int page){
+    	String hql = orderTableDao.getCategory();
     	return getFenYe(hql, pageSize, page);
     }
 }

@@ -6,8 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <m:frame>
-
-	<s:form action="./tools/gatherData1Result.do">
+	<form action="./tools/gatherData1Result.do" method="post" name="forms" id="forms">
 		<table border="1" cellspacing="0" style="width: 100%; float: left">
 			<tr>
 				<th colspan="4" align="center">
@@ -18,6 +17,10 @@
 			<tr>
 				<td colspan="4">
 					导出时间：<input type="text" name="exporttime" onfocus="WdatePicker()" id="exporttime" value="${param.exporttime}"/>至<input type="text" name="exporttime1" onfocus="WdatePicker()" id="exporttime1" value="${param.exporttime1}"/>
+					<input type="submit" value="查询"/>
+		        	<s:hidden name="pageNumber" value="1"></s:hidden>
+					<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
+					<input type="hidden" value="${tit}" name="tit"> 
 				</td>
 			</tr>
 			<tr align="center" style="font-weight: bold;">
@@ -43,10 +46,10 @@
 						export="currentPageNumber=pageNumber" maxPageItems="${pageSize }" maxIndexPages="10" >
 						<pg:param name="keyCreateTime" value="${keyCreateTime }"/>
 						<pg:first>
-							<a href="${pageUrl}&pageNum=1">首页</a>
+							<a href="${pageUrl}&pageNum=1&exporttime=${param.exporttime}&exporttime1=${param.exporttime1}">首页</a>
 						</pg:first>
 						<pg:prev>
-							<a href="${pageUrl}&pageNum=${pageBean.currentPage-1}">上一页</a>
+							<a href="${pageUrl}&pageNum=${pageBean.currentPage-1}&exporttime=${param.exporttime}&exporttime1=${param.exporttime1}">上一页</a>
 						</pg:prev>
 						<pg:pages>
 							<c:choose>
@@ -54,19 +57,19 @@
 									<font color="red">${pageNumber}</font>
 								</c:when>
 								<c:otherwise>
-									<a href="${pageUrl}&pageNum=${pageNumber}">${pageNumber}</a>
+									<a href="${pageUrl}&pageNum=${pageNumber}&exporttime=${param.exporttime}&exporttime1=${param.exporttime1}">${pageNumber}</a>
 								</c:otherwise>
 							</c:choose>
 						</pg:pages>
 						<pg:next>
-							<a href="${pageUrl}&pageNum=${pageBean.currentPage+1}">下一页</a>
+							<a href="${pageUrl}&pageNum=${pageBean.currentPage+1}&exporttime=${param.exporttime}&exporttime1=${param.exporttime1}">下一页</a>
 						</pg:next>
 						<pg:last>
-							<a href="${pageUrl}&pageNum=${pageBean.allPage}">尾页</a>
+							<a href="${pageUrl}&pageNum=${pageBean.allPage}&exporttime=${param.exporttime}&exporttime1=${param.exporttime1}">尾页</a>
 						</pg:last>
 					</pg:pager>
 				</td>
 			</tr>
 		</table>
-	</s:form>
+	</form>
 </m:frame>

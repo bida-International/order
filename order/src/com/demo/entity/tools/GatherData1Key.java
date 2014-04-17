@@ -18,6 +18,14 @@ public class GatherData1Key implements Serializable {
 	private String queryParam; // 采集条件
 	private Long createTime;
 	private Long updateTime; 
+	private Long sfexported;//是否被导出
+	
+	public Long getSfexported() {
+		return sfexported;
+	}
+	public void setSfexported(Long sfexported) {
+		this.sfexported = sfexported;
+	}
 	@Id
 	@GeneratedValue
 	public Long getId() {
