@@ -13,6 +13,7 @@
 			<list>
 				<ref bean="synchDataJobCronTrigger" />
 				<ref bean="orderStatJobCronTrigger" />
+				<ref bean="productStatusCheckJobCronTrigger" />
 			</list>
 		</property>
 		<!-- Quartz配置 -->
@@ -50,6 +51,20 @@
 		<property name="concurrent" value="false" />
 	</bean>
 	<bean id="orderStatJob" class="com.demo.schedule.OrderStatJob" lazy-init="false"></bean>
+	
+	<!-- 定时检测产品状态 -->
+	<bean id="productStatusCheckJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="productStatusCheckJobDetail" />
+		<!-- 每五分钟执行一次 -->
+		<property name="cronExpression" value="0 0/5 * * * ?"/>
+	</bean>
+	<bean id="productStatusCheckJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="productStatusCheckJob" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="productStatusCheckJob" class="com.demo.schedule.ProductStatusCheckJob" lazy-init="false"></bean>
+	
 </beans>
 
 

@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "site-config")
 @XmlType(propOrder = {
 		"dhgateAppKey", "dhgateAppSecret", "dhgateApiUrl", "dhgateGetTokenUrl",
-		"aliRedirectUri", "aliApiUrl", "trackApiUrl"})
+		"aliRedirectUri", "aliApiUrl", "trackApiUrl", "autoSynchProductStatus"})
 public class SiteConfig {
 	
 	public static final String PATH = "/config/site-config.xml";
@@ -22,6 +22,7 @@ public class SiteConfig {
 	private String aliRedirectUri;
 	private String aliApiUrl;
 	private String trackApiUrl;
+	private Integer autoSynchProductStatus;
 	
 	public String getDhgateAppKey() {
 		return dhgateAppKey;
@@ -64,6 +65,12 @@ public class SiteConfig {
 	}
 	public void setTrackApiUrl(String trackApiUrl) {
 		this.trackApiUrl = trackApiUrl;
+	}
+	public Integer getAutoSynchProductStatus() {
+		return autoSynchProductStatus;
+	}
+	public void setAutoSynchProductStatus(Integer autoSynchProductStatus) {
+		this.autoSynchProductStatus = autoSynchProductStatus;
 	}
 	
 }

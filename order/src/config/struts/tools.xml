@@ -14,6 +14,15 @@
 		<action name="gatherData1Result" class="tools.gatherData1ResultAction">
 			<result name="success">/inc/tools/gatherData1Result.jsp</result>
 		</action>
+		
+		<action name="productStatus" class="tools.productStatusAction">
+			<result name="success">/inc/tools/productStatus.jsp</result>
+			<result name="input">/inc/tools/productStatus-add.jsp</result>
+			<result name="list" type="redirect">productStatus.do</result>
+		</action>
+		<action name="productStatusConfig" class="tools.productStatusConfigAction">
+			<result name="success">/inc/tools/productStatusConfig.jsp</result>
+		</action>
 	</package>
 	
 </struts>

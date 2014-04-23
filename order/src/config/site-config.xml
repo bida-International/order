@@ -14,4 +14,7 @@
 	<!-- 17track -->
 	<trackApiUrl>http://www.a.com/Rest/HandlerTrack.ashx</trackApiUrl>
 	
+	<!-- 产品状态同步功能配置 -->
+	<autoSynchProductStatus>0</autoSynchProductStatus>
+	
 </site-config>
