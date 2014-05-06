@@ -62,6 +62,15 @@ public class ProductStatusDaoImpl extends BaseDaoImpl<ProductStatus, Long> imple
 		return true;
 	}
 	
+	public boolean isExist(String aliUrl) {
+		String hql = "from ProductStatus where aliUrl like ?";
+		List<ProductStatus> list = ht.find(hql, new Object[] { aliUrl + "%" });
+		if (list == null || list.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
 	public void batchUpdateSynchResult(List<Long> idList, Long synchTime, Integer synchResult) {
 		String hql = "update ProductStatus set synchTime = ?, synchResult = ? where id in ?";
 		ht.bulkUpdate(hql, new Object[] {synchTime, synchResult, idList.toArray()});

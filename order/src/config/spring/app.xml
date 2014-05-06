@@ -131,6 +131,10 @@
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache/ehcache-hibernate-local.xml</prop>
 			</props>
 		</property>
 	</bean>
@@ -143,5 +147,7 @@
 	</bean>
 	<!-- 添加Bean的注解支持 -->
 	<context:component-scan base-package="com.demo"/> 
+	
+	<import resource="cache/applicationContext-ehcache.xml" />
 
 </beans> 

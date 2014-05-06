@@ -107,10 +107,10 @@ public class ProdcutStatusAction extends BaseAction {
 		itemcodeList.add(productStatus.getDhId());
 		boolean success = dhProductApiBiz.upshelfProducts((String[]) itemcodeList.toArray(), dhAccount);
 		if (success) {
-			productStatusBiz.saveOrUpdateProductStatus(productStatus);
+			productStatusBiz.checkProductStatus(productStatus);
 			Struts2Utils.renderJson("操作成功", true);
 		} else {
-			productStatusBiz.saveOrUpdateProductStatus(productStatus);
+			productStatusBiz.checkProductStatus(productStatus);
 			Struts2Utils.renderJson("操作失败", true);
 		}
 		return null;
@@ -124,10 +124,10 @@ public class ProdcutStatusAction extends BaseAction {
 		itemcodeList.add(productStatus.getDhId());
 		boolean success = dhProductApiBiz.downshelfProducts((String[]) itemcodeList.toArray(), dhAccount);
 		if (success) {
-			productStatusBiz.saveOrUpdateProductStatus(productStatus);
+			productStatusBiz.checkProductStatus(productStatus);
 			Struts2Utils.renderJson("操作成功", true);
 		} else {
-			productStatusBiz.saveOrUpdateProductStatus(productStatus);
+			productStatusBiz.checkProductStatus(productStatus);
 			Struts2Utils.renderJson("操作失败", true);
 		}
 		return null;

@@ -34,6 +34,8 @@
 					<a href="./tools/productStatus!add.do">添加产品</a>
 					<span>&nbsp;&nbsp;</span>
 					<a href="./tools/productStatusConfig.do">功能设置</a>
+					<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					<a href="./tools/pubProduct.do">发布产品</a>
 				</td>
 			</tr>
 			<tr align="center" style="font-weight: bold;">
@@ -44,7 +46,7 @@
 			<s:iterator value="pageBean.list" var="i">
 				<tr align="center">
 					<td>
-						<div style="float:left; width:80px; height:80px;"><s:if test="aliImgUrl != null"><img src="${i.dhImgUrl }" width="60" height="60" /></s:if></div>
+						<div style="float:left; width:80px; height:80px;"><s:if test="dhImgUrl != null"><img src="${i.dhImgUrl }" width="60" height="60" /></s:if></div>
 						<div style="float:left; text-align:left;">
 							<span>状态：</span>
 							<s:if test="dhStatus == 0"><span class='status_word' style='color:#ccc'>下架</span></s:if>

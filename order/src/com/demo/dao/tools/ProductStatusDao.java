@@ -13,5 +13,7 @@ public interface ProductStatusDao extends BaseDao<ProductStatus, Long> {
 	
 	public boolean isExist(String dhUrl, String aliUrl);
 	
+	public boolean isExist(String aliUrl);
+	
 	public void batchUpdateSynchResult(List<Long> idList, Long synchTime, Integer synchResult);
 }

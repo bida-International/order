@@ -58,15 +58,15 @@ public class ProductStatusBiz {
 		productStatus.setCreateTime(new Date().getTime());
 		productStatus.setZhangHaoId(zhangHao.getId());
 		productStatus.setZhangHaoAccount(zhangHao.getAccount());
-		this.saveOrUpdateProductStatus(productStatus);
+		this.checkProductStatus(productStatus);
 		return "success";
 	}
 	
 	/**
-	 * 保存更新
+	 * 检测状态
 	 * @param productStatus
 	 */
-	public void saveOrUpdateProductStatus(ProductStatus productStatus) {
+	public void checkProductStatus(ProductStatus productStatus) {
 		// 获取敦煌产品状态
 		String dhHtml = HttpClientUtils.doGetHtml(productStatus.getDhUrl());
 		Integer dhStatus = this.getDhStatusByHtml(productStatus.getDhId(), dhHtml);
@@ -90,6 +90,10 @@ public class ProductStatusBiz {
 		} else if (dhStatus == aliStatus) {
 			productStatus.setStatusFlag(1);
 		}
+		productStatusDao.merge(productStatus);
+	}
+	
+	public void save(ProductStatus productStatus) {
 		productStatusDao.merge(productStatus);
 	}
 	
@@ -159,9 +163,20 @@ public class ProductStatusBiz {
 		Pattern p = Pattern.compile(regx);
 		Matcher macher = p.matcher(html);
 		
+		String imgUrl = null;
 		if (macher.find()) {
-			return macher.group(2);
+			imgUrl = macher.group(2);
+			imgUrl = imgUrl.substring(0, imgUrl.lastIndexOf("_"));
+			return imgUrl;
 		}
-		return null;
+		
+		regx = "<img(.*?)src=\"(.*?)\" data-role=\"thumb\" />";
+		p = Pattern.compile(regx);
+		macher = p.matcher(html);
+		if (macher.find()) {
+			imgUrl = macher.group(2);
+			imgUrl = imgUrl.substring(0, imgUrl.lastIndexOf("_"));
+		}
+		return imgUrl;
 	}
 }

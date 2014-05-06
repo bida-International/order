@@ -23,6 +23,9 @@
 		<action name="productStatusConfig" class="tools.productStatusConfigAction">
 			<result name="success">/inc/tools/productStatusConfig.jsp</result>
 		</action>
+		<action name="pubProduct" class="tools.pubProductAction">
+			<result name="success">/inc/tools/pubProduct.jsp</result>
+		</action>
 	</package>
 	
 </struts>

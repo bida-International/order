@@ -51,7 +51,7 @@ public class ProductStatusCheckJob implements InitializingBean {
 		System.out.println("---- 自动检测产品状态 ----");
 		List<ProductStatus> productStatusList = pageBean.getList();
 		for (ProductStatus productStatus : productStatusList) {
-			this.productStatusBiz.saveOrUpdateProductStatus(productStatus);
+			this.productStatusBiz.checkProductStatus(productStatus);
 		}
 
 		// 检查自动同步状态功能开关是否开启
