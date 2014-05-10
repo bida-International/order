@@ -28,6 +28,9 @@ public class DhAlbumApiBiz {
 	
 	public JSONObject upload(String imgUrl, ZhangHao dhAccount) {
 		String fileName = imgUrl.substring(imgUrl.lastIndexOf("/") + 1);
+		if (fileName.indexOf("?") > 0) {
+			fileName = fileName.substring(0, fileName.indexOf("?"));
+		}
 		String prjPath = DhAlbumApiBiz.class.getClassLoader().getResource(".").getPath();
 		String filePath = prjPath + "/tmp/" + fileName;
 		File file = new File(filePath);
@@ -71,7 +74,7 @@ public class DhAlbumApiBiz {
 				}
 				
 				JSONObject statusObj = respJson.getJSONObject("status");
-				if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+				if (Integer.parseInt(statusObj.getString("code")) == 0) {
 					return respJson;
 				}
 			}

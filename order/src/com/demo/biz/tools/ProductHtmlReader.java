@@ -253,9 +253,11 @@ public class ProductHtmlReader {
 			JSONObject jsonAttr = jsonAttrList.getJSONObject(i);
 			if (jsonAttr.getInt("required") == 1 &&
 					!this.attrHasAdded(jsonAttr.getLong("attrId"), prodAttrList)) {
+				Long attrValId = 0l;
 				ProdAttr prodAttr = new ProdAttr();
 				if (jsonAttr.getString("lineAttrName").equalsIgnoreCase("brand")) {
 					prodAttr.setIsbrand(1);
+					attrValId = 99l;
 				} else {
 					prodAttr.setIsbrand(0);
 				}
@@ -264,7 +266,7 @@ public class ProductHtmlReader {
 				ProdAttrVal prodAttrVal = new ProdAttrVal();
 				prodAttrVal.setAttrId(jsonAttr.getLong("attrId"));
 				prodAttrVal.setAttrName(jsonAttr.getString("lineAttrName"));
-				prodAttrVal.setAttrValId(jsonAttr.getLong("attrId"));
+				prodAttrVal.setAttrValId(attrValId);
 				prodAttrVal.setLineAttrvalName("");
 				prodAttrVal.setLineAttrvalNameCn("");
 				prodAttrValList.add(prodAttrVal);
@@ -314,6 +316,7 @@ public class ProductHtmlReader {
 	/** 取类目下的产品属性列表 */
 	private JSONArray getCateAttribueList() {
 		JSONObject json = dhCategoryApiBiz.getCategory(pubCateId, dhAccount);
+		System.out.println(json.toString());
 		if (json != null && json.getJSONObject("categoryPublish").containsKey("attributeList")) {
 			return json.getJSONObject("categoryPublish").getJSONArray("attributeList");
 		}
@@ -532,7 +535,7 @@ public class ProductHtmlReader {
 			if (skuVal.containsKey("bulkOrder")) { // 包含批发信息
 				Integer startQty = skuVal.getInt("bulkOrder");
 				if (!isExistSaleRange(startQty, prodSaleRangeList)) {
-					Double bulkPrice = skuVal.getDouble("actSkuPrice") * 1.3; // 批发价格 * 1.3倍
+					Double bulkPrice = skuVal.getDouble("skuBulkPrice") * 1.3; // 批发价格 * 1.3倍
 					Double discount = (retailPrice - bulkPrice) / retailPrice;
 					discount = Double.parseDouble(new DecimalFormat("#0.00").format(discount));
 					

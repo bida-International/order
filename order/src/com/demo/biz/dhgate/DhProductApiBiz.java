@@ -47,7 +47,7 @@ public class DhProductApiBiz {
 			}
 			
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				return respJson;
 			}
 		}
@@ -79,7 +79,7 @@ public class DhProductApiBiz {
 			}
 			
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				return respJson.getJSONObject("productState").getInt("istate");
 			}
 		}
@@ -108,7 +108,7 @@ public class DhProductApiBiz {
 			}
 			
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				return true;
 			}
 		}
@@ -136,7 +136,7 @@ public class DhProductApiBiz {
 			}
 			
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				return true;
 			}
 		}
@@ -177,7 +177,7 @@ public class DhProductApiBiz {
 			}
 			
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				return respJson;
 			}
 		}
@@ -209,11 +209,7 @@ public class DhProductApiBiz {
 				}
 			}
 			
-			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK") &&
-					Integer.parseInt(statusObj.getString("code")) == 0) {
-				return respJson;
-			}
+			return respJson;
 		}
 		return null;
 	}

@@ -39,6 +39,10 @@ public class ProductStatusCheckJob implements InitializingBean {
 	private DhProductApiBiz dhProductApiBiz;
 	
 	public void execute() {
+		
+		// 自动检测功能暂时先不启用，
+		
+		/*
 		int pageSize = 100; // 一次检测100个产品
 		int pageNum = 1;
 		String orderBy = "checkTime asc";
@@ -114,6 +118,7 @@ public class ProductStatusCheckJob implements InitializingBean {
 				productStatusDao.batchUpdateSynchResult(downselfIdList, synchTime, synchResult);
 			}
 		}
+		*/
 	}
 
 }

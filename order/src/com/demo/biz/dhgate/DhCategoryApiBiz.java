@@ -54,7 +54,7 @@ public class DhCategoryApiBiz {
 			}
 			
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				ApiCacheUtils.getInstance().addCache(CACHE_KEY, respJson.toString());
 				return respJson;
 			}
@@ -94,7 +94,7 @@ public class DhCategoryApiBiz {
 			}
 			
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				ApiCacheUtils.getInstance().addCache(CACHE_KEY, respJson.toString());
 				return respJson;
 			}
