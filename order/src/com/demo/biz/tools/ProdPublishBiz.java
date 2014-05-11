@@ -26,6 +26,8 @@ public class ProdPublishBiz {
 	private ProductHtmlReader productHtmlReader;
 	@Resource
 	private DhProductApiBiz dhProductApiBiz;
+	@Resource
+	private ProductStatusBiz productStatusBiz;
 	
 	public OptResult doPublish(String aliUrl, String pubCateId,
 			String shippingTemplateId, String productGroupId, ZhangHao dhAccount) {
@@ -84,12 +86,14 @@ public class ProdPublishBiz {
 				dhStatus = productDetail.getJSONObject("product").getInt("istate");
 			}
 			// Èë¿â
+			productStatusBiz.addProdcut(dhProductUrl, aliUrl, dhAccount);
 			ProductStatus productStatus = new ProductStatus();
 			productStatus.setDhId(itemCode);
 			productStatus.setDhUrl(dhProductUrl);
 			productStatus.setDhImgUrl(dhImgUrl);
 			productStatus.setDhStatus(dhStatus);
 			productStatus.setAliUrl(aliUrl);
+			productStatus.setAliImgUrl(productStatusBiz.getAliImgUrl(aliUrl));
 			productStatus.setAliStatus(1);
 			productStatus.setZhangHaoId(dhAccount.getId());
 			productStatus.setZhangHaoAccount(dhAccount.getAccount());

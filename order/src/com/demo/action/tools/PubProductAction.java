@@ -138,74 +138,6 @@ public class PubProductAction extends BaseAction {
 		} else {
 			Struts2Utils.renderJson("发布模式错误", false);
 		}
-		
-//		try {
-//			String aliUrl = Struts2Utils.getParameter("aliUrl");
-//			if (productStatusDao.isExist(aliUrl)) {
-//				Struts2Utils.renderJson("该产品已在库中", false);
-//				return null;
-//			}
-//			
-//			ZhangHao dhAccount = zhangHaoDao.get(zhangHaoId);
-//			
-//			Product product = new Product();
-//			product.setCatePubId(Struts2Utils.getParameter("pubCateId"));
-//			product.setShippingModelId(Struts2Utils.getParameter("shippingTemplateId"));
-//			
-//			String productGroupId = Struts2Utils.getParameter("productGroupId");
-//			if (!productGroupId.equals("0")) {
-//				product.setProductGroupId(productGroupId);
-//			}
-//			
-//			// 采集产品信息
-//			OptResult optResult =  productHtmlReader.read(aliUrl, product, dhAccount);
-//			if (optResult.getResult() == 0) {
-//				Struts2Utils.renderJson(optResult.getMsg(), false);
-//				return null;
-//			}
-//			
-//			System.out.println(JSONObject.fromObject(product).toString());
-//			// 发布产品
-//			JSONObject respJson = dhProductApiBiz.add(product, dhAccount);
-//			if (respJson == null) {
-//				Struts2Utils.renderJson("调用发布接口时出错！", false);
-//			} else {
-//				String itemCode = respJson.getString("itemcode");
-//				String dhProductUrl = "";
-//				String dhImgUrl = "http://image.dhgate.com/" + product.getImageUrl() + "/1.0x0.jpg";
-//				Integer dhStatus = 0;
-//				JSONObject productDetail = dhProductApiBiz.getProduct(itemCode, dhAccount);
-//				if (productDetail != null) {
-//					dhProductUrl = "http://www.dhgate.com/" + productDetail.getJSONObject("product").getString("productUrl");
-//					dhStatus = productDetail.getJSONObject("product").getInt("istate");
-//				}
-//				// 入库
-//				ProductStatus productStatus = new ProductStatus();
-//				productStatus.setDhId(itemCode);
-//				productStatus.setDhUrl(dhProductUrl);
-//				productStatus.setDhImgUrl(dhImgUrl);
-//				productStatus.setDhStatus(dhStatus);
-//				productStatus.setAliUrl(aliUrl);
-//				productStatus.setAliStatus(1);
-//				productStatus.setZhangHaoId(dhAccount.getId());
-//				productStatus.setZhangHaoAccount(dhAccount.getAccount());
-//				productStatus.setCreateTime(new Date().getTime());
-//				productStatus.setCheckTime(new Date().getTime());
-//				if (dhStatus == 2) {
-//					productStatus.setStatusFlag(2);
-//				} else if (dhStatus != 1) {
-//					productStatus.setStatusFlag(0);
-//				} else if (dhStatus == 1) {
-//					productStatus.setStatusFlag(1);
-//				}
-//				productStatusDao.merge(productStatus);
-//				
-//				Struts2Utils.renderJson("发布产品成功！", true);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			Struts2Utils.renderJson("发生未知错误！", false);
-//		}
 		return null;
 	}
 	
@@ -231,7 +163,8 @@ public class PubProductAction extends BaseAction {
 			HSSFWorkbook wb = new HSSFWorkbook(fs);
 			HSSFCell cell = null;
 			HSSFSheet st = wb.getSheetAt(0);
-			for (int rowIndex = 1; rowIndex <= st.getLastRowNum(); rowIndex++) {
+			int maxReadCount = 1000;
+			for (int rowIndex = 1; rowIndex <= maxReadCount; rowIndex++) {
 				HSSFRow row = st.getRow(rowIndex);
 				cell = row.getCell(0);
 				String aliUrl = cell.getStringCellValue();

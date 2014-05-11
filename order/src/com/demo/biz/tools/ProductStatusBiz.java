@@ -153,6 +153,11 @@ public class ProductStatusBiz {
 		return null;
 	}
 	
+	public String getAliImgUrl(String aliUrl) {
+		String html = HttpClientUtils.doGetHtml(aliUrl);
+		return this.getAliImgUrlByHtml(html);
+	}
+	
 	/**
 	 * 获取速卖通产品图片地址
 	 * @param html

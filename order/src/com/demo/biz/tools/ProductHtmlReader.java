@@ -183,7 +183,11 @@ public class ProductHtmlReader {
 		p = Pattern.compile(regx);
 		macher = p.matcher(itemSpecHtml);
 		while (macher.find()) {
-			attrNameList.add(macher.group(1).replace(":", "").trim());
+			String attrName = macher.group(1).replace(":", "").trim();
+			if (attrName.contains("Brand") || attrName.contains("brand")) {
+				attrName = "brand";
+			}
+			attrNameList.add(attrName);
 		}
 		
 		if (attrNameList.isEmpty()) {
@@ -202,6 +206,7 @@ public class ProductHtmlReader {
 		ProdAttr customProdAttr = new ProdAttr(); // 自定义属性
 		Long customAttrId = 11l;
 		Long customAttrValId = 1l;
+		Integer customAttrNum = 0; // 自定义属性个数, 最多
 		customProdAttr.setAttrId(customAttrId);
 		customProdAttr.setIsbrand(0);
 		customProdAttr.setProdAttrValList(new ArrayList<ProdAttrVal>());
@@ -224,6 +229,13 @@ public class ProductHtmlReader {
 				prodAttr.setAttrId(prodAttrVal.getAttrId());
 				prodAttrList.add(prodAttr);
 			} else { // 自定义属性
+				if (customAttrNum == 10) { // 最多10个自定义属性
+					continue;
+				}
+				if (attrName.equalsIgnoreCase("brand")) {
+					continue;
+				}
+				
 				// 检查属性值长度, 不超过40
 				while (attrVal.length() > 40) {
 					if (attrVal.indexOf(",") > 0) {
@@ -241,6 +253,7 @@ public class ProductHtmlReader {
 				prodAttrVal.setLineAttrvalNameCn(attrVal);
 				customProdAttr.getProdAttrValList().add(prodAttrVal);
 				customAttrValId++;
+				customAttrNum++;
 			}
 		}
 		if (!customProdAttr.getProdAttrValList().isEmpty()) {
@@ -580,24 +593,30 @@ public class ProductHtmlReader {
 	
 	/** 取自定义规格属性 */
 	private ProdSpecSelfDef getProdSpec(String skuPropIds, String html) {
-		String regx = "<a(.*?) id=\"sku-1-" + skuPropIds + "\"(.*?) title=\"(.*?)\"(.*?)>(.*?)</a>";
+		String regx = "<a(.*?) id=\"sku-1-" + skuPropIds + "\"(.*?)>(.*?)</a>";
 		Pattern p = Pattern.compile(regx);
 		Matcher macher = p.matcher(html);
-		String attrValName = "";
-		String imgHtml = "";
+		String attrHtml = "";
 		if (macher.find()) {
-			attrValName = macher.group(3);
-			imgHtml = macher.group(5);
+			attrHtml = macher.group(3);
 		}
 		
-		// 取图片信息
+		String attrValName = "";
 		String imgUrl = "";
-		if (!imgHtml.equals("")) {
-			regx = "<img(.*?)bigpic=\"(.*?)\"";
+		if (attrHtml.contains("<img")) {
+			regx = "<img(.*?)title=\"(.*?)\"(.*?)bigpic=\"(.*?)\"";
 			p = Pattern.compile(regx);
-			macher = p.matcher(imgHtml);
+			macher = p.matcher(attrHtml);
 			if (macher.find()) {
-				imgUrl = macher.group(2);
+				attrValName = macher.group(2);
+				imgUrl = macher.group(4);
+			}
+		} else {
+			regx = "<span>(.*?)</span>";
+			p = Pattern.compile(regx);
+			macher = p.matcher(attrHtml);
+			if (macher.find()) {
+				attrValName = macher.group(1);
 			}
 		}
 		

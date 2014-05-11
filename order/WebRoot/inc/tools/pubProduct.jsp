@@ -75,7 +75,11 @@ th, td { height: 30px; vertical-align: middle;}
 		<tr class="pubMode">
 			<td align="right">请选择Excel文件：</td>
 			<td><input type="file" name="excel" />
-				<span style="color:#999">&nbsp;&nbsp;&nbsp;&nbsp;（该Excel文件从“工具箱 > 采集产品链接记录”页面中导出，导出的文件可能格式不正确，请先另存为新Excel文件后上传）</span></td>
+				<br/>
+				<span style="color:#999">
+					&nbsp;&nbsp;&nbsp;&nbsp;（该Excel文件从“工具箱 > 采集产品链接记录”页面中导出，导出的文件可能格式不正确，请先另存为新Excel文件后上传，每次都多发布1000条）
+				</span>
+			</td>
 		</tr>
 		<tr class="pubMode" style="display:none;">
 			<td align="right">速卖通产品页面地址：</td>
@@ -325,9 +329,8 @@ th, td { height: 30px; vertical-align: middle;}
 			dataType: "json",
 			success: function(resp) {
 				if (resp.success) {
-					$("#t1").html("发布产品结束");
+					$("#t1").html("正在结束发布，请稍候...");
 					$("#startButton").hide();
-					$("#backButton").show();
 				}
 			}
 		});
