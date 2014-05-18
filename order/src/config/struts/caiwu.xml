@@ -19,6 +19,7 @@
 			<result name="updatedanhao">/inc/caiwu/updatedanhao.jsp</result>
 			<result name="getPayMent">/inc/caiwu/getPayment.jsp</result>
 			<result name="updateorders">/inc/caiwu/updateorders.jsp</result>
+			<result name="getcaigous">/inc/caiwu/getcaigous.jsp</result>
 			<result name="ceshi">/inc/caiwu/test.jsp</result>
 			 <result name="success" type="stream"> 
                 <param name="contentType">application/vnd.ms-excel</param> 

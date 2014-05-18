@@ -22,7 +22,11 @@
 			<result name="kucun">/inc/caigou/cgadmin/kucun.jsp</result>
 			<result name="upnumber">/inc/caigou/cgadmin/upnumber.jsp</result>
 			<result name="upzhanghao">/inc/caigou/cgadmin/upzhanghao.jsp</result>
+			<result name="cgsingleaudit">/inc/caigou/cgadmin/cgsingleaudit.jsp</result>
 			<result name="cgadminexportOrder">/inc/caigou/cgadminexportOrder.jsp</result>
+			<result name="tuihuo">/inc/caigou/cgadmin/tuihuo.jsp</result>
+			<result name="caigouweiwancheng">/inc/caigou/cgadmin/caigouweiwancheng.jsp</result>
+			<result name="sumaitong">/inc/caigou/cgadmin/sumaitong.jsp</result>
 		</action>
 	</package>
 </struts>

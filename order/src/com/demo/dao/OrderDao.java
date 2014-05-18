@@ -10,7 +10,7 @@ import java.util.List;
 public interface OrderDao extends BaseDao<OrderTable,Long>
 {
 	//查看全部订单
-    public abstract String getAllOrder(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract String getAllOrder(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
 
     public abstract OrderTable getDingDao(String s);
 
@@ -28,15 +28,15 @@ public interface OrderDao extends BaseDao<OrderTable,Long>
 
     public abstract List<OrderTable> getWanChengOrder(String s);
     //管理员查看总金额
-    public abstract List<OrderTable> getAllMoney(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getAllMoney(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //管理员查看总运费
-    public abstract List<OrderTable> getAllYunFei(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getAllYunFei(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //管理员查看总货款
-    public abstract List<OrderTable> getAllHuoKuan(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getAllHuoKuan(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //管理员查看总退款
-    public abstract List<OrderTable> getAllTuiKuan(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getAllTuiKuan(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //管理员查看纠纷个数
-    public abstract List<OrderTable> getJiuFenNum(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getJiuFenNum(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
 
     public abstract List<OrderTable> getJiuFen(String s, String s1, String s2,Long selcaigouyuan,String leimus);
     //查看纠纷订单
@@ -46,9 +46,9 @@ public interface OrderDao extends BaseDao<OrderTable,Long>
 
     public abstract List<OrderTable> getAllOrderId(String s);
     //管理员查看运费为空
-    public abstract List<OrderTable> getYunFeiNullNum(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getYunFeiNullNum(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //管理员查看货款为空
-    public abstract List<OrderTable> getHuoKuanNullNum(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getHuoKuanNullNum(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //业务查询运费为空
     public abstract String getYunFeiNull(String s, String s1, String s2);
 
@@ -66,7 +66,7 @@ public interface OrderDao extends BaseDao<OrderTable,Long>
     //查看退货订单
     public abstract String getTuiKuanAll(String s, String danhao,Long chuli);
     //查看问题订单
-    public abstract String getWenTiOrder(String s);
+    public abstract String getWenTiOrder(String s,String time,String time1);
 
     public abstract List<OrderTable> getCaiGouHuoKuanNull(Long long1, String s, String s1, String s2);
     //查看采购未完成订单
@@ -100,7 +100,7 @@ public interface OrderDao extends BaseDao<OrderTable,Long>
 
     public abstract List<OrderTable> getCaiGouJiuFenMoney(Long long1, String s, String s1, String s2);
     //管理员查看纠纷总额
-    public abstract List<OrderTable> getCaiGouAllJiuFenMoney(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getCaiGouAllJiuFenMoney(String s, String s1, String s2, String s3,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
 
     public abstract List<OrderTable> getOldDaoRu(Long long1);
 
@@ -134,7 +134,7 @@ public interface OrderDao extends BaseDao<OrderTable,Long>
     //管理员 导出发给客户的运费
     public List<OrderTable> getAdminYunFei(Long id,String time);
     //总的未入账
-    public List<OrderTable> getWeiRuZhang(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public List<OrderTable> getWeiRuZhang(String orderId, String time, String time1, String zhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //查询全部未入账
     public String getAllWeiRuZhang(String orderId, String time, String time1, String zhanghao,String danhao);
     //单号查看全部

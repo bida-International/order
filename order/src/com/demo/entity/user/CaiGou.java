@@ -18,6 +18,14 @@ public class CaiGou implements Serializable{
 	private String name;//姓名
 	private Long userid;//账户编号
 	private Long quanxian;//权限
+	private Long cgadminId;//采购管理员编号 
+	
+	public Long getCgadminId() {
+		return cgadminId;
+	}
+	public void setCgadminId(Long cgadminId) {
+		this.cgadminId = cgadminId;
+	}
 	public Long getQuanxian() {
 		return quanxian;
 	}

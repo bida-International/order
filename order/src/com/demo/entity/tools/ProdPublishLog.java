@@ -25,8 +25,8 @@ public class ProdPublishLog implements Serializable {
 	private Integer result;
 	private String msg;
 	private Long createTime;
-	
-	
+
+
 	public Long getId() {
 		return id;
 	}
@@ -91,5 +91,5 @@ public class ProdPublishLog implements Serializable {
 	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
-	
+
 }

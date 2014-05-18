@@ -36,6 +36,8 @@ public class LoginInfo implements Serializable{
     private Long gukeId;//顾客编号
     private Long CangKuYuanId;//仓库员编号
     private Long caiwuId;//财务编号
+    //业务编号
+    private Long businessId;//业务编号
 	//登录时间
 	private Timestamp loginTime;
 	private List<CaiGou> caigou;//采购
@@ -48,6 +50,13 @@ public class LoginInfo implements Serializable{
 	private Long id;//用户编号
 	private Long yewu1Id;//业务编号
 	private Long psa;//采购助理
+	
+	public Long getBusinessId() {
+		return businessId;
+	}
+	public void setBusinessId(Long businessId) {
+		this.businessId = businessId;
+	}
 	public Long getPsa() {
 		return psa;
 	}

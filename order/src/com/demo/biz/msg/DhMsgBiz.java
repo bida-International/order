@@ -9,11 +9,14 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.demo.biz.dhgate.DhOrderApiBiz;
+import com.demo.biz.dhgate.DhCommonApiBiz;
+import com.demo.biz.dhgate.DhMsgApiBiz;
+import com.demo.biz.dhgate.DhOrderBiz;
 import com.demo.biz.dhgate.DhProductApiBiz;
 import com.demo.dao.DhMsgInfoDao;
 import com.demo.dao.DhMsgTopicDao;
 import com.demo.dao.LeiMuDao;
+import com.demo.dao.ZhangHaoDao;
 import com.demo.entity.DhMsgInfo;
 import com.demo.entity.DhMsgTopic;
 import com.demo.entity.ZhangHao;
@@ -33,11 +36,15 @@ public class DhMsgBiz {
 	@Resource
 	private DhMsgInfoDao dhMsgInfoDao;
 	@Resource
-	private DhOrderApiBiz dhOrderApiBiz;
+	private DhOrderBiz DhOrderBiz;
 	@Resource
 	private DhProductApiBiz dhProductApiBiz;
 	@Resource
 	private LeiMuDao leiMuDao;
+	@Resource
+	private DhMsgApiBiz dhMsgApiBiz;
+	@Resource
+	private ZhangHaoDao zhangHaoDao;
 	
 	/**
 	 * 分页查询站内信
@@ -76,13 +83,13 @@ public class DhMsgBiz {
 	@Deprecated
 	private void fenpeiOrderMsg(DhMsgTopic topic, ZhangHao dhAccount) {
 		// 取订单详情
-		JSONObject order = dhOrderApiBiz.getOrder(topic.getParm(), dhAccount);
+		JSONObject order = DhOrderBiz.getOrder(topic.getParm(), dhAccount);
 		if (order == null) {
 			return;
 		}
 		// 取订单产品详情
 		String rfxid = order.getJSONObject("rfxDto").getString("rfxid");
-		JSONObject orderProduct = dhOrderApiBiz.getOrderProduct(rfxid, dhAccount);
+		JSONObject orderProduct = DhOrderBiz.getOrderProduct(rfxid, dhAccount);
 		if (orderProduct == null || orderProduct.getString("lstProductDTO").equals("null") || 
 				orderProduct.getString("lstProductDTO").equals("[]") ) {
 			return;
@@ -103,5 +110,44 @@ public class DhMsgBiz {
 		topic.setBdUserId(leiMu.getMsgFenpeiUserId());
 		topic.setBdUserName(leiMu.getMsgFenpeiUserName());
 		dhMsgTopicDao.merge(topic);
+	}
+	
+	public void delete(String topicIds) {
+		String[] idArr = topicIds.split(",");
+		for (String id : idArr) {
+			Long topicId = Long.parseLong(id);
+			// 删除msgInfo
+			List<DhMsgInfo> msgInfoList = dhMsgInfoDao.getAllByTopicId(topicId);
+			for (DhMsgInfo msgInfo : msgInfoList) {
+				dhMsgInfoDao.delete(msgInfo);
+			}
+			// 删除msgTopic
+			DhMsgTopic msgTopic = dhMsgTopicDao.getByTopicId(topicId);
+			dhMsgTopicDao.delete(msgTopic);
+		}
+	}
+	
+	public void updateReaded(String topicIds) {
+		if (topicIds == null || topicIds.equals("")) {
+			return;
+		}
+		
+		String[] topicIdArr = topicIds.split(",");
+		String updateTopicIds = "";
+		ZhangHao dhAccount = null;
+		for (String topicId : topicIdArr) {
+			DhMsgTopic msgTopic = dhMsgTopicDao.getByTopicId(Long.parseLong(topicId));
+			if (msgTopic.getReadStatus().equals(0)) {
+				updateTopicIds += topicId + ",";
+				if (dhAccount == null) {
+					dhAccount = zhangHaoDao.findUnique(msgTopic.getDhAccount(), 
+							DhCommonApiBiz.ACCOUNT_TYPE);
+				}
+				msgTopic.setReadStatus(1);
+				dhMsgTopicDao.merge(msgTopic);
+			}
+		}
+		updateTopicIds = updateTopicIds.substring(0, updateTopicIds.length() - 1);
+		dhMsgApiBiz.updateReaded(dhAccount, updateTopicIds);
 	}
 }

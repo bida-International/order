@@ -88,11 +88,11 @@
     		var pageNumber = document.getElementById("pageNumber").value;
     		location.href = "caigouadmin!getCaiGouAdminDeDaoOrder.do?pager.offset="+(pageNumber*10-10)+"&pageNumber="+pageNumber+"&orderId="+orderId+"&time="+time+"&time1="+time1+"&category="+category;
      }
-     function getPayment(){
+     function singleaudit(){
     	 var zhanghaoId = document.getElementById("zhanghaoId").value;
     	 var category = document.getElementById("category").value;
 		var items=document.getElementsByTagName("input"); 
-	     var lujing = "caigouadmin!getPayment.do?category="+category+"&zhanghaoId="+zhanghaoId+"&pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
+	     var lujing = "caigouadmin!getPayments.do?category="+category+"&zhanghaoId="+zhanghaoId+"&pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
 	     bianhao(items,lujing);
      }
       function page(pageNumber) 
@@ -124,8 +124,8 @@
 			<td>
 				 <input type="button" style="cursor:pointer" onclick="daochu()" value="选择导出订单"/>
 			</td>
-			<td><span style="color:red">传给财务:</span></td>
-			<td> <input type="button" style="cursor:pointer" onclick="getPayment()" value="给财务付款订单"/></td>
+				<td><span style="color:red">传给财务:</span></td>
+				<td> <input type="button" style="cursor:pointer" onclick="singleaudit()" value="传给财务付款"/></td>
 			</tr>
 			<tr>
 			<!-- <td><span style="color:red">传给业务:</span></td>

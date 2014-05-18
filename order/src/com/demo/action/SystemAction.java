@@ -2,6 +2,7 @@ package com.demo.action;
 
 import com.demo.biz.SystemBiz;
 import com.demo.dao.*;
+import com.demo.dao.user.BusinessDao;
 import com.demo.dao.user.CaiGouAdminDao;
 import com.demo.dao.user.CaiGouDao;
 import com.demo.dao.user.CaiWuDao;
@@ -14,6 +15,7 @@ import com.demo.dao.user.UserDao;
 import com.demo.dao.user.YeWu1Dao;
 import com.demo.dao.user.YeWuDao;
 import com.demo.entity.*;
+import com.demo.entity.user.BusinessTable;
 import com.demo.entity.user.CaiGou;
 import com.demo.entity.user.CaiGouAdmin;
 import com.demo.entity.user.CaiWuTable;
@@ -66,6 +68,8 @@ public class SystemAction extends BaseAction  implements ServletRequestAware
     private TechnicianDao technicianDao;
 	@Resource
     private PuchasingAssistantDao puchasingassistantdao;
+	@Resource
+    private BusinessDao businessDao;
     public String username;
     public String pwd;
     public String msg;
@@ -104,6 +108,7 @@ public class SystemAction extends BaseAction  implements ServletRequestAware
 	        YeWu1 yy = yeWu1Dao.getByUserId(info.getUserId());
 	        ClipArt hh = clipArtDao.getByUserId(info.getUserId());
 	        Technician js = technicianDao.getByUserId(info.getUserId());
+	        BusinessTable bu = businessDao.getByUserId(info.getUserId());
 	        com.demo.entity.user.PurchasingAssistant pp =  puchasingassistantdao.getByUserId(info.getUserId());
 	        if(Boolean.TRUE.equals(user.getAdmin())){
 	            info.setRole(Integer.valueOf(1));
@@ -154,6 +159,10 @@ public class SystemAction extends BaseAction  implements ServletRequestAware
 	        else if(pp != null){
 	        	info.setRole(11);
 	        	info.setTechnicianId(pp.getId());
+	        }
+	        else if(bu != null){
+	        	info.setRole(12);
+	        	info.setTechnicianId(bu.getId());
 	        }
 	        else
 	        {

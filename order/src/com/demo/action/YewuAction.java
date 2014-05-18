@@ -1,5 +1,6 @@
 package com.demo.action;
 
+import com.demo.biz.OrderStatLmBiz;
 import com.demo.biz.OrderStatZhBiz;
 import com.demo.dao.GuoJiaDao;
 import com.demo.dao.LeiMuDao;
@@ -56,6 +57,8 @@ public class YewuAction extends BaseAction implements ServletRequestAware
     private LeiMuDao leiMuDao;
 	@Resource
     private OrderStatZhBiz orderStatZhBiz;
+	@Resource
+    private OrderStatLmBiz orderStatLmBiz;
 	@Resource
     private ZhangHaoDao zhanghaodao;
 	
@@ -136,10 +139,10 @@ public class YewuAction extends BaseAction implements ServletRequestAware
              Long tuihuo = ordertable.getTuihuo();
              String bianma = ordertable.getBianma(); 
              String gongyunshang = ordertable.getGongyunshang();
-             java.sql.Date time = ordertable.getJiufentime();            
+             String time = ordertable.getJiufentime();            
              ordertable = (OrderTable)orderDao.get(ordertable.getId());
              ZhangHao zh = zhanghaodao.get(ordertable.getZhanghaoId());
-             System.out.println("+++zhanghaoid++"+ordertable.getZhanghaoId());
+             LeiMuTable lm = leiMuDao.get(ordertable.getLeimuid());
              ordertable.setCaigouyuan(cai);
              ordertable.setOrderId(order);
              ordertable.setYunshu(yunshu);
@@ -159,12 +162,16 @@ public class YewuAction extends BaseAction implements ServletRequestAware
              ordertable.setBianma(bianma);
              ordertable.setGongyunshang(gongyunshang);
              if(jiufen ==1 && (time == null || "".equals(time))){
-            	 
-            	 ordertable.setJiufentime(new java.sql.Date(System.currentTimeMillis()));
+            	  Date d = new Date();
+                  SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                  String ff = f.format(d);
+            	 ordertable.setJiufentime(ff);
             	 orderStatZhBiz.updateStatData(ordertable.getTime(), zh); 
+            	 orderStatLmBiz.updateStatData(ordertable.getTime(), lm);
              }else if(jiufen ==1 && (time != null && !"".equals(time))){
             	    ordertable.setJiufentime(time);
             	    orderStatZhBiz.updateStatData(ordertable.getTime(),zh); 
+            	    orderStatLmBiz.updateStatData(ordertable.getTime(), lm);
              }
          
              ordertable.setXiugai(1l);
@@ -490,7 +497,7 @@ public class YewuAction extends BaseAction implements ServletRequestAware
          String str[] = new String[ch.length];
          for(int i = 0; i < ch.length; i++)
          {
-        	 System.out.println("++ÀàÄ¿id++++"+sel[i]);
+        	
         	 List<LeiMuTable> ss = leiMuDao.getSelId(Long.parseLong(sel[i]));
              List<OrderTable> ls = orderDao.getSelId(Long.parseLong(ch[i]));
              if(sel.length != ch.length)

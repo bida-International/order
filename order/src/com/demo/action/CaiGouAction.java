@@ -307,9 +307,28 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     {
         return "updatehuokuans";
     }
+//    //修改金额
+//    public String jsmoney(){
+//    	System.out.println("++++修改金额++");
+//    	String num = request.getParameter("num");
+//    	String goods = request.getParameter("goods");
+//    	String id = request.getParameter("id");
+//        List<KuCunTable> kk = kuCunDao.getGoodsUserId(goods);
+//        ordertable = orderDao.get(Long.parseLong(id));
+//        if (kk.size() != 0) {
+//        	if (Long.parseLong(num)>kk.get(0).getNum()) {
+//				msg = "库存数量剩"+kk.get(0).getNum()+",数量不足、操作失败";
+//			}else{
+//				ordertable.setMoney(Long.parseLong(num)*kk.get(0).getUnitprice());
+//				orderDao.merge(ordertable);
+//			}
+//		}
+//    	return "updatehuokuan";
+//    }
     //采购修改得到订单
     public String updatedingdans() throws Exception
     {
+    	System.out.println("+++库存订单+++");
     	String orderId = ordertable.getOrderId();
         String gongyunshang = ordertable.getGongyunshang();
         String beizhu = ordertable.getRemark();
@@ -324,14 +343,13 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
         Long kuaidi = ordertable.getKuaidifangshiId();
         String guojia = ordertable.getGuojia();
         String num = request.getParameter("num");
+        String miaosu = request.getParameter("miaosu");
         ordertable = (OrderTable)orderDao.get(ordertable.getId());
         ordertable.setGongyunshang(gongyunshang);
         ordertable.setRemark(beizhu);
         ordertable.setCaigouyuan(cai);
         ordertable.setDanhao(danhao);
-        ordertable.setHuokuan(huokuan);
         ordertable.setGuowaidizhi(dizhi);
-        ordertable.setWuping(wuping);
         ordertable.setCaigoutime(shijian);
         ordertable.setGuoneiwangzhanId(caigou); 
        	ordertable.setKuaidifangshiId(kuaidi);
@@ -341,27 +359,78 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String ff = f.format(d);
         if (Long.parseLong(kucun) == 1) {
-        	 LoginInfo us = (LoginInfo)getFromSession("logininfo");
-             List<KuCunTable> kk = kuCunDao.getGoodsUserId(wuping, us.getUserId());
+      
+             List<KuCunTable> kk = kuCunDao.getGoodsUserId(wuping);
              if (kk.size() == 0) {
      			msg = "库存订单里面没有找到("+wuping+")此物品、操作失败";
-     			return getCaiGouOrder();
+     			return "updatehuokuan";
      		}else{
+     			Long ku=0l;
+     			Long nn = 0l;
+     			if (kk.get(0).getNum() == null || kk.get(0).getNum() == 0l) {
+					nn = 0l;
+				}else{
+					nn = kk.get(0).getNum();
+				}
+     			if (kk.get(0).getZynum()==null || kk.get(0).getZynum() == 0) {
+					ku = 0l;
+				}else{
+					ku=kk.get(0).getZynum();
+				}
+     			if ((ku+(Long.parseLong(num)))>nn) {
+					msg = "占用库存大于库存数量、"+(((kk.get(0).getZynum())+(Long.parseLong(num)))-(kk.get(0).getNum()));
+					return "updatehuokuan";
+				}
      			if (kk.get(0).getNum() < Long.parseLong(num)) {
      				kk.get(0).setId(kk.get(0).getId());
-     				msg= "库存数量还差"+((Long.parseLong(num))-(kk.get(0).getNum()));
-     				kk.get(0).setNum(0l);
+     				msg= "库存数量还差"+((Long.parseLong(num))-(kk.get(0).getNum()))+"、请在物品那一栏修改物品数量";
+     			//	kk.get(0).setNum(0l);
+     			//	kk.get(0).setOrderId(orderId);
      				kk.get(0).setSytime(f.parse(ff));
+     				Long zy = 0l;
+     				if (kk.get(0).getZynum() != null) {
+						zy = kk.get(0).getZynum() + kk.get(0).getZynum();
+						
+					}else{
+						zy = kk.get(0).getZynum();
+					}
+     				kk.get(0).setZynum(zy);
+     				kk.get(0).setZynum(kk.get(0).getNum());
+     				ordertable.setHuokuan((kk.get(0).getUnitprice())*(kk.get(0).getNum()));
+     				ordertable.setNum(kk.get(0).getNum());
+     				kk.get(0).setThnum(kk.get(0).getNum());
      				kuCunDao.merge(kk.get(0));
      			}else{
+     				Long zy = 0l;
+ 					
+     				if (kk.get(0).getZynum() != null && kk.get(0).getZynum() != 0) {
+						zy = Long.parseLong(num) + kk.get(0).getZynum();
+						
+					}else{
+						zy = Long.parseLong(num);
+					}
      				kk.get(0).setId(kk.get(0).getId());
-     				kk.get(0).setNum((kk.get(0).getNum()-(Long.parseLong(num))));
+     			//	kk.get(0).setNum((kk.get(0).getNum()-(Long.parseLong(num))));
+     			//	kk.get(0).setOrderId(orderId);
      				kk.get(0).setSytime(f.parse(ff));
+     				kk.get(0).setZynum(zy);
+     				ordertable.setNum(Long.parseLong(num));
+     				ordertable.setHuokuan((kk.get(0).getUnitprice())*(Long.parseLong(num)));
+     				kk.get(0).setThnum(Long.parseLong(num));
      				kuCunDao.merge(kk.get(0));
      			}
+     			ordertable.setKucun(1l);
+     			ordertable.setKucunid(kk.get(0).getId());
+     			ordertable.setWuping(wuping+","+(Long.parseLong(num))+miaosu);
      		}
+             
 		}
-        orderDao.merge(ordertable);
+        if (Long.parseLong(kucun) == 0) {
+            ordertable.setHuokuan(huokuan);
+            ordertable.setWuping(wuping);
+		}
+		orderDao.merge(ordertable);
+		System.out.println("+库存+++");
         return getCaiGouOrder();
     }
 
@@ -575,6 +644,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
                 if(ls.size() != 0)
                 {
                     ((OrderTable)ls.get(0)).setId(Long.parseLong(ch[i]));
+                    ls.get(0).setFenpei(1l);
                     ((OrderTable)ls.get(0)).setSumaitong(1l);
                     orderDao.merge((OrderTable)ls.get(0));
                 }
@@ -942,7 +1012,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     public String getTuiHuo(){
     	LoginInfo us = (LoginInfo)getFromSession("logininfo");
     	int pageSize = 10;
-    	pageBean = pageBiz.selKanTuiHuo(pageSize, pageNumber, us.getUserId(), orderId,danhao, chuli);
+    	pageBean = pageBiz.selKanTuiHuo(pageSize, pageNumber, us.getUserId(), orderId,danhao);
     	return "tuihuo";
     }
     //修改处理情况
@@ -1090,11 +1160,14 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
   //批量上传图片
     public String uploadInventoryOrders() throws Exception{
     	try {
+    		String root = null;
         	//得到工程保存图片的路径
-        	String root = ServletActionContext.getServletContext().getRealPath("WebRoot/"+"upload/");
+    		if (uploadFile != null) {
+    			root = ServletActionContext.getServletContext().getRealPath("WebRoot/"+"upload/");		
+			}
             String[] coding = request.getParameterValues("bianma");
             String[] num = request.getParameterValues("num");
-            String[] totalprice = request.getParameterValues("totalprice");
+          //  String[] totalprice = request.getParameterValues("totalprice");//总价
             String[] unitprice = request.getParameterValues("unitprice");
             LoginInfo us = (LoginInfo)getFromSession("logininfo");
             String[] wuping = request.getParameterValues("wuping");
@@ -1115,7 +1188,8 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
             	List<KuCunTable> pic = kuCunDao.getThePictureName("upload"+"/"+this.getUploadFileFileName().get(i), us.getUserId());
             	String[] stu = new String[uploadFile.size()];
             	if (pic.size() == 0) {
-            		List<KuCunTable> cc = kuCunDao.getGoodsUserId(wuping[i], us.getUserId());
+            		List<KuCunTable> cc = kuCunDao.getGoodsUserId(wuping[i]);
+            		if (cc.size() == 0 || cc.get(0).getNum() == null || cc.get(0).getNum() == 0l) {
                	 	InputStream is = new FileInputStream(uploadFile.get(i)); 
                     //得到图片保存的位置(根据root来得到图片保存的路径在tomcat下的该工程里)
                     File destFile = new File(root,this.getUploadFileFileName().get(i));
@@ -1129,7 +1203,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
                	if (cc.size() == 0 ) {
                		 kk.setCoding(coding[i]);
                         kk.setNum(Long.parseLong(num[i]));
-                        kk.setTotalprice(Double.parseDouble(totalprice[i]));
+                        kk.setTotalprice(Double.parseDouble(unitprice[i])*Double.parseDouble(num[i]));
                         kk.setUnitprice(Double.parseDouble(unitprice[i]));
                         kk.setWuping(wuping[i]);
                         kk.setUserid(us.getUserId());
@@ -1142,7 +1216,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
        				cc.get(i).setId(cc.get(i).getId());
        				cc.get(i).setCoding(coding[i]);
        				cc.get(i).setNum(Long.parseLong(num[i]));
-       				cc.get(i).setTotalprice(Double.parseDouble(totalprice[i]));
+       				cc.get(i).setTotalprice(Double.parseDouble(unitprice[i])*Double.parseDouble(num[i]));
        				cc.get(i).setUnitprice(Double.parseDouble(unitprice[i]));
        				cc.get(i).setUserid(us.getUserId());
        				cc.get(i).setTransportproviders(transportproviders[i]);
@@ -1154,6 +1228,10 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
        			}
                    is.close();
                    os.close();
+            	}else{
+            		msg = "此物品还有库存、请库存用完之后再添加";
+					return "addStock";
+            	}
     			}else{
     				stu[i] = i+"图片名称已经存在";
     			}
@@ -1173,7 +1251,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     	try {
     		LoginInfo us = (LoginInfo)getFromSession("logininfo");
         	int pageSize = 10;
-        	pageBean = pageBiz.selStockOrder(pageSize, pageNumber, us.getUserId(),time,time1,bianma);
+        	pageBean = pageBiz.selStockOrder(pageSize, pageNumber, us.getUserId(),time,time1,bianma,orderId);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -1185,7 +1263,7 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     public String getIssuesOrders(){
     	LoginInfo us = (LoginInfo)getFromSession("logininfo");
     	int pageSize = 10;
-    	pageBean = pageBiz.selIssuesOrders(pageSize, pageNumber, orderId, us.getUserId());
+    	pageBean = pageBiz.selIssuesOrders(pageSize, pageNumber, orderId, us.getUserId(),time,time1);
     	return "issuesorders";
     }
     //将完成订单返回给代发 
@@ -1231,21 +1309,81 @@ public class CaiGouAction extends BaseAction implements ServletRequestAware
     }
     //修改库存
     public String updateStock(){
-    	   String bianma = kucuntable.getCoding();
-           Long num = kucuntable.getNum();
-           Double total = kucuntable.getTotalprice();
-           Double unitprice = kucuntable.getUnitprice();
-           String wuping = kucuntable.getWuping();
-           String transportproviders = kucuntable.getTransportproviders();
-           kucuntable = kuCunDao.get(kucuntable.getId());
-           kucuntable.setNum(num);
-           kucuntable.setCoding(bianma);
-           kucuntable.setTotalprice(total);
-           kucuntable.setUnitprice(unitprice);
-           kucuntable.setWuping(wuping);
-           kucuntable.setTransportproviders(transportproviders);
+    	try {
+    		LoginInfo us = (LoginInfo)getFromSession("logininfo");
+        	//得到工程保存图片的路径
+    		String root = null;
+    		if (uploadFile != null) {
+    			root = ServletActionContext.getServletContext().getRealPath("WebRoot/"+"upload/");		
+			}
+    		   String bianma = kucuntable.getCoding();
+               Long num = kucuntable.getNum();
+               Double total = kucuntable.getTotalprice();
+               Double unitprice = kucuntable.getUnitprice();
+               String wuping = kucuntable.getWuping();
+               String transportproviders = kucuntable.getTransportproviders();
+               kucuntable = kuCunDao.get(kucuntable.getId());
+               kucuntable.setNum(num);
+               kucuntable.setCoding(bianma);
+               kucuntable.setTotalprice(total);
+               kucuntable.setUnitprice(unitprice);
+               kucuntable.setWuping(wuping);
+               kucuntable.setTransportproviders(transportproviders);
+            File dirs = new File(root);//+(System.currentTimeMillis())   
+            if(!dirs.exists()){  
+                dirs.mkdirs();  
+            }
+            if(uploadFile == null){  
+            	orderDao.merge(ordertable);
+                return  getStockOrder();
+            }else{
+            //循环上传的文件
+            for(int i = 0 ; i < uploadFile.size() ; i ++){
+            
+        		String[] stu = new String[uploadFile.size()];
+           	 	InputStream is = new FileInputStream(uploadFile.get(i)); 
+                //得到图片保存的位置(根据root来得到图片保存的路径在tomcat下的该工程里)
+                File destFile = new File(root,this.getUploadFileFileName().get(i));
+                //把图片写入到上面设置的路径里
+                OutputStream os = new FileOutputStream(destFile);
+                byte[] buffer = new byte[1024];
+                int length  = 0;
+                while((length = is.read(buffer))>0){
+                    os.write(buffer, 0, length);
+                }
+                kucuntable.setUploadFile("upload"+"/"+this.getUploadFileFileName().get(i));
+               is.close();
+               os.close();
+               ActionContext.getContext().put("insert", stu);
+            }
+          }
+           
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	
            kuCunDao.merge(kucuntable);
            return getStockOrder();
+    }
+    //下单审核
+    public String singleaudit(){
+    	String ch[] = request.getParameter("bulletinId").split("-");
+        String str[] = new String[ch.length];
+        for(int i = 0; i < ch.length; i++)
+        {
+            List<OrderTable> ls = orderDao.getSelId(Long.valueOf(Long.parseLong(ch[i])));
+            if(ls.size() != 0){
+                    ls.get(0).setId(Long.parseLong(ch[i]));
+                    ls.get(0).setSingleAuditId(1l);
+                    ls.get(0).setFenpei(1l);
+                    ls.get(0).setGetordersId(0l);
+                    orderDao.merge(ls.get(0));
+                    str[i] = i +".操作成功！";
+            }
+        }
+        ActionContext.getContext().put("strsd", str);
+    	return getCaiGouOrder();
     }
     public void setServletRequest(HttpServletRequest arg0)
     {

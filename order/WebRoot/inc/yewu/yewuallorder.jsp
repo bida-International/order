@@ -96,7 +96,7 @@ function as(){
 	    <td>
 	     	<s:property value="getZhangHaoId(#i.zhanghaoId)"/>
 	    </td>
-	    <td>${i.jiufentime}</td>
+	     <td>${i.jiufentime}</td>
 	   	 <td><s:property value="(#i.caigouyuan==0 || #i.caigouyuan==null)?('未分配'):(getUserId(#i.caigouyuan))"/></td>
 	   	 <td><a href="yewu!getorderIdAll.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改</a></td>	      
      </tr>    

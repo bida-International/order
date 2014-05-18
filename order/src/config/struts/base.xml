@@ -78,6 +78,10 @@
 		             <result name="stockorder">/inc/admin/stockorder.jsp</result>
 		             <result name="exportorder">/inc/admin/exportOrder.jsp</result>
 		             <result name="upstock">/inc/admin/upStock.jsp</result>
+		             <result name="fpzh">/inc/admin/fpzh.jsp</result>
+		              <result name="getlvlunorder">/inc/admin/getlvlunorder.jsp</result>
+		             <result name="getbusinessperformance">/inc/admin/getbusinessperformance.jsp</result>
+		              <result name="transfer">/inc/admin/transfer.jsp</result>
 		</action>
 		<action name="test" class="testAction">
 		<result name="addorder">/inc/admin/addorder.jsp</result>

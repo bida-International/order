@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="m" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="pg" uri="http://jsptags.com/tags/navigation/pager" %>
+<script type="text/javascript"  src="My97DatePicker/WdatePicker.js"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript" src="./inc/js/bianhao.js"></script>
 <script type="text/javascript">
@@ -66,7 +67,7 @@ function myupadmin(){
 <s:form action="admin!getWenTiOrder.do" theme="simple" method="post">
   <table border="1"  class="datagrid2" id="list" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="9" align="center"><strong>问题订单分配</strong>
+      <td colspan="11" align="center"><strong>问题订单分配</strong>
             请选择分配对象(<font color="blue" size="2">默认为采购</font>)：<select name="usertype" id="usertype" onchange="myshow()">
 	       				<option value="0">-请选择-</option>
 	       				<option value="1"
@@ -80,17 +81,22 @@ function myupadmin(){
       </td>
     </tr>
     <tr>
-      <td colspan="9" align="right"><input type="button" value="已经完成" onclick="wcorder()"> 订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
+      <td colspan="11" align="right"><input type="button" value="已经完成" onclick="wcorder()">
+      	 订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
+      	时间查询：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/> 至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>	 
+      </td>
       <td><input type="submit" value="查询"/></td>
     </tr>
     <tr align="center">
     <td width="34" height="25">
 		<input name="checkbox" onclick="quan()" type="checkbox" style="cursor:pointer"/></td>
 		 <td width="100"><span class="STYLE2">账号</span></td>
-      <td width="100"><span class="STYLE2">订单号</span></td>
-      <td width="100"><span class="STYLE2">上传时间</span></td>
-      <td width="100"><span class="STYLE2">订单金额</span></td>
-        <td width="130"><span class="STYLE2">类目</span></td>
+     	 <td width="100"><span class="STYLE2">订单号</span></td>
+     	 <td width="100"><span class="STYLE2">上传时间</span></td>
+       	 <td width="100"><span class="STYLE2">订单金额</span></td>
+         <td width="130"><span class="STYLE2">类目</span></td>
+         <td width="130"><span class="STYLE2">国家</span></td>
+         <td width="130"><span class="STYLE2">订单金额</span></td>
          <td width="163"><span class="STYLE2">备注</span></td>
          <td width="130"><span class="STYLE2">采购员</span></td>
       <td width="100"><span class="STYLE2">选择采购名</span></td>
@@ -111,6 +117,8 @@ function myupadmin(){
 	         <s:if test="#sd.leimuid != null">
 	         	<td><s:property value="getSelLeiMu(#sd.leimuid)"/></td>
 	         </s:if>
+	         <td><s:property value="#sd.country"/></td>
+	         <td>${sd.money}</td>
 	   		 <td>${sd.remark}</td>
 	   		 <td><s:property value="(#sd.caigouyuan==0 || #sd.caigouyuan==null)?('未分配'):(getUserId(#sd.caigouyuan))"/></td>
 		     <td>
@@ -125,7 +133,7 @@ function myupadmin(){
 	     </tr>   
      </s:iterator> 
       <tr>     
-         <td colspan="10" align="center">
+         <td colspan="12" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
         <pg:pager url="admin!getWenTiOrder.do" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  		 <pg:first> 

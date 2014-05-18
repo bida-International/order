@@ -70,8 +70,9 @@
               	<s:iterator value="getStockOrders()" var="i">
               		<option value="${i.id}">${i.wuping}</option>
               	</s:iterator>
-              </select>       
-      	   数量：<input type="text" name="num" />
+              </select><br/>
+      	   数量：<input type="text" name="num" id="num"/> <br/>
+	             数量描述/单位：<input type="text" name="miaosu" id="miaosu"/>
       	</div>
       </td>
 	</tr>

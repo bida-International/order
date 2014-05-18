@@ -26,11 +26,11 @@
 		<property name="startupDelay" value="3" />
 	</bean>
 	
-<!-- 定时同步订单和站内信数据 -->
+	<!-- 定时同步订单和站内信数据 -->
 	<bean id="synchDataJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="synchDataJobDetail" />
 		<!-- 每10分钟执行一次 -->
-		<property name="cronExpression" value="0 0/50 * * * ?" />
+		<property name="cronExpression" value="0 0/10 * * * ?" />
 	</bean>
 	<bean id="synchDataJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="synchDataJob" />
@@ -42,8 +42,8 @@
 	<!-- 定时统计订单数据 -->
 	<bean id="orderStatJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="orderStatJobDetail" />
-		<!-- 每一个小时执行一次 -->
-		<property name="cronExpression" value="0 0 0/1 * * ?"/>
+		<!-- 11:59和22:59各执行一次 -->
+		<property name="cronExpression" value="0 59 0/11 * * ?" />
 	</bean>
 	<bean id="orderStatJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="orderStatJob" />
@@ -52,11 +52,23 @@
 	</bean>
 	<bean id="orderStatJob" class="com.demo.schedule.OrderStatJob" lazy-init="false"></bean>
 	
+	<bean id="orderCancellationDataJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="orderCancellationDataJobDetail" />
+		<!-- 每一个小时执行一次 -->
+			<property name="cronExpression" value="0 0/50 * * * ?" />
+	</bean>
+	<bean id="orderCancellationDataJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orderCancellationDataJob" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="orderCancellationDataJob" class="com.demo.schedule.OrderCancellationDataJob" lazy-init="false"></bean>
+
 	<!-- 定时检测产品状态 -->
 	<bean id="productStatusCheckJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="productStatusCheckJobDetail" />
-		<!-- 每五分钟执行一次 -->
-		<property name="cronExpression" value="0 0/5 * * * ?"/>
+		<!-- 每天00:30,6:30,12:30,18:30各执行一次 -->
+		<property name="cronExpression" value="0 30 0/6 * * ?"/>
 	</bean>
 	<bean id="productStatusCheckJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="productStatusCheckJob" />

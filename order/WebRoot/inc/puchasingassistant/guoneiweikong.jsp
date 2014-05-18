@@ -7,8 +7,6 @@
 <%@ taglib prefix="pg" uri="http://jsptags.com/tags/navigation/pager" %> 
 <script type="text/javascript" src="./inc/js/bianhao.js"></script>
 <script type="text/javascript"  src="My97DatePicker/WdatePicker.js"></script>
-
-
 <script>
  function myguonei(){
 	 	var items=document.getElementsByTagName("input"); 

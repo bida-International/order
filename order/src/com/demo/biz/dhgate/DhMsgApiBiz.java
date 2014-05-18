@@ -15,9 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.demo.dao.DhMsgInfoDao;
 import com.demo.dao.DhMsgTopicDao;
 import com.demo.dao.ZhangHaoDao;
+import com.demo.dao.user.YeWu1Dao;
 import com.demo.entity.DhMsgInfo;
 import com.demo.entity.DhMsgTopic;
 import com.demo.entity.ZhangHao;
+import com.demo.entity.user.YeWu1;
 import com.demo.utils.ApplicationUtils;
 import com.demo.utils.DateUtils;
 import com.demo.utils.HttpClientUtils;
@@ -38,9 +40,12 @@ public class DhMsgApiBiz {
 	private DhMsgInfoDao dhMsgInfoDao;
 	@Resource
 	private ZhangHaoDao  zhangHaoDao;
-
+	@Resource
+	private YeWu1Dao yewu1dao;
 	private final Integer pageSize = 20;
 	private Integer updateCount = 0;
+	private Long newLastReplyTime; // 新的最后回复时间
+	private Long dbLastReplyTime; // 数据库该账号最新一条数据的最后回复时间
 
 	/**
 	 *  同步订单数据(用于自动同步)
@@ -59,11 +64,16 @@ public class DhMsgApiBiz {
 				beforeDay = intervalDays;
 			}
 		} else {
-			beforeDay = 5; // 初始从5天前的数据开始取
+			beforeDay = 1; // 初始从5天前的数据开始取
 		}
 		
 		String result = this.fetchMsg(dhAccount, msgType, beforeDay);
 		if (!result.contains("错误")) {
+			// 更新
+			if (newLastReplyTime != null) {
+				dhMsgTopicDao.updateTop1LastReplyTimeCache(dhAccount.getAccount(), newLastReplyTime);
+			}
+			
 			// 更新同步时间
 			dhAccount.setMsg_update_time(curTime.getTime());
 			zhangHaoDao.merge(dhAccount);
@@ -94,6 +104,8 @@ public class DhMsgApiBiz {
 	public String fetchMsg(ZhangHao dhAccount, String msgType, Integer beforeDay) {
 		try {
 			updateCount = 0;
+			newLastReplyTime = null;
+			dbLastReplyTime = dhMsgTopicDao.getTop1LastReplyTime(dhAccount.getAccount());
 			String result = this.fetchMsg(dhAccount, msgType, beforeDay, 1);
 			if (result.equals("success")) {
 				return "本次成功更新 " + updateCount + " 条站内信数据";
@@ -128,8 +140,8 @@ public class DhMsgApiBiz {
 		paramMap.put("beforeday", beforeDay.toString());
 		paramMap.put("marked", "");
 		paramMap.put("msgtype", msgType);
-		paramMap.put("orderField", "");
-		paramMap.put("orderType", "");
+		paramMap.put("orderField", "lastreplytime"); // 按最后回复时间倒序排序
+		paramMap.put("orderType", "desc");
 		paramMap.put("pagenum", pageNum.toString());
 		paramMap.put("pagesize", this.pageSize.toString());
 		paramMap.put("recivereaded", "");
@@ -150,19 +162,32 @@ public class DhMsgApiBiz {
 			}
 			
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				if (respJson.getString("messageTopicList").equals("null") || 
 						respJson.getString("messageTopicList").equals("[]") ) {
 					return "success";
 				}
 
+				boolean stopFlag = false;
 				JSONArray msgTopics = respJson.getJSONArray("messageTopicList");
 				for (int i = 0; i < msgTopics.size(); i++) {
+					// 检查最后回复时间，当它小于等于dbLastReplyTime时，表示接下来的数据已在库中或已更新，结束取数据
+					Long lastReplyTime = msgTopics.getJSONObject(i).getLong("lastreplytime");
+					if (dbLastReplyTime != null 
+							&& lastReplyTime <= dbLastReplyTime) {
+						stopFlag = true;
+						break;
+					}
+					// 第一条为新的最后回复时间
+					if (newLastReplyTime == null) { 
+						newLastReplyTime = lastReplyTime;
+					}
+					
 					updateCount += this.updateMsgTopic(dhAccount,
 							msgTopics.getJSONObject(i));
 				}
 				// 当取到的topic数量与pagesize相等时，继续取下一页
-				if (msgTopics.size() == this.pageSize) {
+				if (!stopFlag && msgTopics.size() == this.pageSize) {
 					this.fetchMsg(dhAccount, msgType, beforeDay,
 							pageNum + 1);
 				}
@@ -208,7 +233,7 @@ public class DhMsgApiBiz {
 					msgTopic.getRecieverReaded() != json.getInt("recivereaded")) { //读取状态发生变化时更新
 				msgTopic.setSenderReaded(json.getInt("senderreaded"));
 				msgTopic.setRecieverReaded(json.getInt("recivereaded"));
-			} else if (marked != msgTopic.getMarked()) {
+			} else if (!msgTopic.getMarked().equals(marked)) {
 				msgTopic.setMarked(marked);
 			} else {
 				needUpdate = false;
@@ -231,10 +256,20 @@ public class DhMsgApiBiz {
 				readStatus = 1;
 			}
 			msgTopic.setReadStatus(readStatus);
-			this.dhMsgTopicDao.merge(msgTopic);
-			
+
+			if (msgTopic.getBdUserId() == null) {
+				String ff = DateUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss:SSS");
+		        YeWu1 yy = yewu1dao.getMsgTimes().get(0);
+		        
+		        msgTopic.setBdUserId(yy.getUserid());
+				this.dhMsgTopicDao.merge(msgTopic);
+				
+				yy.setLetterTime(ff);
+				yewu1dao.merge(yy);
+			}
 			// 更新站内信详情信息
 			this.fetchTopicMsgInfo(dhAccount, msgTopic, false);
+		
 			return 1;
 		}
 		return 0;
@@ -295,7 +330,7 @@ public class DhMsgApiBiz {
 			}
 		
 			JSONObject statusObj = respJson.getJSONObject("status");
-			if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
 				JSONArray msgInfos = respJson.getJSONObject("message")
 						.getJSONArray("messageInfo");
 				for (int i = 0; i < msgInfos.size(); i++) {
@@ -470,7 +505,7 @@ public class DhMsgApiBiz {
 				}
 				
 				JSONObject statusObj = respJson.getJSONObject("status");
-				if (statusObj.getString("message").equalsIgnoreCase("OK")) {
+				if (Integer.parseInt(statusObj.getString("code")) == 0) {
 					return "success";
 				} else {
 					return "发生错误：" + statusObj.getString("message");
@@ -482,5 +517,42 @@ public class DhMsgApiBiz {
 			e.printStackTrace();
 			return "发生错误：未知异常";
 		}
+	}
+	
+	/**
+	 * 更新已读状态
+	 * @param msgTopic	
+	 * @param updateMsgTopic 是否更新主题数据
+	 */
+	public String updateReaded(ZhangHao dhAccount, String msgTopicIds) {
+		String apiUrl = (String) ApplicationUtils.get("dhgateApiUrl");
+		Map<String, String> paramMap = new HashMap<String, String>();
+		if (!dhCommonApiBiz.putSystemParamsToParamMap(paramMap, dhAccount,
+				"dh.message.readed.update")) {
+			return "发生错误：" + DhCommonApiBiz.ERR_TOKEN;
+		}
+		paramMap.put("messageTopicIdList", msgTopicIds);
+
+		JSONObject respJson = HttpClientUtils.doPost(apiUrl, paramMap);
+		if (respJson != null) {
+			System.out.println(respJson);
+			if (respJson.containsKey("code")) {
+				if (respJson.getString("code").equals("2") || 
+						respJson.getString("code").equals("40")) {
+					dhCommonApiBiz.clearAccessToken(dhAccount);
+					return "发生错误：" + DhCommonApiBiz.ERR_TOKEN;
+				} else if (!respJson.getString("code").equals("0")) {
+					return "发生错误:" + respJson.getString("message");
+				}
+			}
+		
+			JSONObject statusObj = respJson.getJSONObject("status");
+			if (Integer.parseInt(statusObj.getString("code")) == 0) {
+				return "success";
+			}  else {
+				return "发生错误：" + statusObj.getString("message");
+			}
+		}
+		return "发生错误：" + DhCommonApiBiz.CONN_ERR;
 	}
 }

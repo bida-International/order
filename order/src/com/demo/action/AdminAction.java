@@ -7,6 +7,7 @@ import com.demo.dao.Courier.DhlfqDao;
 import com.demo.dao.Courier.FedexDao;
 import com.demo.dao.Impl.user.PuchasingAssistantDaoImpl;
 import com.demo.dao.tools.GatherData1ResultDao;
+import com.demo.dao.user.BusinessDao;
 import com.demo.dao.user.CaiGouAdminDao;
 import com.demo.dao.user.CaiGouDao;
 import com.demo.dao.user.CaiWuDao;
@@ -26,6 +27,7 @@ import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 import com.demo.entity.order.Order_Detail;
 import com.demo.entity.tools.GatherData1Result;
+import com.demo.entity.user.BusinessTable;
 import com.demo.entity.user.CaiGou;
 import com.demo.entity.user.CaiGouAdmin;
 import com.demo.entity.user.CaiWuTable;
@@ -119,6 +121,12 @@ public class AdminAction extends BaseAction implements ServletRequestAware
 	private GatherData1ResultDao gatherData1ResultDao;
 	@Resource
 	private PuchasingAssistantDao puchasingassistantDao; 
+	@Resource
+	private CaiGouDao caigoudao; 
+	@Resource
+	private BusinessDao businessdao; 
+	@Resource
+	private DhMsgTopicDao dhmsgtopicdao; 
  	private YunCun yunCun;
  	public Long chuli;
  	public List<OrderTable> stu1;
@@ -154,6 +162,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     public String xujia;
     private KuCunTable kucuntable;
     public String dhgatezhanghao;
+    
     public int pageNumber;
     public Long caigouyuan;
     private int page;
@@ -168,6 +177,11 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     public File excelfile;
     public Long disputes;//是否处理
     public String country;//国家
+    public Long yewuid;//业务编号
+    public Double tpm;
+    public String gongyunshang;//供运商
+    public Long kefu;//客服
+    public Long kefu1;//客服1 
 	public List<GatherData1Result> gatherdata1result; 
     private HttpServletRequest request;
     @Resource
@@ -544,7 +558,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
          Double jine = ordertable.getMoney();
          Long tuihuo = ordertable.getTuihuo();
          String bianma = ordertable.getBianma(); 
-         java.sql.Date time = ordertable.getJiufentime();
+         String time = ordertable.getJiufentime();
          ordertable = (OrderTable)orderDao.get(ordertable.getId());
          ordertable.setCaigouyuan(cai);
          ordertable.setOrderId(order);
@@ -565,7 +579,10 @@ public class AdminAction extends BaseAction implements ServletRequestAware
          ordertable.setMoney(jine);
          ordertable.setBianma(bianma);
          if(jiufen ==1 && (time == null || "".equals(time))){
-        	 ordertable.setJiufentime(new java.sql.Date(System.currentTimeMillis()));
+        	 java.util.Date d = new java.util.Date();
+             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+             String ff = f.format(d);
+             ordertable.setJiufentime(ff);
          }else if(jiufen ==1 && (time != null && !"".equals(time))){
         	    ordertable.setJiufentime(time);
          }
@@ -620,7 +637,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     {
     	try {
     		 int pagesize = 10;
-    	        pageBean = pageBiz.selForPage(pagesize, pageNumber, orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country);
+    	        pageBean = pageBiz.selForPage(pagesize, pageNumber, orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang);
     	        
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -630,9 +647,9 @@ public class AdminAction extends BaseAction implements ServletRequestAware
         return "getall";
     }
     //计算总利润
-    public String getZongLiRun(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long category,String country){
+    public String getZongLiRun(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long category,String country,Double tpm,String guoneidanhao,String gongyunshang){
     	
-    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country);
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm, guoneidanhao, gongyunshang);
     	Double lirun = 0d;
     	Double tuikuan = 0d;
     	Double huokuan = 0d;
@@ -734,6 +751,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
                 {
                     ((OrderTable)ls.get(0)).setId(Long.parseLong(ch[i]));
                     ((OrderTable)ls.get(0)).setFenpei(2l);
+                    ls.get(0).setXiugai(2l);
                     orderDao.merge((OrderTable)ls.get(0));
                     str[i] = "操作成功";
                 }
@@ -913,21 +931,37 @@ public class AdminAction extends BaseAction implements ServletRequestAware
                     msg = "操作成功";
                 }
                 else
-                    if(Integer.parseInt(usertype) == 9)
-                    {
-                        user.setAdmin(Boolean.valueOf(false));
-                        user.setName(user.getUsername());
-                        java.util.Date date = new java.util.Date();
-                        SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        user.setTime(sim.format(date));
-                        user.setQuanxian(Long.valueOf(11L));
-                        user = (UserInfo)userDao.merge(user);
-                        PurchasingAssistant tt = new PurchasingAssistant();
-                        tt.setName(name);
-                        tt.setUserid(user.getId());
-                        puchasingassistantDao.merge(tt);
-                        msg = "操作成功";
-                    }
+                if(Integer.parseInt(usertype) == 9)
+                {
+                    user.setAdmin(Boolean.valueOf(false));
+                    user.setName(user.getUsername());
+                    java.util.Date date = new java.util.Date();
+                    SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    user.setTime(sim.format(date));
+                    user.setQuanxian(Long.valueOf(11L));
+                    user = (UserInfo)userDao.merge(user);
+                    PurchasingAssistant tt = new PurchasingAssistant();
+                    tt.setName(name);
+                    tt.setUserid(user.getId());
+                    puchasingassistantDao.merge(tt);
+                    msg = "操作成功";
+                }
+                else
+                if(Integer.parseInt(usertype) == 10)
+                {
+                    user.setAdmin(Boolean.valueOf(false));
+                    user.setName(user.getUsername());
+                    java.util.Date date = new java.util.Date();
+                    SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    user.setTime(sim.format(date));
+                    user.setQuanxian(Long.valueOf(12L));
+                    user = (UserInfo)userDao.merge(user);
+                    BusinessTable tt = new BusinessTable();
+                    tt.setName(name);
+                    tt.setUserid(user.getId());
+                    businessdao.merge(tt);
+                    msg = "操作成功";
+                }
         return "addadminuser";
     }
 
@@ -1131,7 +1165,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     	
     	try {
     		
-    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country);
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang);
     	Double tuikuan = 0d;
     	Double huokuan = 0d;
     	Double yunfei = 0d;
@@ -1186,7 +1220,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     //利润小于0的总数
     public String getChaKanZero(String orderId,String time,String time1,String dhgatezhanghao,String danhao)
     {
-    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country);
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang);
     	Double tuikuan = 0d;
     	Double huokuan = 0d;
     	Double yunfei = 0d;
@@ -1235,7 +1269,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     //管理员查看大于0小于30的订单
     public PageModel<OrderTable> getLiRunInterval()
     {
-    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country);
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang);
     	Double tuikuan = 0d;
     	Double huokuan = 0d;
     	Double yunfei = 0d;
@@ -1336,7 +1370,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
     public String getWenTiOrder()
     {
         int pageSize = 10;
-        pageBean = pageBiz.selAllWenTiOrder(pageSize, pageNumber, orderId);
+        pageBean = pageBiz.selAllWenTiOrder(pageSize, pageNumber, orderId,time,time1);
         return "wentiorder";
     }
     //查看采购未完成订单
@@ -1565,6 +1599,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
                     ls.get(0).setDenghuixin(0l);
                     ls.get(0).setSumaitong(0l);
                     ls.get(0).setDaifahuo(0l);
+                    ls.get(0).setGetordersId(1l);
                     orderDao.merge(ls.get(0));
                     str[i] = i+".操作成功";
                 }
@@ -1803,19 +1838,17 @@ public class AdminAction extends BaseAction implements ServletRequestAware
                    List<OrderTable> ls = orderDao.getSelId(Long.parseLong(ch[i]));
                    if(ls.size() != 0)
                    {
-                	   if(ls.get(0).getWancheng() == 1){
-                		   str[i]  = i+".此订单已经是完成的订单";
+                	   if(ls.get(0).getWancheng() == null || ls.get(0).getWancheng() == 0l){
+                		   ls.get(0).setId(Long.parseLong(ch[i]));
+                           ls.get(0).setDaifahuo(0l);
+                           ls.get(0).setWancheng(1l);
+                           ls.get(0).setGetordersId(0l);
+                           ls.get(0).setSumaitong(0l);  
+                           ls.get(0).setWanchengtime(new java.sql.Date(System.currentTimeMillis()));
+                           orderDao.merge(ls.get(0));
+                           str[i] = i+".操作成功";
                 	   }else{
-                       ls.get(0).setId(Long.parseLong(ch[i]));
-                       ls.get(0).setDaifahuo(0l);
-                       ls.get(0).setWancheng(1l);
-                       ls.get(0).setGetordersId(0l);
-                       ls.get(0).setSumaitong(0l);
-                       
-                       ls.get(0).setWanchengtime(new java.sql.Date(System.currentTimeMillis()));
-        
-                       orderDao.merge(ls.get(0));
-                       str[i] = i+".操作成功";
+                		   str[i]  = i+".此订单已经是完成的订单";
                 	   }
                    }
                }
@@ -1831,7 +1864,7 @@ public class AdminAction extends BaseAction implements ServletRequestAware
      //查看采购到入账时间差
      public PageModel<OrderTable> getCaiRuTime()
      {
-     	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country);
+     	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang);
      	
      	 PageModel<OrderTable> ls = new PageModel<OrderTable>();
      	java.util.Date caigoutime = null;
@@ -2370,6 +2403,125 @@ public class AdminAction extends BaseAction implements ServletRequestAware
             e.printStackTrace();
         }
         return stu;
+    }
+    //查询全部采购账号
+    public String getProcurementAccount(){
+    	int pageSize = 10;
+    	pageBean = pageBiz.getAllCgZh(pageSize, pageNumber);
+    	return "fpzh";
+    }
+    //管理员分配类目给采购
+    public String fenpei_zhanghao(){
+	  try
+      {
+		  
+          String ch[] = request.getParameter("bulletinId").split("-");
+          String sel[] = request.getParameter("seluserid").split("-");
+          String str[] = new String[ch.length];
+          for(int i = 0; i < ch.length; i++)
+          {
+              List<CaiGou> ls = caigoudao.getSelId(Long.parseLong(ch[i]));
+              if(sel.length != ch.length)
+                  str[i] = i+".操作失败";
+              else
+              if("".equals(sel[i]) || sel[i] == null)
+                  str[i] = i+".操作失败";
+              else
+              if(ls.size() != 0)
+              {
+                  ls.get(0).setId(Long.parseLong(ch[i]));
+                  ls.get(0).setCgadminId((Long.parseLong(sel[i])));
+                  caigoudao.merge(ls.get(0));
+                  str[i] = i+".分配成功！";
+              }
+          }
+          ActionContext.getContext().put("strsd", str);
+      }
+      catch(Exception e)
+      {
+          e.printStackTrace();
+      }
+      return getProcurementAccount();
+    }
+    //业务筛选
+    public String getBusinessCompletion(){
+    	try {
+    	
+    	  	int pageSize = 10;
+        	pageBean = pageBiz.getBusinessPerformance(pageSize, pageNumber, yewuid, orderId, time, time1);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+  
+    	return "getbusinessperformance";
+    }
+    //修改利润率
+    public String updatelilunlv(){
+    	List<OrderTable> stu = orderTableDao.getChaKanOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang);
+    	Double lirun = 0d;
+    	Double tuikuan = 0d;
+    	Double huokuan = 0d;
+    	Double yunfei = 0d;
+    	Double money = 0d;
+    	Double huilv = 0d;
+    	String num = "";
+    	try {
+    		for (int i = 0; i < stu.size(); i++) {
+    			if(stu.get(i).getTuikuan() == null){
+    				tuikuan = 0d;
+    			}else{
+    				tuikuan = stu.get(i).getTuikuan();
+    			}
+    			if(stu.get(i).getHuokuan() == null){
+    				huokuan = 0d;
+    			}else{
+    				 huokuan = stu.get(i).getHuokuan();
+    			}
+    			if(stu.get(i).getYunfei()==null){
+    				yunfei = 0d;
+    			}else{
+    				yunfei = stu.get(i).getYunfei();
+    			}
+    			 if(stu.get(i).getHuilv() == null){
+    				 huilv = 0d;
+    			 }else{
+    				 huilv = stu.get(i).getHuilv();
+    			 }
+    			 if(stu.get(i).getMoney()==null){
+    				 money = 0d;
+    			 }else{
+    				 money = stu.get(i).getMoney();
+    			 }
+    			if (money != 0 && huilv != 0 && stu.get(i).getProfitmargin()==null) {
+    		
+    				lirun = (money*huilv-(tuikuan*huilv+huokuan+yunfei))/(money*huilv);
+    				DecimalFormat df = new DecimalFormat("0.000");
+        			num = df.format(lirun);
+    				orderTableDao.updateLirunlv(Double.parseDouble(num), stu.get(i).getId());
+				}
+    			
+    			
+    		}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	
+    	return getAllOrder();
+    }
+    //转移数据
+    public String getTransfer()
+    {
+    	return "transfer";
+    }
+    //转移数据
+    public String updateTransfer(){
+    	dhmsgtopicdao.updateTransferMsgs(kefu, kefu1);
+    	orderTableDao.updateTransfer(kefu, kefu1);
+    	yeWu1Dao.deleteMsgStatus(kefu);
+    	msg = "操作成功";
+    	return "transfer";
     }
     public void setServletRequest(HttpServletRequest arg0)
     {

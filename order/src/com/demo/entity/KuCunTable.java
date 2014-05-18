@@ -27,7 +27,21 @@ public class KuCunTable implements Serializable{
 	private Double unitprice;//单价 
 	private Date time;//上传时间
 	private Date sytime;//使用时间
+	private Long zynum;//占用库存
+	private Long thnum;//库存被退回
+	public Long getThnum() {
+		return thnum;
+	}
+	public void setThnum(Long thnum) {
+		this.thnum = thnum;
+	}
 	private String transportproviders;//供运商
+	public Long getZynum() {
+		return zynum;
+	}
+	public void setZynum(Long zynum) {
+		this.zynum = zynum;
+	}
 	public String getTransportproviders() {
 		return transportproviders;
 	}

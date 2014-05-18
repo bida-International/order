@@ -12,6 +12,7 @@ import com.demo.biz.dhgate.DhCommonApiBiz;
 import com.demo.biz.msg.DhMsgBiz;
 import com.demo.entity.ZhangHao;
 import com.demo.page.PageBean;
+import com.demo.utils.Struts2Utils;
 import com.demo.vo.LoginInfo;
 
 /**
@@ -67,6 +68,20 @@ public class DhgateMsgAction extends BaseAction {
 				queryDhAccount, queryMsgType, queryReadStatus, queryMarked);
 
 		return SUCCESS;
+	}
+	
+	public String delete() {
+		String topicIds = Struts2Utils.getParameter("ids");
+		dhMsgBiz.delete(topicIds);
+		Struts2Utils.renderJson("删除操作成功", true);
+		return null;
+	}
+	
+	public String updateReaded() {
+		String topicIds = Struts2Utils.getParameter("ids");
+		dhMsgBiz.updateReaded(topicIds);
+		Struts2Utils.renderJson("更新已读操作成功", true);
+		return null;
 	}
 	
 	public PageBean getPageBean() {

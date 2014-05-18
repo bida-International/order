@@ -12,14 +12,18 @@ import org.springframework.stereotype.Service;
 import com.demo.action.msg.FenpeiConfigAction;
 import com.demo.dao.DocumentDao;
 import com.demo.dao.GuoJiaDao;
+import com.demo.dao.IncomeDao;
 import com.demo.dao.KuCunDao;
 import com.demo.dao.LeiMuDao;
 import com.demo.dao.OrderDao;
 import com.demo.dao.OrderTableDao;
 import com.demo.dao.Order_DetailDao;
+import com.demo.dao.SpendingDao;
 import com.demo.dao.XieXinDao;
 import com.demo.dao.YuCunDao;
 import com.demo.dao.ZhangHaoDao;
+import com.demo.dao.user.BusinessDao;
+import com.demo.dao.user.CaiGouDao;
 import com.demo.dao.user.GuKeDao;
 import com.demo.dao.user.UserDao;
 import com.demo.entity.YunCun;
@@ -50,13 +54,21 @@ public class PageBizImpl extends PageBean implements PageBiz
 	@Resource
     private LeiMuDao leiMuDao;
 	@Resource
+    private SpendingDao spendingdao;
+	@Resource
     private KuCunDao kuCunDao;
 	@Resource
     private DocumentDao documentDao;
+	@Resource
+    private CaiGouDao caigoudao;
+	@Resource
+    private IncomeDao incomedao;
+	@Resource
+    private BusinessDao businessdao;
 	//管理员查看全部订单
-	public PageBean selForPage(int pageSize, int page, String orderId,String time, String time1, String dhgatezhanghao, String danhao,String sumaitong, String bianma, Long leimu,String country)
+	public PageBean selForPage(int pageSize, int page, String orderId,String time, String time1, String dhgatezhanghao, String danhao,String sumaitong, String bianma, Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang)
     {
-    	 String hql = orderDao.getAllOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu,country);
+    	 String hql = orderDao.getAllOrder(orderId, time, time1, dhgatezhanghao,danhao,sumaitong,bianma,leimu,country,tpm,guoneidanhao,gongyunshang);
          return getFenYe(hql, pageSize, page);
     }
 
@@ -73,9 +85,9 @@ public class PageBizImpl extends PageBean implements PageBiz
         return getFenYe(hql, pageSize, page);
     }
     //查看问题订单
-    public PageBean selAllWenTiOrder(int pageSize, int page, String orderId)
+    public PageBean selAllWenTiOrder(int pageSize, int page, String orderId,String time,String time1)
     {
-        String hql = orderDao.getWenTiOrder(orderId);
+        String hql = orderDao.getWenTiOrder(orderId,time,time1);
         return getFenYe(hql, pageSize, page);
     }
     //采购完成订单
@@ -264,8 +276,8 @@ public class PageBizImpl extends PageBean implements PageBiz
     	return getFenYe(hql, pageSize, page);
     }
     //采购查看退货
-    public PageBean selKanTuiHuo(int pageSize, int page,Long userid,String orderId,String danhao,String chuli){
-    	String hql = orderTableDao.getTuiHuo(userid, orderId, danhao, chuli);
+    public PageBean selKanTuiHuo(int pageSize, int page,Long userid,String orderId,String danhao){
+    	String hql = orderTableDao.getTuiHuo(userid, orderId, danhao);
     	return getFenYe(hql, pageSize, page);
     }
     public PageBean selChaKanJiuFenOrder(int pageSize, int page,Long userid,String orderId,String time,String time1){
@@ -418,8 +430,8 @@ public class PageBizImpl extends PageBean implements PageBiz
     	return getFenYe(hql, pageSize, page);
     }
     //采购员查看库存订单
-    public PageBean selStockOrder(int pageSize,int page,Long userid,String time,String time1,String bianma){
-    	String hql = kuCunDao.getStockOrder(userid,time,time1,bianma);
+    public PageBean selStockOrder(int pageSize,int page,Long userid,String time,String time1,String bianma,String orderId){
+    	String hql = kuCunDao.getStockOrder(userid,time,time1,bianma,orderId);
     	return getFenYe(hql, pageSize, page);
     }
     //管理员查看库存订单
@@ -428,8 +440,8 @@ public class PageBizImpl extends PageBean implements PageBiz
     	return getFenYe(hql, pageSize, page);
     }
     //采购查看问题订单
-    public PageBean selIssuesOrders(int pageSize,int page,String orderid,Long userid){
-    	String hql = orderTableDao.getIssuesOrders(orderid, userid);
+    public PageBean selIssuesOrders(int pageSize,int page,String orderid,Long userid,String time,String time1){
+    	String hql = orderTableDao.getIssuesOrders(orderid, userid,time,time1);
     	return getFenYe(hql, pageSize, page);
     }
     //查询全部类目 
@@ -437,4 +449,70 @@ public class PageBizImpl extends PageBean implements PageBiz
     	String hql = orderTableDao.getCategory();
     	return getFenYe(hql, pageSize, page);
     }
+    //业务得到全部订单
+    public PageBean getOrders(int pageSize,int page,String orderid,Long userid){
+    	String hql = orderTableDao.getBusinessOrders(orderid, userid);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //业务得到已经处理订单
+    public PageBean getBusinessDisposed(int pageSize,int page,String orderid,Long userid){
+    	String hql = orderTableDao.getBusinessDisposed(orderid, userid);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //查看全部采购账号
+    public PageBean getAllCgZh(int pageSize,int page){
+    	String hql = caigoudao.getAllCaiGou();
+    	return getFenYe(hql, pageSize, page);
+    }
+    //采购管理员查询全部审核订单
+    public PageBean getSingleAudit(int pageSize,int page,String orderid,Long userid){
+    	String hql = orderTableDao.getSingleAudit(orderid, userid);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //业务查看纠纷处理完毕
+    public PageBean getDisputesDealtWith(int pageSize,int page,String orderid,Long userid,String time,String time1){
+    	String hql = orderTableDao.getDisputesDealtWith(orderid, userid, time, time1);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //业务查看纠纷未处理完毕订单
+    public PageBean getDisputependingBefore(int pageSize,int page,String orderid,Long userid,String time,String time1){
+    	String hql = orderTableDao.getDisputependingBefore(orderid, userid, time, time1);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //查看业务业绩
+    public PageBean  getBusinessPerformance(int pageSize,int page,Long yewuid,String orderid,String time,String time1){
+    	String hql = orderTableDao.getBusinessPerformance(yewuid, orderid, time, time1);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //查看全部支出
+    public PageBean getSpending(int pageSize,int page,String time,String time1){
+    	String hql = spendingdao.getAllSpeng(time, time1);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //查看全部收入
+    public PageBean getInCome(int pageSize,int page,String time,String time1){
+    	String hql = incomedao.getIncome(time, time1);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //采购管理员查看退货
+    public PageBean selReturnGoods(int pageSize, int page,Long userid,String orderId,String danhao,Long caigouyuan){
+    	String hql = orderTableDao.getPurchasing(userid, orderId, danhao,caigouyuan);
+    	return getFenYe(hql, pageSize, page);
+    }
+  //查看未完成订单
+    public PageBean getOutstandingOrders(int pageSize,int page,Long userid,String orderId,Long caigouyuan){
+    	String hql = orderTableDao.getOutstandingOrders(userid, orderId, caigouyuan);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //速卖通录单
+    public PageBean getIntoaSingle(int pageSize,int page,Long userid,Long caigouyuan,String orderId,String time,String time1){
+    	String hql = orderTableDao.getIntoaSingle(userid, caigouyuan, orderId, time, time1);
+    	return getFenYe(hql, pageSize, page);
+    }
+    //查看大金额订单
+    public PageBean getLargeOrder(int pageSize,int page,String orderId,String time,String time1){
+    	String hql = businessdao.getlargeorder(orderId, time, time1);
+    	return getFenYe(hql, pageSize, page);
+    }
+
 }

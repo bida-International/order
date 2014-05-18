@@ -2,9 +2,11 @@
 package com.demo.action;
 
 import com.demo.dao.GuoNeiKuaiDiDao;
+import com.demo.dao.KuCunDao;
 import com.demo.dao.OrderDao;
 import com.demo.dao.OrderTableDao;
 import com.demo.entity.GuoNeiKuaiDi;
+import com.demo.entity.KuCunTable;
 import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.OrderTable;
 import com.demo.list.PageModel;
@@ -43,6 +45,8 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
     private PageBiz pageBiz;
     @Resource
     private GuoNeiKuaiDiDao guoNeiKuaiDiDao;
+    @Resource
+    private KuCunDao kucundao;
     public String msg;
     public String danhao;
     public String guoneidanhao;
@@ -201,7 +205,6 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
             {
                 ls.get(0).setId(Long.parseLong(id[i]));
                 ls.get(0).setDaifahuo(1l);
-                
                 orderDao.merge(ls.get(0));
             }
         }
@@ -234,12 +237,9 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
             String[] id = request.getParameter("bulletinId").split("-");
             for(int j = 0; j < id.length; j++)
             {
-            
 	        	 List<OrderTable> os = orderDao.getSelAllId(Long.valueOf(Long.parseLong(id[j])));
-	        	
 	        	 if(os.size() !=0){
-	        		 orders.add(os.get(0));
-	        	 
+	            orders.add(os.get(0));
             	row = sheet.createRow(j);
                 row.setHeight((short)2750);
                 if(orders.get(j).getZhanghaoId() != null && !"".equals(orders.get(j).getZhanghaoId()) && orders.get(j).getZhanghaoId() != 15){
@@ -254,8 +254,8 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
                 }else{
                 	cteateCell(workbook, row, 3, "");
                 }
-             
-                if((orders.get(j).getGuoneikuaidiId() == null || "".equals(orders.get(j).getGuoneikuaidiId()))&&(orders.get(j).getGuoneidanhao()==null || "".equals(orders.get(j).getGuoneidanhao()))){
+            
+                if((orders.get(j).getGuoneikuaidiId() == null || "".equals(orders.get(j).getGuoneikuaidiId()) || orders.get(j).getGuoneikuaidiId() ==0l)&&(orders.get(j).getGuoneidanhao()==null || "".equals(orders.get(j).getGuoneidanhao()))){
                 	cteateCell(workbook, row, 4, "");
                 }       
                 else{
@@ -432,6 +432,7 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
         ordertable.setSumaitong(0l);
         ordertable.setFenpei(1l);
         ordertable.setWancheng(0l);
+        ordertable.setGetordersId(1l);
         ordertable.setDaochu(0l);
         orderDao.merge(ordertable);
         msg = "操作成功";
@@ -657,23 +658,29 @@ public class CangKuYuanAction extends BaseAction implements ServletRequestAware
              for(int i = 0; i < ch.length; i++)
              {
                  List<OrderTable> ls = orderDao.getSelId(Long.parseLong(ch[i]));
+                 List<KuCunTable> kc = kucundao.getKuCunId(ls.get(0).getKucunid());
+                 if (kc.size() != 0) {
+					kc.get(0).setId(kc.get(0).getId());
+					kc.get(0).setNum(ls.get(0).getNum()+kc.get(0).getNum());
+					kc.get(0).setTotalprice(kc.get(0).getTotalprice()+ls.get(0).getHuokuan());
+					kucundao.merge(kc.get(0));
+				}
                  if(ls.size() != 0)
                  {
-                 	ls.get(i).setId(ls.get(i).getId());
-                	ls.get(i).setGetordersId(0l);
-                	ls.get(i).setWancheng(0l);
-                	ls.get(i).setDaochu(0l);
-                	ls.get(i).setChuli(0l);
-                 	ls.get(i).setTuihuo(1l);  
+                 	ls.get(0).setId(ls.get(0).getId());
+                	ls.get(0).setGetordersId(0l);
+                	ls.get(0).setWancheng(0l);
+                	ls.get(0).setDaochu(0l);
+                	ls.get(0).setChuli(0l);
+                 	ls.get(0).setTuihuo(1l);  
                     Date d = new Date();
                     SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String ff = f.format(d);
-                 	ls.get(i).setReturnTime(f.parse(ff));
-                    orderTableDao.merge(ls.get(i));
+                 	ls.get(0).setReturnTime(f.parse(ff));
+                    orderTableDao.merge(ls.get(0));
                     str[i] = i + ".操作成功！";
                  }
              }
-
              ActionContext.getContext().put("strsd", str);
          }
          catch(Exception e)

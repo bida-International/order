@@ -54,7 +54,7 @@
     <s:iterator value="pageBean.list" var="sd">
 	     <tr align="center" style="font-size:30px">
 		     <td><input name="chkItems" value="${sd.id}" onclick="chkItems_click(this)" type="checkbox"  id="chk_${sd.id}" readonly="readonly"  style="cursor:pointer"/></td>
-		     <td><img width="80px" height="80px" src="${sd.uploadFile}"></td>	
+		     <td><img width="80px" height="80px" src="http://qiantingdi.gicp.net:49644/order/WebRoot/${sd.uploadFile}"></td>	
 			 <td>${sd.wuping}</td>
 			 <td>${sd.coding}</td>
 			 <td>${sd.totalprice}</td>
@@ -62,7 +62,7 @@
 			 <td>${sd.num}</td>
 			  <td>${sd.transportproviders}</td>
 			 <td>${sd.time}</td>	  
-			 <td><s:property value="getUserId(#sd.caigouyuan)"/></td>	  
+			 <td><s:property value="getUserId(#sd.userid)"/></td>	  
 			  <td><a href="admin!upStock.do?kucuntable.id=${sd.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改库存</a></td>  
 	     </tr>   
      </s:iterator>

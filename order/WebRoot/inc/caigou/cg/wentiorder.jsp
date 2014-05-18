@@ -3,6 +3,7 @@
 <%@ taglib prefix="m" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="pg" uri="http://jsptags.com/tags/navigation/pager" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<script type="text/javascript"  src="My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="./inc/js/bianhao.js"></script>
 <script type="text/javascript">
 	 function quan()
@@ -52,8 +53,9 @@
 <table><tr><td><input type="button" value="返回到得到订单" onclick="fanhuidaifahuo()"/> </td></tr></table>
   <table border="1"  class="datagrid2" id="list" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="9" align="center"><strong>问题订单</strong>
+      <td colspan="10" align="center"><strong>问题订单</strong>
   	订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
+  	时间查询：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/> 至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>
   	<input type="submit" value="查询"/>
   	   <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
@@ -67,10 +69,10 @@
       <td width="100"><span class="STYLE2">订单号</span></td>
       <td width="100"><span class="STYLE2">上传时间</span></td>
       <td width="100"><span class="STYLE2">订单金额</span></td>
+       <td width="130"><span class="STYLE2">国家 </span></td>
         <td width="130"><span class="STYLE2">类目</span></td>
          <td width="163"><span class="STYLE2">备注</span></td>
          <td width="130"><span class="STYLE2">采购员</span></td>
-   
       <td width="100"><span class="STYLE2">操作</span></td>
     </tr>
     <s:iterator value="pageBean.list" var="sd">
@@ -79,7 +81,8 @@
 	         <td><s:property value="getZhangHaoId(#sd.zhanghaoId)"/></td>
 	         <td>${sd.orderId}</td>
 	   		 <td>${sd.time}</td>
-	   		 <td>${sd.money}</td>		
+	   		 <td>${sd.money}</td>
+	   	     <td><s:property value="#sd.country"/></td>				
 	   		 <s:if test="#sd.leimuid == null">
 	         		<td>
 	         			${sd.yunshu}
@@ -95,7 +98,7 @@
 	     </tr>   
      </s:iterator> 
      <tr> 
-	    <td colspan="19" align="center">
+	    <td colspan="10" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
        <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>

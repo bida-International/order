@@ -17,6 +17,8 @@ public class GatherData1Thread implements Runnable {
 	private GatherData1Key gatherKey;
 	private GatherData1ResultDao gatherData1ResultDao;
 	private String sessionId;
+	private int retry = 0;
+	private int maxRetry = 3;
 	
 	public GatherData1Thread(GatherData1Key gatherData1Key, GatherData1ResultDao gatherData1ResultDao,
 			String sessionId) {
@@ -72,6 +74,22 @@ public class GatherData1Thread implements Runnable {
 		regx = "<a class=\"order-num-a(.*?)href=\"(.*?)\" (.*?)><em title=\"Total Orders\"> Order(.*?)</em>";
 		p = Pattern.compile(regx);
 		macher = p.matcher(html);
+		// ÷ÿ ‘ª˙÷∆
+		if (!macher.find()) {
+			retry++;
+			if (retry <= maxRetry) {
+				try {
+					Thread.sleep(500);
+					this.gatherOnePage(targetUrl);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			if (retry > 0)
+				retry = 0;
+		}
+		
 		while (macher.find()) {
 			doneNum++;
 			String link = macher.group(2).trim().split("#")[0];

@@ -32,4 +32,13 @@ public interface DhMsgTopicDao   extends BaseDao<DhMsgTopic,Long>{
 	public List<DhMsgTopic> getNotFenpeiMsgList(String dhAccount);
 	
 	public void fenpeiMsg(String dhAccount, Long bdUserId, String bdUserName);
+	//分配站内信给客服
+	public void fenpeiMsgs(Long bdUserId);
+	//转移数据 
+	public void updateTransferMsgs(Long kefu,Long kefu1);
+	
+	// 获取一个账号最新的站内信的回复时间
+	public Long getTop1LastReplyTime(String dhAccount);
+	// 更新一个账号最新的站内信的回复时间缓存
+	public void updateTop1LastReplyTimeCache(String dhAccount, Long lastReplyTime);
 }

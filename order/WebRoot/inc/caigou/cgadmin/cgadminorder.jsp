@@ -68,15 +68,16 @@
       	<input name="kucun" type="radio" id="kucun" style="ime-mode:disabled" value="0"  onclick="myshow()" checked="checked">否
       	<input name="kucun" type="radio" id="kucun" style="ime-mode:disabled" value="1"  onclick="myshow()">是
   
-      <div style="display:none" id="div1">
-	              物品：
-            <select name="goods" id="goods">
-            	<option value="">-请选择-</option>
-            	<s:iterator value="getStockOrders()" var="i">
-            		<option value="${i.id}">${i.wuping}</option>
-            	</s:iterator>
-            </select>     
-      	   数量：<input type="text" name="num"/>
+        <div style="display:none" id="div1">
+                         物品：
+              <select name="goods" id="goods">
+              	<option value="">-请选择-</option>
+              	<s:iterator value="getStockOrders()" var="i">
+              		<option value="${i.id}">${i.wuping}</option>
+              	</s:iterator>
+              </select><br/>
+      	   数量：<input type="text" name="num" id="num"/> <br/>
+	             数量描述/单位：<input type="text" name="miaosu" id="miaosu"/>
       	</div>
       </td>
 	</tr>

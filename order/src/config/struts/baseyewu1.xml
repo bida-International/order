@@ -15,6 +15,10 @@
 			<result name="tuihuoAll">/inc/yewu1/tuihuoAll.jsp</result>
 			<result name="tuihuo">/inc/yewu1/tuihuo.jsp</result>
 			<result name="upremarks">/inc/yewu1/upremarks.jsp</result>
+			<result name="getorders">/inc/yewu1/getorders.jsp</result>
+			<result name="getdisposed">/inc/yewu1/Disposed.jsp</result>
+			<result name="getDisputesDealtWith">/inc/yewu1/getDisputesDealtWith.jsp</result>
+			<result name="getDisputependingBefore">/inc/yewu1/getDisputependingBefore.jsp</result>
 		</action>
 	</package>
 </struts>

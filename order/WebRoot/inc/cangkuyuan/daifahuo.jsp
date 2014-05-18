@@ -95,7 +95,7 @@
          <td><textarea rows="5" cols="13">${i.gongyunshang}</textarea></td>
 	    <td><textarea cols="13" rows="5">${i.wuping}</textarea></td>
 	    <td><textarea cols="10" rows="5">${i.remark}</textarea></td>
-	     <td><a href="cangkuyuan!fanhui.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}" onclick="return confirm('确定?')">返回</a>
+	     <td><a href="cangkuyuan!fanhui.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}" onclick="return confirm('确定?')">返回给采购员</a>
 	   	 <a href="cangkuyuan!upguoneiyunshu.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改订单</a></td>	      
      </tr>    
    </s:iterator>

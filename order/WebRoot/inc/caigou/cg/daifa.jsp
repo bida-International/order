@@ -29,7 +29,7 @@
 <table>
 	<tr>
 		<td>
-			 <input type="button" style="cursor:pointer" value="将代发产品传给业务" onClick="daifa()">
+			 <input type="button" style="cursor:pointer" value="将代发产品传给跟单" onClick="daifa()">
 		</td>
 	</tr>
 </table>

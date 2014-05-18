@@ -91,7 +91,7 @@ ${msg}
 	         	<td><textarea rows="5" cols="10"><s:property value="getSelLeiMu(#sd.leimuid)"/></textarea></td>
 	         </s:if>
 	   		 <td>${sd.remark}</td>
-	   		 <td><s:property value="#i.caigouyuan==0?('未分配'):(getUserId(#sd.caigouyuan))"/></td>
+	   		 <td><s:property value="#sd.caigouyuan==0?('未分配'):(getUserId(#sd.caigouyuan))"/></td>
 		     <td>
 		     	<select name="selcaigouyuan" id="selcaigou"> 
 		     	<option value="0">-请选择-</option>

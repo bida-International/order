@@ -31,5 +31,7 @@
 	<include file="config/struts/technician.xml"></include>
 	<include file="config/struts/ClipArt.xml"></include>
 	<include file="config/struts/puchasingassistant.xml"></include>
+	<include file="config/struts/theaccount.xml"></include>
+	<include file="config/struts/business.xml"></include>
 </struts>
 

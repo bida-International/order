@@ -21,7 +21,21 @@ public class CaiGouDaoImpl extends BaseDaoImpl<CaiGou, Long> implements CaiGouDa
 	//查询全部采购
 	public List getCaiGou() {	
 		List hql = ht.find("from CaiGou a");
-		
 		return hql;
+	}
+	//查看全部采购
+	public String getAllCaiGou(){
+		String hql = "from CaiGou ";
+		return hql;
+	}
+	//采购编号查询全部
+	public List<CaiGou> getSelId(Long id){
+		   return ht.find("from CaiGou a where a.id = ?", new Object[] {
+		            id
+		        });
+	}
+	//采购管理员编号查询全部
+	public List<CaiGou> getAdCaiGou(Long aduserid){
+		return ht.find("from CaiGou where cgadminId="+aduserid+"");
 	}
 }

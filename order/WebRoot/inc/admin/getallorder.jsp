@@ -70,7 +70,6 @@
 			window.location = "admin!getFpAll.do?usertype="+usertype;
 		}
 	</script>
-	
 	<div style="WIDTH: 1150px; HEIGHT: 430px;overflow: auto;font: 12px Verdana;color:#000;background-color:#FFF;border: 1px dotted #999;
 scrollbar-face-color: #CBDDF1;
 scrollbar-highlight-color: #547CBB;
@@ -79,7 +78,6 @@ scrollbar-3dlight-color: #ffffff;
 scrollbar-arrow-color:  #547CBB;
 scrollbar-track-color: #FFFFFF;
 scrollbar-darkshadow-color: #FFFFFF;"> 
-	
 	 <form action="admin!getAllOrder.do"  name="forms" id="forms" method="post" onsubmit="return as()">
 	 <table  align="left"  cellspacing="0" cellpadding="0">
 	 	<tr>
@@ -96,15 +94,14 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	 </table>
   <table border="1"  cellspacing="0" cellpadding="0" align="center" width="1500px" cellspacing="0">
     <tr>
-      <td colspan="19" align="center"><strong>显示全部订单</strong>
-    
+      <td colspan="21" align="center"><strong>显示全部订单</strong>
          <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
 		<input type="hidden" value="${tit}" name="tit"> 
       </td>
     </tr>
     <tr>
-    <td colspan="19">
+    <td colspan="21">
     	订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}" size="9"/>
     	时间：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}" size="9"/>至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}" size="9"/>
     	dhgate账号查询：
@@ -116,10 +113,11 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	      	>${i.name}</option>
 	      </s:iterator>
 	      </select>  
-	     
     	国际单号查询：<input type="text" name="danhao" id="danhao" value="${param.danhao}" size="9"/>
     	速卖通采购：<input type="radio" name="sumaitong" id="sumaitong" value="0">未完成 <input type="radio" name="sumaitong" id="sumaitong" value="1">完成
     	编码:<input type="text" name="bianma" id="bianma" value="${param.bianma}" size="9"/>
+    	国内运输单号：<input type="text" name="guoneidanhao" id="guoneidanhao" value="${param.guoneidanhao}" size="9"/>
+    	供运商：<input type="text" name="gongyunshang" id="gongyunshang" value="${param.gongyunshang}" size="9"/>
     	<br/>类目查询：
     		<select name="category" id="category" title="类目">
 	    		<option value="">-请选择 -</option>
@@ -130,13 +128,32 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	    		</s:iterator>
 	    	</select>
 	    	国家查询:
-	    	<select name="country" id="country" title="国家">
-	    		<option value="">-请选择 -</option>
-	    		<s:iterator value="getAllGuoJia()" id="i">
-	    			<option value="${i.guojia}"
-	    					${i.guojia==country?('selected="selected"'):('')}
-	    			>${i.guojia}</option>
-	    		</s:iterator>
+	    	 	<select name="country" id="country">
+	    		<option value="">-请选择-</option>
+		    		<s:iterator value="getAllGuoJia()" var="i" status="j">	
+		    			<option>
+		    				<s:if test="#i.fenqu==#i.zimu">
+			    				------------------${i.zimu}------------------
+			    			</s:if>
+		    			</option>
+		    			<option value="${i.guojia}">${i.guojia}</option>
+		    		</s:iterator>
+	    	</select>
+	    	利润率:
+	    	 <select name="tpm" id="tpm">
+	    		<option value="">-请选择-</option>
+		    	<option value="0.1"
+		    	${tpm==0.1?('selected="selected"'):('')}
+		    	>-大于0.1-</option>
+		    	<option value="0.2"
+		    	${tpm==0.2?('selected="selected"'):('')}
+		    	>-大于0.2-</option>
+		    	<option value="0.3"
+		    	${tpm==0.3?('selected="selected"'):('')}
+		    	>-大于0.3-</option>
+		    	<option value="1"
+		    	${tpm==1?('selected="selected"'):('')}
+		    	>-其他-</option>
 	    	</select>
     	<input type="submit" value="查询"/>
     </td>
@@ -150,14 +167,17 @@ scrollbar-darkshadow-color: #FFFFFF;">
       <td width="100"><span class="STYLE2">金额($)</span></td>
        <td width="100"><span class="STYLE2">类目</span></td>
        <td width="100"><span class="STYLE2">运输单号</span></td>
+      <td width="100"><span class="STYLE2">国内运输单号</span></td>
        <td width="63"><span class="STYLE2">运费</span></td>
       <td width="54"><span class="STYLE2">货款</span></td>
       <td width="100"><span class="STYLE2">供运商</span></td> 
-      <td width="100"><span class="STYLE2">退款</span></td>  
-      <td width="64"><span class="STYLE2"> 汇率</span></td>
+      <td width="100"><span class="STYLE2">地址</span></td>  
+      <td width="64"><span class="STYLE2"> 国家</span></td>
        <td width="64"><span class="STYLE2">利润</span></td>
        <td width="80"><span class="STYLE2">纠纷</span></td>
-       <td width="80"><span class="STYLE2">是否处理</span></td>
+       <td width="80"><span class="STYLE2">重量</span></td>
+       <td width="80"><span class="STYLE2">利润率</span></td>
+       <td width="80"><span class="STYLE2">物品</span></td>
        <td width="80"><span class="STYLE2">账号</span></td>
        <td width="80"><span class="STYLE2">备注</span></td>
       <td width="80"><span class="STYLE2">采购员</span></td>
@@ -172,11 +192,12 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	    <td>${i.money}</td>	 
         <td><textarea rows="5" cols="10"><s:if test="#i.leimuid == null">${i.yunshu}</s:if><s:if test="#i.leimuid != null"><s:property value="getSelLeiMu(#i.leimuid)"/></s:if></textarea></td>
 	    <td><textarea rows="5" cols="10">${i.danhao}</textarea></td>
+	    <td>${i.guoneidanhao}</td>
 	    <td><fmt:formatNumber value="${i.yunfei}" pattern="0.00"></fmt:formatNumber></td>	  	 
 	    <td>${i.huokuan}</td>   	 
 	    <td><textarea rows="5" cols="10">${i.gongyunshang}</textarea></td>  
-	    <td>${i.tuikuan}</td>
-	    <td> ${i.huilv}</td>	    
+	    <td><textarea rows="5" cols="10">${i.guowaidizhi}</textarea></td>
+	    <td>${i.country}</td>	    
 	    <s:if test="#i.tuikuan==null || #i.tuikuan==0">
 	    	<td><fmt:formatNumber value="${i.money*i.huilv-(i.huokuan+i.yunfei)}" pattern="0.00"></fmt:formatNumber></td>
 	    </s:if>
@@ -185,19 +206,14 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	    </s:if>
 	     <td>${(i.jiufen==0 || i.jiufen == null)?('否'):('是')}</td>
 	     <td>
-	     	<s:if test="#i.jiufen==1 && (#i.chuli == 0 || #i.chuli == null)">
-	     		否
-	     	</s:if>
-	     	<s:if test="#i.jiufen==1 && #i.chuli == 1">
-	     		是
-	     	</s:if>		
+	     	${i.zhongliang}	
 	     </td>
+	      <td><fmt:formatNumber value="${(i.money*i.huilv-(i.huokuan+i.yunfei+i.tuikuan*i.huilv))/(i.money*i.huilv)}"  pattern="0.000"></fmt:formatNumber></td>
+	     <td>${i.wuping}</td>
 	     <td><s:property value="getZhangHaoId(#i.zhanghaoId)"/></td>
 	     <td><textarea rows="5" cols="10">${i.remark}</textarea></td>
 	   	 <td><a href="admin!getCaiGouAll.do?caigouyuan=${i.caigouyuan}"><s:property value="#i.caigouyuan==0?('未分配'):(getUserId(#i.caigouyuan))"/></a></td>	
-
 	   	 <td>
-		
 	   	 <a href = "admin!delorder.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}" onclick="return confirm('是否删除?')">删除</a><br/>
 	   	 /<a href="admin!uporder.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改订单号</a><br/>
 	   	 <s:if test="#i.jingji==1">
@@ -207,30 +223,28 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	   	 	/<a href="admin!upjinji.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}" onclick="return confirm('确定?')">紧急订单</a><br/>
 	   	 </s:if>
 	   	 /<a href="admin!getorderId.do?ordertable.id=${i.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改</a><br/>
-	  
 	   	 </td>      
      </tr>    
    </s:iterator>
  <tr>
-   	<td colspan="19">
-   
-   		总金额($)：<s:property value="getMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"></s:property>
-   		总运费：<s:property value="getYunFei(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
-   		总采购货款：<s:property value="getHuoKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
-   		退款总额($)：<s:property value="getTuiKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/><br>
-   		纠纷个数：<a href="admin!jiufen.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getJiuFen(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/></a>
-   		运费为空：<a href="admin!getYunFeiNull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getYunFeiNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/></a>
-   		货款为空：<a href="admin!huokuannull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getHuoKuanNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/></a>
-   		纠纷总额($): <s:property value="getCaiGouAllJiuFenMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
+   	<td colspan="22">
+   		<a href="admin!updatelilunlv.do"><font color="red">修改利润率</font></a>
+   		总金额($)：<s:property value="getMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"></s:property>
+   		总运费：<s:property value="getYunFei(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/>
+   		总采购货款：<s:property value="getHuoKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/>
+   		退款总额($)：<s:property value="getTuiKuan(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/><br>
+   		纠纷个数：<a href="admin!jiufen.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getJiuFen(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/></a>
+   		运费为空：<a href="admin!getYunFeiNull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getYunFeiNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/></a>
+   		货款为空：<a href="admin!huokuannull.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}"><s:property value="getHuoKuanNullNum(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/></a>
+   		纠纷总额($): <s:property value="getCaiGouAllJiuFenMoney(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/>
    		<a href="admin!adminlirun.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}">利润小于0</a> /<a href="admin!liruninterval.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}">利润大于0小于30</a>
-   		总利润:<s:property value="getZongLiRun(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
-   		未入账：<a href="admin!weiruzhang.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}&dhgatezhanghao=${param.dhgatezhanghao}&danhao=${param.danhao}"><s:property value="getRuZhang(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/></a>
-   		平均采购速度(小时)<s:property value="getCaiGouTimed(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country)"/>
-  
+   		总利润:<s:property value="getZongLiRun(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/>
+   		未入账：<a href="admin!weiruzhang.do?orderId=${param.orderId}&time=${param.time}&time1=${param.time1}&dhgatezhanghao=${param.dhgatezhanghao}&danhao=${param.danhao}"><s:property value="getRuZhang(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/></a>
+   		平均采购速度(小时)<s:property value="getCaiGouTimed(orderId,time,time1,dhgatezhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/>
+  		 利润率：<s:property value="getTheProfitMargin(orderId, time, time1, zhanghao,danhao,sumaitong,bianma,category,country,tpm,guoneidanhao,gongyunshang)"/>
    		<br>
    	</td>
    </tr> 
-
     <tr> 
 	    <td colspan="19" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
@@ -256,6 +270,16 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	</pg:pager> 
 	    </td>   		
     </tr>
+        <tr>
+			<td colspan="19" style="color:#ff0000;">
+					注：
+					<ol>
+						<li>当操作,用利润率查询时,需要先填充利润率这个字段</li>
+						<li>填充利润率的方法是点击 总金额旁边的那个红色字体--修改利润率</li>
+
+					</ol>
+				</td>
+			</tr>
   </table>
   </form>
 	</div>

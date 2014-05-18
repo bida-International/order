@@ -19,17 +19,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<link href="./CSS/style.css" rel="stylesheet"/>
-	
 	<link href="./CSS/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
 	<script src="jquery-1.8.2.js" type="text/javascript"></script>
-    <script src="./CSS/jquery.ui.core.js"></script>  
-    <script src="./CSS/jquery.ui.widget.js"></script>  
-    <script src="./CSS/jquery.ui.accordion.js"></script>
 	<script src="./CSS/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
 	<script src="./CSS/common.js?v=20140306" type="text/javascript"></script>
-
-	<!--  <link rel="stylesheet" href="./CSS/style3.css" type="text/css" media="screen" /> --> 
-	
 	<style>
 ul{list-style-type:none;margin:0px;}
 .div-menu { margin:0px ;float:left;clear:both;background-color: #EEF2FB; line-height:30px;margin-left: 0px;}
@@ -170,13 +163,23 @@ a{
 text-decoration:none}
 .div-height{border:1px solid #F00; width:300px; height:1000px} 
 	</style>
-<SCRIPT type="text/javascript">
-   $(function() {  
-        $( "#accordion" ).accordion({  
-            collapsible: true  
-        });  
-    }); 
-</SCRIPT>
+	<script>
+		String.prototype.getParameter = function (key) {  
+			var re = new RegExp(key + '=([^&]*)(?:&)?');
+	        return this.match(re) && this.match(re)[1];  
+		};
+		var s = location.href;  
+		
+   		 // 获取编号  
+		var activeIndex = s.getParameter("activeIndex") || 0; 
+		$(function() {
+			$( "#accordion" ).accordion({
+				collapsible: true,
+				active:parseInt(activeIndex)
+				
+			});
+		});
+	</script>
   </head>
   <body style=" font-size:12px">
 		<div id="body">
@@ -225,13 +228,13 @@ text-decoration:none}
     	</div>
   		<div  style="width:100%; background-color:#FFF;display:block">
   		<div id="accordion" style="width: 150px;float: left;border-right: 1px solid #ccc;">  
-			<s:iterator value="getMenu(#session.logininfo.role)" id="m1">
+			<s:iterator value="getMenu(#session.logininfo.role)" id="m1" status="i">
 		    <h3><a href="javascript:void(0)" ><img src="./images/m_ico.gif" width="11" height="11" />${m1.name}</a></h3>
 		    <ul>
 			    <s:iterator value="getMenu(#m1.id)" id="m2">  
 		        	<li class="MM">
 			        	<s:url value="%{#m2.url}" id="myurl"></s:url>
-						<a href="${myurl}?tit=${m2.id}" title="${m2.name}">${m2.name}</a> 
+						<a href="${myurl}?tit=${m2.id}&activeIndex=${i.index}" title="${m2.name}">${m2.name}</a> 
 					</li>  	             
 			    </s:iterator>
 		    </ul>

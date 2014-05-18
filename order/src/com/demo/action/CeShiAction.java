@@ -86,7 +86,7 @@ public class CeShiAction extends BaseAction implements ServletResponseAware
 	                }else{
 	                	cteateCell(workbook, row, 3, "");
 	                }
-	                if((orders.get(i).getGuoneikuaidiId() == null || "".equals(orders.get(i).getGuoneikuaidiId())) && (orders.get(i).getGuoneidanhao() == null || "".equals(orders.get(i).getGuoneidanhao()))){
+	                if((orders.get(i).getGuoneikuaidiId() == null || "".equals(orders.get(i).getGuoneikuaidiId())  || orders.get(i).getGuoneikuaidiId() ==0l) && (orders.get(i).getGuoneidanhao() == null || "".equals(orders.get(i).getGuoneidanhao()))){
 	                	cteateCell(workbook, row, 4, "");
 	                }else{
 	                    cteateCell(workbook, row, 4, getGuoNeiKuaiDiFangShi(orders.get(i).getGuoneikuaidiId().toString())+orders.get(i).getGuoneidanhao().toString());

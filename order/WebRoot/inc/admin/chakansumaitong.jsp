@@ -54,14 +54,14 @@ function as(){
 	<form action="admin!getSuMaiTong.do" name="forms" id="forms" method="post" onsubmit="return as()">
   <table border="1"  class="datagrid2" id="list" width="1143px" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="18" align="center"><strong>显示全部速卖通订单</strong></td>
+      <td colspan="18" align="center"><strong>速卖通录单</strong></td>
       
     </tr>
     <tr>
     <td colspan="18">
     	订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
     	时间：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/>至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>
-    	<input type="submit" value="查询"/>  <input type="button" style="cursor:pointer" value="将速卖通的产品分配给业务" onclick="fanhuiorder()"/>
+    	<input type="submit" value="查询"/>  <input type="button" style="cursor:pointer" value="将速卖通的产品分配给跟单" onclick="fanhuiorder()"/>
     	 <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
 		<input type="hidden" value="${tit}" name="tit"> 

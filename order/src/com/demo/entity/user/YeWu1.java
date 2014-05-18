@@ -18,6 +18,20 @@ public class YeWu1 implements Serializable{
 	private String name;//姓名
 	private Long userid;//账户编号
 	private Long quanxian;//权限
+	private String disputeTime;//纠纷时间
+	private String letterTime;//站内信时间 
+	public String getDisputeTime() {
+		return disputeTime;
+	}
+	public void setDisputeTime(String disputeTime) {
+		this.disputeTime = disputeTime;
+	}
+	public String getLetterTime() {
+		return letterTime;
+	}
+	public void setLetterTime(String letterTime) {
+		this.letterTime = letterTime;
+	}
 	public Long getQuanxian() {
 		return quanxian;
 	}

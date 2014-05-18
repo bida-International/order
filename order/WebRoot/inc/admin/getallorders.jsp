@@ -58,23 +58,31 @@ scrollbar-darkshadow-color: #FFFFFF;">
 			<div id="imgwrapper"  class="content">	
   <table border="1" align="left"  cellspacing="0" cellpadding="0" width="800px">
     <tr align="center">
-       <th>重量</th>
+       <th>是否处理</th>
        <th>速卖通地址</th>
-       <th>国外地址</th>
+       <th>退款</th>
       <th>完成情况</th>
+      <th>汇率</th>
        <th>纠纷时间</th>
        <th>上传到采购时间差(小时)</th>
        <th>采购到入账时间差(小时)</th>
     </tr>
     <s:iterator value="getReAllOrders()" var="i">
       <tr align="center">
-	    <td>${i.zhongliang}</td>	 
+	    <td>
+	     	<s:if test="#i.jiufen==1 && (#i.chuli == 0 || #i.chuli == null)">
+	     		否
+	     	</s:if>
+	     	<s:if test="#i.jiufen==1 && #i.chuli == 1">
+	     		是
+	     	</s:if>	
+		</td>	 
 	    <td>${i.guojia}</td>
 	    <td>
-	    <textarea rows="5" cols="10">
-	    	${i.guowaidizhi}
-	    </textarea></td>       
+	    	${i.tuikuan}
+	    </td>       
 	    <td>${(i.wancheng==0 || i.wancheng == null)?('否'):('是')}</td>
+	    <td>${i.huilv}</td>
 	    <td>${i.jiufentime}</td>
 	    <td>
 	    <s:if test="#i.time==null || #i.caigoutime == null">
@@ -94,7 +102,7 @@ scrollbar-darkshadow-color: #FFFFFF;">
 	    </td>
      </tr>    
    </s:iterator>
-   <tr><td colspan="7" align="center"><a href="admin!reorder.do?pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">返回</a></td></tr>
+   <tr><td colspan="8" align="center"><a href="admin!reorder.do?pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">返回</a></td></tr>
   </table>
 	</div>	
 		</div>

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.demo.dao.GuoJiaDao;
+import com.demo.dao.KuCunDao;
 import com.demo.dao.KuaiDiFangShiDao;
 import com.demo.dao.OrderDao;
 import com.demo.dao.OrderTableDao;
@@ -35,6 +37,7 @@ import com.demo.dao.Courier.HydbDao;
 import com.demo.dao.Courier.SALdbDao;
 import com.demo.dao.Courier.YunFeiTableDao;
 import com.demo.dao.Courier.YunFeieDao;
+import com.demo.entity.KuCunTable;
 import com.demo.entity.KuaiDiFangShi;
 import com.demo.entity.YunCun;
 import com.demo.entity.Courier.Gjsl;
@@ -79,6 +82,8 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 	@Resource
 	private HydbDao hydbDao;
 	@Resource
+	private KuCunDao kucundao;
+	@Resource
 	private HkdbDao hkdbDao;
     private PageBean pageBean;
     public int pageNumber;
@@ -90,10 +95,12 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
     public String gongyunshang;
     public Long selzhanghao;
     public List<OrderTable> orders;
+    public String usertype;
     public String guoneidanhao;
     public int pageindex;
     public String msg;
     private OrderTable ordertable;
+    public Long caigouyuan;
     public String chuli;
     private HttpServletRequest request;
     public File getExcelfile() {
@@ -302,17 +309,23 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
             for(int i = 0; i < ch.length; i++)
             {
                 List<OrderTable> ls = orderDao.getSelId(Long.parseLong(ch[i]));
+                List<KuCunTable> kc = kucundao.getKuCunId(ls.get(0).getKucunid());
+                if (kc.size() != 0) {
+					kc.get(0).setId(kc.get(0).getId());
+					kc.get(0).setNum((kc.get(0).getNum())-(ls.get(0).getNum()));
+					kc.get(0).setZynum((kc.get(0).getZynum())-(ls.get(0).getNum()));
+					kc.get(0).setTotalprice((kc.get(0).getTotalprice())-(kc.get(0).getUnitprice()*ls.get(0).getNum()));
+					kucundao.merge(kc.get(0));
+				}
                 if(ls.size() != 0)
                 {
                     ls.get(0).setId(Long.parseLong(ch[i]));
                     ls.get(0).setDaifahuo(0l);
                     ls.get(0).setSumaitong(0l);
-                   
                     ls.get(0).setWancheng(1l);
                     ls.get(0).setDaochu(0l);
                     ls.get(0).setGetordersId(0l);
                     ls.get(0).setWanchengtime(new java.sql.Date(System.currentTimeMillis()));
-     
                     orderDao.merge(ls.get(0));
                     str[i] = i+".操作成功";
                 }
@@ -780,7 +793,7 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
          String bianma = ordertable.getBianma(); 
          String gongyunshang = ordertable.getGongyunshang();
          Double zl = ordertable.getZhongliang();
-         java.sql.Date time = ordertable.getJiufentime();
+         String time = ordertable.getJiufentime();
          ordertable = (OrderTable)orderDao.get(ordertable.getId());
          ordertable.setOrderId(order);
          ordertable.setYunshu(yunshu);
@@ -801,7 +814,10 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
          ordertable.setZhongliang(zl);
          ordertable.setGongyunshang(gongyunshang);
          if(jiufen ==1 && (time == null || "".equals(time))){
-        	 ordertable.setJiufentime(new java.sql.Date(System.currentTimeMillis()));
+        	 Date d = new Date();
+             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+             String ff = f.format(d);
+             ordertable.setJiufentime(ff);
          }else if(jiufen ==1 && (time != null && !"".equals(time))){
         	    ordertable.setJiufentime(time);
          }
@@ -1417,7 +1433,12 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
 		}
   	  return tt;
     }
-  
+    //查看采购全部订单
+    public String getFilter(){
+	   	 int pageSize = 10;
+	   	 pageBean = pageBiz.selFilter(pageSize, pageNumber, caigouyuan, orderId, time, time1);
+	   	 return "getcaigous";
+    }
     //测试
     public String ceshi(){
     	return "ceshi";

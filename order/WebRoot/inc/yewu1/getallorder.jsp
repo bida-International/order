@@ -15,11 +15,11 @@
 <form action="yewu1!getYeAllOrder.do" method="post" onsubmit="return as()" id="forms" name="forms">
   <table border="1" width="900px" cellspacing="0" style="float:left">
      <tr>
-      <td colspan="7" align="center"><strong>全部订单</strong></td>
+      <td colspan="8" align="center"><strong>全部订单</strong></td>
 
     </tr>
     <tr>
-      <td colspan="6" align="right">订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
+      <td colspan="7" align="right">订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
       <td><input type="submit" value="查询"/>
       <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
@@ -34,6 +34,7 @@
         <td width="130"><span class="STYLE2">采购时间</span></td>
          <td width="100"><span class="STYLE2">备注</span></td>
          <td width="100"><span class="STYLE2">采购员</span></td>
+          <td width="120"><span class="STYLE2">发货时间</span></td>
        <td width="100"><span class="STYLE2">操作</span></td>
     </tr>
     <s:iterator value="pageBean.list" var="sd">
@@ -44,6 +45,7 @@
 	   		 <td>${sd.caigoutime}</td>
 	   		 <td><textarea rows="5" cols="10">${sd.remark}</textarea></td>
 	   		 <td><s:property value="getUserId(#sd.caigouyuan)"/></td>
+	   		  <td>${sd.dcsj}</td>
 		      <td>
 		      	<a href="yewu1!upOrder.do?ordertable.id=${sd.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}">修改订单</a>
 		      <s:if test="#sd.jingji==1">
@@ -56,7 +58,7 @@
 	     </tr>   
      </s:iterator> 
      <tr>     
-         <td colspan="7" align="center">
+         <td colspan="8" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
         <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	 		 <a href="javascript:page(1)">首页</a>

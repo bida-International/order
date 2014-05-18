@@ -8,6 +8,7 @@ import com.demo.entity.order.OrderTable;
 import com.demo.entity.order.Order_Detail;
 
 import java.io.PrintStream;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -409,149 +410,235 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     	 return stu;
     }
   //管理员查询全部订单
-    public List<OrderTable> getChaKanOrder(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country){
+    public List<OrderTable> getChaKanOrder(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang){
     	List<OrderTable> stu = null;
           try
           {
-              if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)))
+              if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang)))
               {
               
                   stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null)   and sjc is null  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') order by time desc");
               }
-              if(("".equals(dhgatezhanghao) || dhgatezhanghao == null) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId != null && !"".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              if(("".equals(dhgatezhanghao) || dhgatezhanghao == null) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId != null && !"".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
                   stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null  and orderId = '"+orderId+"' order by time desc");
               }
-              if(!"".equals(dhgatezhanghao) && dhgatezhanghao != null && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              if(!"".equals(dhgatezhanghao) && dhgatezhanghao != null && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
                   stu = ht.find("from OrderTable a where (fenpei != 3 or fenpei is null) and sjc is null  and a.zhanghaoId in(select  b.id from ZhangHao b where b.id = '"+dhgatezhanghao+"') order by time desc");
               }
-              if((!"".equals(dhgatezhanghao) && dhgatezhanghao != null)&& (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              if((!"".equals(dhgatezhanghao) && dhgatezhanghao != null)&& (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
                   stu = ht.find("from OrderTable a where (fenpei != 3 or fenpei is null)  and sjc is null  and a.zhanghaoId = "+dhgatezhanghao+" and leimuid="+leimu+" order by time desc");
               }
-              if(!"".equals(dhgatezhanghao) && dhgatezhanghao != null && time != null && !"".equals(time) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              if(!"".equals(dhgatezhanghao) && dhgatezhanghao != null && time != null && !"".equals(time) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
                   stu = ht.find("from OrderTable a where (fenpei != 3 or fenpei is null)  and sjc is null  and a.zhanghaoId in(select b.id from ZhangHao b where b.id = '"+dhgatezhanghao+"') and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') order by time desc");
               }
-              if((danhao != null && !"".equals(danhao)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(time == null || "".equals(time)) && (time1 == null || "".equals(time1))&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              if((danhao != null && !"".equals(danhao)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(time == null || "".equals(time)) && (time1 == null || "".equals(time1))&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm))){
               	
               	stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  and danhao='"+danhao+"' order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
                   stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong)||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao != null && !"".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+                  stu = ht.find("from OrderTable where guoneidanhao = '"+guoneidanhao+"' and fenpei != 3  and sjc is null");
+              }
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong)||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang != null && !"".equals(gongyunshang))){
+                  stu = ht.find("from OrderTable where gongyunshang = '"+gongyunshang+"' and fenpei != 3  and sjc is null");
+              }
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  and bianma like '%"+bianma+"%' order by time desc");
               }
-              else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)))
+              else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang)))
               {
               	
                   stu = ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  and datediff(day,time,'"+time+"')=0 order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
              
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null  and leimuid="+leimu+" order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+" order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null  and datediff(day,time,'"+time+"')=0 and danhao = '"+danhao+"' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and danhao = '"+danhao+"' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null  and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null  and datediff(day,time,'"+time+"')=0 and leimuid = '"+leimu+"' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and leimuid = '"+leimu+"' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and danhao = '"+danhao+"' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and leimuid = '"+leimu+"' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and danhao = '"+danhao+"' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' order by time desc");
               }
-              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and leimuid = '"+leimu+"' order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and danhao='"+danhao+"' and leimuid = '"+leimu+"' order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and bianma='"+bianma+"' and leimuid = '"+leimu+"' order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"' order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"' order by time desc");
               }        
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and danhao='"+danhao+"' and leimuid = '"+leimu+"' order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country))){
-              	
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	System.out.println("+++国家查询++++"+country);
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and country = '"+country+"'");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and country='"+country+"'");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and country='"+country+"' and leimuid = '"+leimu+"'");
               }
-              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and country='"+country+"'");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
 
-              	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null and country='"+country+"' and leimuid = '"+leimu+"'");
+              	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null and country='"+country+"' and leimuid = '"+leimu+"");
               }
-              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null)  and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and leimuid = "+leimu+" and country='"+country+"'");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(Long.parseLong(sumaitong) == 0)&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.1 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.2 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.3 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.1 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.2 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.3 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  leimuid = "+leimu+" and zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.1 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  leimuid = "+leimu+" and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.2 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  leimuid = "+leimu+" and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.3 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  leimuid = "+leimu+" and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  leimuid = "+leimu+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.1 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  leimuid = "+leimu+"  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.2 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  leimuid = "+leimu+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.3 order by zhanghaoId desc");
+              }
+              else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  leimuid = "+leimu+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+              }
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+             
+              	stu=ht.find("from OrderTable where fenpei != 3 and  profitmargin > 0.1 order by zhanghaoId desc");
+              }
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  profitmargin > 0.2 order by zhanghaoId desc");
+              }
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  profitmargin > 0.3 order by zhanghaoId desc");
+              }
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+              	
+              	stu=ht.find("from OrderTable where fenpei != 3 and  id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+              }
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(Long.parseLong(sumaitong) == 0)&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and sumaitong=0 order by time desc");
               }
-              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(Long.parseLong(sumaitong) == 1)&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+              else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(Long.parseLong(sumaitong) == 1)&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
               	stu=ht.find("from OrderTable where (fenpei != 3 or fenpei is null) and sjc is null and sumaitong=1 order by time desc");
               }
           }
@@ -787,27 +874,19 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
         return stu;
     }
   //采购查看退货
-    public String getTuiHuo(Long userid,String orderId,String danhao,String chuli){
+    public String getTuiHuo(Long userid,String orderId,String danhao){
     	String stu = null;
         try
         {
-        	
-            if((danhao != null && !"".equals(danhao)) && (orderId == null || "".equals(orderId)) && (chuli == null || "".equals(chuli))){
-                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and sjc is null and  tuihuo = 1 and danhao='"+danhao+"' order by time desc";
+            if((danhao != null && !"".equals(danhao)) && (orderId == null || "".equals(orderId))){
+                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and (chuli = 0 or chuli is null or wancheng = 1) and  tuihuo = 1 and danhao='"+danhao+"' order by time desc";
             }
             else if(!"".equals(orderId) && orderId != null){
-                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and sjc is null and  tuihuo = 1 and orderId = '"+orderId+"' order by time desc";
+                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and (chuli = 0 or chuli is null or wancheng = 1) and  tuihuo = 1 and orderId = '"+orderId+"' order by time desc";
             }
-            else if((danhao == null || "".equals(danhao)) && (orderId == null || "".equals(orderId)) && (chuli == null || "".equals(chuli))){
-                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and sjc is null and tuihuo = 1 order by time desc";
+            else if((danhao == null || "".equals(danhao)) && (orderId == null || "".equals(orderId))){
+                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and (chuli = 0 or chuli is null or wancheng = 1) and tuihuo = 1 order by time desc";
             }
-            else if(danhao == null || "".equals(danhao) && (orderId == null || "".equals(orderId)) && (Long.parseLong(chuli) == 0)){
-            	stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and sjc is null and tuihuo = 1 and (chuli = 0 or chuli is null)";
-            }
-            else if(danhao == null || "".equals(danhao) && (orderId == null || "".equals(orderId)) && (Long.parseLong(chuli) == 1)){
-            	stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and sjc is null and tuihuo = 1 and chuli = 1";;
-            }
-           
         }
         catch(Exception e)
         {
@@ -821,7 +900,7 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
         try
         {
             if((time != null && !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId))){
-            	System.out.println("+userid++"+userid);
+            
                 stu = "from OrderTable where wancheng=1 and fenpei=1 and jiufen=1 and caigouyuan = "+userid+" and (convert(varchar(10),jiufentime,120) between '"+time+"'and '"+time1+"')";
             }
             if(!"".equals(orderId) && orderId != null){
@@ -850,6 +929,7 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     //查看全部分配订单
     public String getAllFenPei(Long userid,String orderId){
     	String hql = null;
+    	System.out.println("++业务id++"+userid);
     	if(orderId != null && !"".equals(orderId)){
     		 hql = "from OrderTable where (fenpei=0 or fenpei is null) and sjc is null and (wancheng=0 or wancheng is null) and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+") and orderId = '"+orderId+"'";
     	}else{
@@ -861,167 +941,254 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     public String getWenTiOrder(Long userid,String orderId,Long dhgatezhanghao){
     	String hql = null;
     	if((dhgatezhanghao != null && !"".equals(dhgatezhanghao))&& (orderId == null || "".equals(orderId))){
-    		 hql = "from OrderTable where fenpei=2  and (wancheng=0 or wancheng is null) and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+") and zhanghaoId = "+dhgatezhanghao+"";
+    		 hql = "from OrderTable where xiugai = 2  and  and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+") and zhanghaoId = "+dhgatezhanghao+"";
     	}
     	if(orderId != null && !"".equals(orderId)){
-    		 hql = "from OrderTable where fenpei=2  and (wancheng=0 or wancheng is null) and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+") and orderId = '"+orderId+"'";
+    		 hql = "from OrderTable where xiugai = 2  and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+") and orderId = '"+orderId+"'";
     	}else if((dhgatezhanghao == null || "".equals(dhgatezhanghao)) && (orderId == null || "".equals(orderId))){
-    		 hql = "from OrderTable where fenpei=2  and (wancheng=0 or wancheng is null) and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+")";
+    		 hql = "from OrderTable where xiugai = 2  and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+")";
     	}
     	return hql;
     }
   //查看全部订单
-    public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country){
+    public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang){
     
     	List<OrderTable> stu = null;
         try
         {
         	
-            if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)))
+            if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang)))
             {
             
                 stu =ht.find("from OrderTable where caigoutime is not null and sjc is null and  (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') order by zhanghaoId desc");
             }
-            if(("".equals(dhgatezhanghao) || dhgatezhanghao == null) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId != null && !"".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            if(("".equals(dhgatezhanghao) || dhgatezhanghao == null) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId != null && !"".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
                 stu = ht.find("from OrderTable where caigoutime is not null and sjc is null and  (fenpei != 3 or fenpei is null) and orderId = '"+orderId+"' order by zhanghaoId desc");
             }
-            if(!"".equals(dhgatezhanghao) && dhgatezhanghao != null && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            if(!"".equals(dhgatezhanghao) && dhgatezhanghao != null && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
                 stu = ht.find("from OrderTable a where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and a.zhanghaoId in(select b.id from ZhangHao b where b.id = '"+dhgatezhanghao+"') order by zhanghaoId desc");
             }
-            if(!"".equals(dhgatezhanghao) && dhgatezhanghao != null && time != null && !"".equals(time) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            if(!"".equals(dhgatezhanghao) && dhgatezhanghao != null && time != null && !"".equals(time) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
                 stu = ht.find("from OrderTable a where caigoutime is not null  and sjc is null and  (fenpei != 3 or fenpei is null) and a.zhanghaoId in(select b.id from ZhangHao b where b.id = '"+dhgatezhanghao+"') and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') order by zhanghaoId desc");
             }
-            if((danhao != null && !"".equals(danhao)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(time == null || "".equals(time)) && (time1 == null || "".equals(time1))&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            if((danhao != null && !"".equals(danhao)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(time == null || "".equals(time)) && (time1 == null || "".equals(time1))&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu = ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and danhao='"+danhao+"' order by zhanghaoId desc");
             }
-            if((!"".equals(dhgatezhanghao) && dhgatezhanghao != null)&& (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            if((!"".equals(dhgatezhanghao) && dhgatezhanghao != null)&& (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
                 stu = ht.find("from OrderTable a where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and a.zhanghaoId = "+dhgatezhanghao+" and leimuid="+leimu+" order by zhanghaoId desc");
             }
-            if((!"".equals(dhgatezhanghao) && dhgatezhanghao != null)&& (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            if((!"".equals(dhgatezhanghao) && dhgatezhanghao != null)&& (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
                 stu = ht.find("from OrderTable a where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and a.zhanghaoId = "+dhgatezhanghao+" and leimuid="+leimu+" order by zhanghaoId desc");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(danhao == null || "".equals(danhao)) && (sumaitong==null || "".equals(sumaitong)) && (bianma == null || "".equals(bianma) )&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(danhao == null || "".equals(danhao)) && (sumaitong==null || "".equals(sumaitong)) && (bianma == null || "".equals(bianma) )&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             
                 stu = ht.find("from OrderTable  where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) order by zhanghaoId desc");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong)||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao != null && !"".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+                stu = ht.find("from OrderTable where caigoutime is not null and guoneidanhao = '"+guoneidanhao+"' and fenpei != 3  and sjc is null order by zhanghaoId desc");
+            }
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong)||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang != null && !"".equals(gongyunshang))){
+                stu =ht.find("from OrderTable where caigoutime is not null and gongyunshang = '"+gongyunshang+"' and fenpei != 3  and sjc is null order by zhanghaoId desc");
+            }
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%' order by zhanghaoId desc");
             }
-            else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)))
+            else if((time != null && !"".equals(time))&&((time1==null) || "".equals(time1)) && (orderId == null || "".equals(orderId)) && ("".equals(dhgatezhanghao) || dhgatezhanghao == null)&&("".equals(danhao) || danhao == null)&&(sumaitong==null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang)))
             {
             	
                 stu = ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 order by zhanghaoId desc");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null  and sjc is null and (fenpei != 3 or fenpei is null) and leimuid="+leimu+" order by zhanghaoId desc");
             }
-            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where  caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = "+dhgatezhanghao+"");
             }
-            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where  caigoutime is not null  and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and danhao = '"+danhao+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and danhao = '"+danhao+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and bianma like '%"+bianma+"%'");
             }
-            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and bianma like '%"+bianma+"%'");
             }
-            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and leimuid = '"+leimu+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and leimuid = '"+leimu+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and danhao = '"+danhao+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and bianma = '"+bianma+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and datediff(day,time,'"+time+"')=0 and zhanghaoId = '"+dhgatezhanghao+"' and leimuid = '"+leimu+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and  (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and danhao = '"+danhao+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))&& (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%'");
             }
-            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null||"".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and zhanghaoId = '"+dhgatezhanghao+"' and leimuid = '"+leimu+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where  caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and danhao='"+danhao+"' and leimuid = '"+leimu+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where  caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&(!"".equals(danhao) && danhao != null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where  caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and danhao = '"+danhao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&(!"".equals(bianma) && bianma != null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and  (fenpei != 3 or fenpei is null) and zhanghaoId = '"+dhgatezhanghao+"' and bianma like '%"+bianma+"%' and leimuid = '"+leimu+"'");
             }        
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country))&& (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and zhanghaoId = '"+dhgatezhanghao+"' and danhao='"+danhao+"' and leimuid = '"+leimu+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where  caigoutime is not null and  (fenpei != 3 or fenpei is null)  and sjc is null and country = '"+country+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where  caigoutime is not null and  (fenpei != 3 or fenpei is null)  and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and country='"+country+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
 
             	stu=ht.find("from OrderTable where  caigoutime is not null and  (fenpei != 3 or fenpei is null)  and sjc is null and zhanghaoId = '"+dhgatezhanghao+"' and country='"+country+"' and leimuid = '"+leimu+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
 
             	stu=ht.find("from OrderTable where  caigoutime is not null and  (fenpei != 3 or fenpei is null)  and sjc is null and country='"+country+"' and leimuid = '"+leimu+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null and  (fenpei != 3 or fenpei is null) and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and country='"+country+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
 
             	stu=ht.find("from OrderTable where  caigoutime is not null  and (fenpei != 3 or fenpei is null)  and sjc is null and country='"+country+"' and leimuid = '"+leimu+"'");
             }
-            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country != null && !"".equals(country))&& (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	
             	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and sjc is null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and leimuid = "+leimu+" and country='"+country+"'");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(Long.parseLong(sumaitong) == 0)&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.1 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.2 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where  caigoutime is not null  and fenpei != 3 and  (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.3 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.1 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.2 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.3 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  leimuid = "+leimu+" and zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.1 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  leimuid = "+leimu+" and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.2 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  leimuid = "+leimu+" and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.3 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao != null && !"".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  leimuid = "+leimu+" and  zhanghaoId = "+dhgatezhanghao+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  leimuid = "+leimu+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.1 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  leimuid = "+leimu+"  and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.2 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  leimuid = "+leimu+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and profitmargin > 0.3 order by zhanghaoId desc");
+            }
+            else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu != null && !"".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  fenpei != 3 and  leimuid = "+leimu+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+            }
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where  caigoutime is not null  and caigoutime is not null and fenpei != 3 and  profitmargin > 0.1 order by zhanghaoId desc");
+            }
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.2d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where  caigoutime is not null  and caigoutime is not null and fenpei != 3 and  profitmargin > 0.2 order by zhanghaoId desc");
+            }
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 0.3d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null  and  caigoutime is not null and fenpei != 3 and  profitmargin > 0.3 order by zhanghaoId desc");
+            }
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(sumaitong == null || "".equals(sumaitong))&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == 1d) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
+            	
+            	stu=ht.find("from OrderTable where caigoutime is not null and fenpei != 3 and  id not in(select id from OrderTable where profitmargin > 0.1 or profitmargin>0.2 or profitmargin > 0.3) order by zhanghaoId desc");
+            }
+          
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(Long.parseLong(sumaitong) == 0)&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	stu=ht.find("from OrderTable where caigoutime is not null  and sjc is null and (fenpei != 3 or fenpei is null) and (sumaitong=0 or sumaitong is null) order by zhanghaoId desc");
             }
-            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(Long.parseLong(sumaitong) == 1)&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country))){
+            else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (dhgatezhanghao == null || "".equals(dhgatezhanghao))&&("".equals(danhao) || danhao == null)&&(Long.parseLong(sumaitong) == 1)&&("".equals(bianma) || bianma == null)&&(leimu == null || "".equals(leimu)) && (country == null || "".equals(country)) && (tpm == null || "".equals(tpm)) && (guoneidanhao == null || "".equals(guoneidanhao)) && (gongyunshang == null || "".equals(gongyunshang))){
             	stu=ht.find("from OrderTable where caigoutime is not null and sjc is null and (fenpei != 3 or fenpei is null) and sumaitong=1 order by zhanghaoId desc");
             }
         }
@@ -1418,6 +1585,66 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     	}
     	return stu;
     }
+    //查询纠纷处理完毕
+    public String getDisputesDealtWith(String orderid,Long userid,String time,String time1){
+    	String stu = null;
+    	if(orderid != null && !"".equals(orderid) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    		stu = "from OrderTable where jiufen = 1 and chuli = 1 and orderId = '"+orderid+"' and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    	
+    		stu = "from OrderTable where jiufen = 1  and chuli = 1 and sjc is null and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid))  && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))){
+    		stu = "from OrderTable where (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and jiufen = 1  and chuli = 1 and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid))  && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))){
+    		stu = "from OrderTable where (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and jiufen = 1  and chuli = 1 and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid))  && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    		
+    		stu = "from OrderTable where and jiufen = 1  and chuli = 1 and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    	
+    		stu = "from OrderTable where jiufen = 1 and sjc is null and chuli = 1 and yewuId="+userid+"";
+    	}
+    
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    		stu = "from OrderTable where jiufen = 1  and chuli = 1  and yewuId="+userid+"";
+    	}
+    	return stu;
+    }
+    //纠纷未处理完毕
+    public String getDisputependingBefore(String orderid,Long userid,String time,String time1){
+    	String stu = null;
+    	if(orderid != null && !"".equals(orderid) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    		stu = "from OrderTable where jiufen = 1 and (chuli = 0 or chuli is null) and orderId = '"+orderid+"' and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    	
+    		stu = "from OrderTable where jiufen = 1  and (chuli = 0 or chuli is null) and sjc is null and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid))  && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))){
+    		stu = "from OrderTable where (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and jiufen = 1  and (chuli = 0 or chuli is null)  and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid))  && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))){
+    		stu = "from OrderTable where (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and jiufen = 1  and (chuli = 0 or chuli is null)  and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid))  && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    		
+    		stu = "from OrderTable where jiufen = 1  and (chuli = 0 or chuli is null)  and yewuId="+userid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    	
+    		stu = "from OrderTable where  jiufen = 1 and sjc is null and (chuli = 0 or chuli is null) and yewuId="+userid+"";
+    	}
+    
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))){
+    		stu = "from OrderTable where jiufen = 1  and (chuli = 0 or chuli is null)  and yewuId="+userid+"";
+    	}
+    	return stu;
+    }
     //查询纠纷订单
     public String getStock(String orderid){
     	String stu = null;
@@ -1457,6 +1684,16 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
 		}
     	return stu;
     }
+    //业务得到订单
+    public String getBusinessOrders(String orderid,Long userid){
+    	String stu = null;
+    	if (orderid != null && !"".equals(orderid)) {
+			stu = "from OrderTable where (sfbusinessId = 0 or sfbusinessId is null) and businessId = 1 and orderId = '"+orderid+"' and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+")";
+		}else if(orderid == null || "".equals(orderid)){
+			stu = "from OrderTable where (sfbusinessId = 0 or sfbusinessId is null) and businessId = 1 and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+")";
+		}
+    	return stu;
+    }
     //处理完毕
     public String getDisposed(String orderId,Long userid){
     	String stu = null;
@@ -1464,6 +1701,16 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
 			stu = "from OrderTable where ArtProcessing = 1 and ArtistsGetOrders = 1 and orderId = '"+orderId+"' and zhanghaoId in(select id from ZhangHao where ClipArtId = "+userid+")";
 		}else{
 			stu = "from OrderTable where ArtProcessing =1  and ArtistsGetOrders = 1 and zhanghaoId in(select id from ZhangHao where ClipArtId = "+userid+")";
+		}
+    	return stu;
+    }
+    //业务处理完毕订单
+    public String getBusinessDisposed(String orderid,Long userid){
+    	String stu = null;
+    	if (orderid != null && !"".equals(orderid)) {
+			stu = "from OrderTable where sfbusinessId = 1 and businessId = 1 and orderId = '"+orderid+"' and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+")";
+		}else if(orderid == null || "".equals(orderid)){
+			stu = "from OrderTable where sfbusinessId = 1 and businessId = 1 and zhanghaoId in(select id from ZhangHao where yewuId = "+userid+")";
 		}
     	return stu;
     }
@@ -1495,8 +1742,11 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     	return ht.find("from OrderTable where orderId='"+orderId+"'");
     }
     //采购查看问题订单
-    public String getIssuesOrders(String orderid,Long userid){
+    public String getIssuesOrders(String orderid,Long userid,String time,String time1){
     	String stu = null;
+    	if ((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderid == null || "".equals(orderid))) {
+    		stu = "from OrderTable where fenpei = 2 and caigouyuan = "+userid+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+		}
     	if(orderid != null && !"".equals(orderid)){
     		stu = "from OrderTable where fenpei = 2 and orderId = '"+orderid+"' and caigouyuan = "+userid+"";
     	}else{
@@ -1512,5 +1762,202 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     //修改导出订单
     public void updateExportOrders(String dcsj){
     	ht.bulkUpdate("update OrderTable set daochu = 1 , dcsj = '"+dcsj+"' where id in(from OrderTable where daifahuo = 2 and (wancheng = 0 or wancheng is null) and (daochu = 0 or daochu is null)  and sjc is null)");
+    }
+    
+    //管理员下单审核
+    public String getSingleAudit(String orderid,Long userid){
+    	String stu = null;
+    	if(orderid != null && !"".equals(orderid)){
+    		stu ="from OrderTable where orderId = '"+orderid+"' and singleAuditId = 1 and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+")";
+    	}else{
+    		stu ="from OrderTable where singleAuditId = 1 and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+")";
+    	}
+    	return stu;
+    }
+    //查看业务业绩
+    public String getBusinessPerformance(Long yewuid,String orderid,String time,String time1){
+    	String stu = null;
+    	if((orderid != null && !"".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (yewuid != null && !"".equals(yewuid))){
+    		stu = "from OrderTable where orderId = '"+orderid+"' and yewuId = "+yewuid+"";
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (yewuid != null && !"".equals(yewuid))){
+    	
+    		stu = "from OrderTable where  yewuId = "+yewuid+" and uploadFile is not null";
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (yewuid != null && !"".equals(yewuid))){
+    		stu = "from OrderTable where yewuId = "+yewuid+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (yewuid == null || "".equals(yewuid))){
+    		stu = "from OrderTable where  uploadFile is not null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (yewuid == null || "".equals(yewuid))){
+    		
+    		stu = "from OrderTable where  uploadFile is not null";
+    	}
+    	return stu;
+    }
+    //管理员查看业务总金额
+    public List<OrderTable> getTheTotalAmount(Long yewuid,String orderid,String time,String time1){
+    	List<OrderTable> stu = null;
+    	if((orderid != null && !"".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (yewuid != null && !"".equals(yewuid))){
+    		stu =ht.find("select round(sum(money),3) from OrderTable where orderId = '"+orderid+"' and yewuId = "+yewuid+"");
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (yewuid != null && !"".equals(yewuid))){
+    		stu = ht.find("select round(sum(money),3) from OrderTable where  yewuId = "+yewuid+" and uploadFile is not null");
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (yewuid != null && !"".equals(yewuid))){
+    		stu = ht.find("select round(sum(money),3) from OrderTable where yewuId = "+yewuid+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')");
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (yewuid == null || "".equals(yewuid))){
+    		stu = ht.find("select round(sum(money),3) from OrderTable where  uploadFile is not null and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')");
+    	}
+    	else if((orderid == null || "".equals(orderid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (yewuid == null || "".equals(yewuid))){
+    		stu = ht.find("select round(sum(money),3) from OrderTable where  uploadFile is not null");
+    	}
+    	return stu;
+    }
+    //修改纠纷状态
+    public void updateDisputeStatus(String orderId,String time,Long userid){
+    	System.out.println("+++订单号++++"+orderId);
+		ht.bulkUpdate("update OrderTable set yewuId = "+userid+",jiufen=1,jiufentime='"+time+"' where orderId='"+orderId+"'");
+	}
+    //订单号修改总退款额
+    public void updateOrderMoney(String orderId,Double tuikuan){
+    	ht.bulkUpdate("update OrderTable set jiufen=1,tuikuan="+tuikuan+" where orderId='"+orderId+"'");
+    }
+    //买家投诉到平台
+    public void updateApplication(String orderId,String time,Double tuikuan){
+    	ht.bulkUpdate("update OrderTable set jiufen = 1,tstime='"+time+"',tuikuan="+tuikuan+" where orderId='"+orderId+"'");
+    }
+    //买家取消退款申请
+    public void updateQxtk(String orderId){
+    	ht.bulkUpdate("update OrderTable set jiufen=0,jiufentime = null where orderId='"+orderId+"'");
+    }
+    //修改入账
+    public void updateRuZhang(String orderId,String time,Double tuikuan){
+    
+    	ht.bulkUpdate("update OrderTable set ruzhang=1,ruzhangtime = '"+time+"',tuikuan="+tuikuan+" where orderId='"+orderId+"'");
+    }
+    //买家取消退款申请
+    public void updateDisputes(String orderId){
+    	ht.bulkUpdate("update OrderTable set jiufen=1 where orderId='"+orderId+"'");
+    }
+    //采购管理员查看退款
+    public String getPurchasing(Long userid,String orderId,String danhao,Long caigouyuan){
+    	String stu = null;
+        try
+        {
+            if((danhao != null && !"".equals(danhao)) && (orderId == null || "".equals(orderId)) && (caigouyuan == null || "".equals(caigouyuan))){
+                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and (chuli = 0 or chuli is null or wancheng = 1) and  tuihuo = 1 and danhao='"+danhao+"' order by time desc";
+            }
+            if ((danhao != null && !"".equals(danhao)) && (orderId == null || "".equals(orderId)) && (caigouyuan != null && !"".equals(caigouyuan))){
+            	 stu = "from OrderTable where caigouyuan = "+caigouyuan+" and (fenpei != 3 or fenpei is null) and (chuli = 0 or chuli is null or wancheng = 1) and  tuihuo = 1 and danhao='"+danhao+"' order by time desc";
+			}
+            if ((danhao == null || "".equals(danhao)) && (orderId == null || "".equals(orderId)) && (caigouyuan != null && !"".equals(caigouyuan))){
+           	 stu = "from OrderTable where caigouyuan = "+caigouyuan+" and (fenpei != 3 or fenpei is null) and (chuli = 0 or chuli is null or wancheng = 1)  and  tuihuo = 1 order by time desc";
+			}
+            else if((!"".equals(orderId) && orderId != null)){
+                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and (chuli = 0 or chuli is null or wancheng = 1)  and  tuihuo = 1 and orderId = '"+orderId+"' order by time desc";
+            }
+            else if((danhao == null || "".equals(danhao)) && (orderId == null || "".equals(orderId)) && (caigouyuan == null || "".equals(caigouyuan))){
+                stu = "from OrderTable where caigouyuan = "+userid+" and (fenpei != 3 or fenpei is null) and (chuli = 0 or chuli is null or wancheng = 1) and  tuihuo = 1 order by time desc";
+            }
+           
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return stu;
+    }
+    //采购管理员查看未完成订单
+    public String getOutstandingOrders(Long userid,String orderId,Long caigouyuan){
+    	String stu = null;
+    	if (orderId != null && !"".equals(orderId)) {
+			stu = "from OrderTable where getordersId=1 and orderId = '"+orderId+"' and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+")";
+		}else if(caigouyuan != null && !"".equals(caigouyuan)){
+			stu = "from OrderTable where getordersId=1 and caigouyuan = '"+caigouyuan+"' and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+")";
+		}
+		else if ((orderId == null || "".equals(orderId)) && (caigouyuan == null || "".equals(caigouyuan))) {
+			stu = "from OrderTable where getordersId=1 and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+")";
+		}
+    	return stu;
+    }
+    //采购管理员速卖通录单
+    public String getIntoaSingle(Long userid,Long caigouyuan,String orderId,String time,String time1){
+    	 String stu = null;
+         if((time != null || !"".equals(time)) && time1 != null && !"".equals(time1) && (orderId == null || "".equals(orderId)) && (caigouyuan == null || "".equals(caigouyuan))){
+             stu = "from OrderTable a where  (wancheng = 0 or wancheng is null) and sumaitong = 1 and fenpei = 1 and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+") order by zhanghaoId";
+         }
+         if(!"".equals(orderId) && orderId != null){
+             stu = "from OrderTable a where  (wancheng = 0 or wancheng is null) and sumaitong = 1 and fenpei = 1  and orderId = '"+orderId+"' and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+") order by zhanghaoId";
+         }
+         else
+         if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (caigouyuan != null && !"".equals(caigouyuan))){
+             stu = "from OrderTable a where caigouyuan = "+caigouyuan+" and (wancheng = 0 or wancheng is null) and sumaitong = 1 and fenpei = 1 and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+") order by zhanghaoId";
+         }
+         else
+         if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (orderId == null || "".equals(orderId)) && (caigouyuan != null && !"".equals(caigouyuan))){
+             stu = "from OrderTable a where caigouyuan = "+caigouyuan+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"') and (wancheng = 0 or wancheng is null) and sumaitong = 1 and fenpei = 1 and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+") order by zhanghaoId";
+         }
+         else
+         if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (orderId == null || "".equals(orderId)) && (caigouyuan == null || "".equals(caigouyuan))){
+             stu = "from OrderTable a where  fenpei = 1 and (wancheng = 0 or wancheng is null) and sumaitong = 1 and caigouyuan in(select userid from CaiGou where cgadminId = "+userid+") order by zhanghaoId";
+         }
+         return stu;
+    }
+    //查询全部订单号
+    public String getAllOrders(Long zhanghaoid,Long leimuid,String time,String time1){
+    	String stu = null;
+    	if ((zhanghaoid == null || "".equals(zhanghaoid)) && (leimuid == null || "".equals(leimuid)) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))) {
+    		
+			stu = "from OrderTable where (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+		}
+    	if ((zhanghaoid != null && !"".equals(zhanghaoid)) && (leimuid == null || "".equals(leimuid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))) {
+    	
+			stu = "from OrderTable where zhanghaoId="+zhanghaoid+"";
+		}
+    	if ((zhanghaoid == null || "".equals(zhanghaoid)) && (leimuid != null && !"".equals(leimuid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))) {
+    		
+			stu = "from OrderTable where leimuid="+leimuid+"";
+		}
+    	if ((zhanghaoid == null || "".equals(zhanghaoid)) && (leimuid != null && !"".equals(leimuid)) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))) {
+    		
+			stu = "from OrderTable where leimuid="+leimuid+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+		}
+    	if ((zhanghaoid == null || "".equals(zhanghaoid)) && (leimuid != null && !"".equals(leimuid)) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))) {
+    		
+			stu = "from OrderTable where zhanghaoId="+zhanghaoid+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+		}
+    	if ((zhanghaoid != null && !"".equals(zhanghaoid)) && (leimuid != null && !"".equals(leimuid)) && (time != null && !"".equals(time)) && (time1 != null && !"".equals(time1))) {
+    		
+			stu = "from OrderTable where leimuid = "+leimuid+" and zhanghaoId="+zhanghaoid+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+		}
+    	if ((zhanghaoid == null || "".equals(zhanghaoid)) && (leimuid == null || "".equals(leimuid)) && (time == null || "".equals(time)) && (time1 == null || "".equals(time1))) {
+    		
+			stu = "from OrderTable";
+		}
+    	return stu;
+    }
+    //修改利润率
+    public void updateLirunlv(Double lirunlv, Long Id){
+    	ht.bulkUpdate("update OrderTable set profitmargin = "+lirunlv+" where id = "+Id+"");
+    }
+    //请款
+    public void updateReceiving(Long id){
+    	ht.bulkUpdate("update OrderTable set qianshou = 1 where id = "+id+"");
+    }
+    //查询60天以前的数据 
+    public List<OrderTable> getDatas(){
+    	return ht.find("from OrderTable where (qianshou = 0 or qianshou is null) and DateDiff(dd,time,getdate())>=60");
+    }
+    //转移数据
+    public void updateTransfer(Long kefu,Long kefu1){
+    	ht.bulkUpdate("update OrderTable set yewuId = ? where yewuId = ?",new Object[]{kefu1,kefu});
+    }
+    //修改入账
+    public void updateTuiKuan(String orderId,Double tuikuan){
+    	System.out.println("+++退款 +++"+tuikuan+"++订单号+++"+orderId);
+    	ht.bulkUpdate("update OrderTable set tuikuan="+tuikuan+" where orderId='"+orderId+"'");
     }
 }

@@ -13,25 +13,21 @@ function addMoreFiles(){
     var newTd3 = newTr.insertCell();
     var newTd4 = newTr.insertCell();
     var newTd5 = newTr.insertCell();
-    var newTd6 = newTr.insertCell();  
-    var newTd7 = newTr.insertCell(); 
-    var newTd8 = newTr.insertCell(); 
+    var newTd6 = newTr.insertCell(); 
+    var newTd7 = newTr.insertCell();
+    var newTd8 = newTr.insertCell();
     var newTd9 = newTr.insertCell();
-    var newTd10 = newTr.insertCell();
+    var newTd10 = newTr.insertCell();      
     var newTd11 = newTr.insertCell();
-    var newTd12 = newTr.insertCell();      
-    var newTd13 = newTr.insertCell();
-    var newTd14 = newTr.insertCell();    
+    var newTd12 = newTr.insertCell();    
     //设置列内容和属性  
-    newTd14.innerText = '图片';   
-    newTd13.innerHTML= '<input type="file" name="uploadFile" value="" id="uploadFile"/>';  
-    newTd12.innerHTML='<input type="button" name="delete" value="删除" style="cursor: pointer;" id="delete" onclick="delFile();"/>'
-    newTd11.innerText = '编码';
-    newTd10.innerHTML= '<input type="text" name="bianma" value="" id="bianma"  size="9"/>';
-    newTd9.innerText = '库存数量';
-    newTd8.innerHTML= '<input type="text" name="num" value="" id="num"  size="4"/>';
-    newTd7.innerText = '总价';
-    newTd6.innerHTML= '<input type="text" name="totalprice" value="" id="totalprice"  size="4"/>';
+    newTd12.innerText = '图片';   
+    newTd11.innerHTML= '<input type="file" name="uploadFile" value="" id="uploadFile"/>';  
+    newTd10.innerHTML='<input type="button" name="delete" value="删除" style="cursor: pointer;" id="delete" onclick="delFile();"/>'
+    newTd9.innerText = '编码';
+    newTd8.innerHTML= '<input type="text" name="bianma" value="" id="bianma"  size="9"/>';
+    newTd7.innerText = '库存数量';
+    newTd6.innerHTML= '<input type="text" name="num" value="" id="num"  size="4"/>';
     newTd5.innerText = '单价';
     newTd4.innerHTML= '<input type="text" name="unitprice" value="" id="unitprice"  size="4"/>';
     newTd3.innerText = '物品';
@@ -57,6 +53,7 @@ function as(){
 }
 </script>
 <m:frame>
+${msg}
   <form action="caigou!uploadInventoryOrders.do"  enctype="multipart/form-data" method="post">
     <table id="myTable">  
         <tr>  
@@ -67,8 +64,8 @@ function as(){
         	<td><input type="text" name="bianma" id="bianma" title="编码" size="9"></td>
             <td  width="60px">库存数量:</td>
         	<td><input type="text" name="num" id="num" title="库存数量 " size="4"></td>
-        	<td  width="30px">总价:</td>
-        	<td><input type="text" name="totalprice" id="totalprice" title="总价" size="4"></td>
+        <!--<td  width="30px">总价:</td>
+        	<td><input type="text" name="totalprice" id="totalprice" title="总价" size="4"></td> -->
         	<td  width="30px">单价:</td>
         	<td><input type="text" name="unitprice" id="unitprice" title="单价" size="4"></td>
         	<td width="30px">物品:</td>
@@ -83,6 +80,7 @@ function as(){
 						<li>上传图片时,图片名称要改一下</li>
 						<li>图片名称不能是一样的</li>
 						<li>每个字段都必须填写</li>
+						<li>库存订单物品要用完之后才能进行再次添加</li>
 					</ol>
 				</td>
 			</tr>

@@ -59,7 +59,7 @@
 	      </select> 
       
       <input type="submit" value="查询"/>
-      <input type="button" value="纠纷是否处理完毕" style="cursor: pointer;" onclick="chulis()"/>
+     <!--  <input type="button" value="纠纷是否处理完毕" style="cursor: pointer;" onclick="chulis()"/> -->
       <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
 		<input type="hidden" value="${tit}" name="tit">  

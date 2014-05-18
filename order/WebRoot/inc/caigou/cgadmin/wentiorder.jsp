@@ -3,6 +3,7 @@
 <%@ taglib prefix="m" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="pg" uri="http://jsptags.com/tags/navigation/pager" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<script type="text/javascript"  src="My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="./inc/js/bianhao.js"></script>
 <script type="text/javascript">
 
@@ -18,7 +19,7 @@
 		 var da=document.getElementsByName("chkItems");
 		quan1(h,da);
 	  }
-	function myupadmin(){
+	function mysuccessful(){
 	  var items=document.getElementsByTagName("input"); 
 	  var flag=0;
  	if(items!=null){
@@ -40,7 +41,7 @@
 			  bulletinId+=items[i].value+"-";
 			}
 		  }
-		  window.location ="caigouadmin!cgadminwenti.do?bulletinId="+bulletinId+"&pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
+		  window.location ="caigouadmin!mysuccessful.do?bulletinId="+bulletinId+"&pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
 		}else{
 			return false;
 		}
@@ -58,16 +59,18 @@
        }
 	</script>    
 <m:frame>
-<form action="caigouadmin!getWenTiOrder.do" name="forms" id="forms" theme="simple" method="post">
+<form action="caigouadmin!getWenTiOrder.do" name="forms" id="forms" method="post">
   <table border="1" cellspacing="0" style="float:left">
     <tr>
-      <td colspan="8" align="center"><strong>问题订单分配</strong><input type="button" style="cursor:pointer" value="分配订单" onClick="mytest()">
-       <input type="button" style="cursor:pointer" value="采购管理员得到订单 " onClick="myupadmin()">
+      <td colspan="11" align="center"><strong>全部问题订单</strong><input type="button" style="cursor:pointer" value="分配订单" onClick="mytest()">
+       <input type="button" style="cursor:pointer" value="已经完成 " onClick="mysuccessful()">
       </td>
     </tr>
     <tr>
-      <td colspan="7" align="right">
-      	订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/></td>
+      <td colspan="10" align="right">
+      	订单号：<input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
+      	时间查询：<input type="text" name="time" id="time" onfocus="WdatePicker()" value="${param.time}"/> 至<input type="text" name="time1" id="time1"  onfocus="WdatePicker()" value="${param.time1}"/>
+      	</td>
       <td><input type="submit" value="查询"/>
       <s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
@@ -79,8 +82,11 @@
 		<input name="checkbox" onclick="quan()" type="checkbox" style="cursor:pointer"/></td>
 		 <td width="100"><span class="STYLE2">账号</span></td>
       <td width="100"><span class="STYLE2">订单号</span></td>
+      <td width="100"><span class="STYLE2">编码</span></td>
       <td width="100"><span class="STYLE2">上传时间</span></td>
         <td width="130"><span class="STYLE2">类目</span></td>
+        <td width="130"><span class="STYLE2">国家</span></td>
+        <td width="130"><span class="STYLE2">金额</span></td>
          <td width="163"><span class="STYLE2">备注</span></td>
          <td width="130"><span class="STYLE2">采购员</span></td>
       <td width="100"><span class="STYLE2">选择采购名</span></td>
@@ -92,6 +98,7 @@
 		     	<s:property value="getZhangHaoId(#sd.zhanghaoId)"/>
 	         </td>
 	         <td>${sd.orderId}</td>
+	          <td>${sd.bianma}</td>
 	   		 <td>${sd.time}</td>	
 	   		 <td>
 	   		 <s:if test="#sd.leimuid == null">
@@ -101,6 +108,8 @@
 	         	<s:property value="getSelLeiMu(#sd.leimuid)"/>
 	         </s:if>
 	         </td>
+	          <td><s:property value="#sd.country"/></td>
+	          <td>${sd.money}</td>
 	   		 <td>${sd.remark}</td>
 	   		 <td><s:property value="#sd.caigouyuan==0?('未分配'):(getUserId(#sd.caigouyuan))"/></td>
 		     <td>
@@ -114,7 +123,7 @@
 	     </tr>   
      </s:iterator> 
       <tr>     
-         <td colspan="17" align="center">
+         <td colspan="11" align="center">
 	        总记录数：${pageBean.allRow} 共几页：${pageBean.allPage} 当前第 ${pageBean.currentPage} 页
         <pg:pager url="" items="${pageBean.allRow}" export="currentPageNumber=pageNumber" maxPageItems="10"> 
  	  <a href="javascript:page(1)">首页</a>

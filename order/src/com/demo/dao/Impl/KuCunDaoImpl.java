@@ -24,23 +24,26 @@ public class KuCunDaoImpl extends BaseDaoImpl<KuCunTable, Long> implements KuCun
 			return ht.findFirst("from KuCunTable where biaoji = ?",new Object[]{biaoji});
 		}
 		//物品和useriid查询
-		public List<KuCunTable> getGoodsUserId(String goods,Long userid){
-			return ht.find("from KuCunTable where wuping = ? and userid = ?",new Object[]{goods,userid});
+		public List<KuCunTable> getGoodsUserId(String goods){
+			return ht.find("from KuCunTable where wuping = ?",new Object[]{goods});
 		}
 		//采购员查看全部库存订单
-		public String getStockOrder(Long userid,String time,String time1,String bianma){
+		public String getStockOrder(Long userid,String time,String time1,String bianma,String orderId){
 			String hql = null;
-			if ((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (bianma == null || "".equals(bianma))) {
-				hql = "from KuCunTable where userid = "+userid+" and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+			if ((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (bianma == null || "".equals(bianma)) && (orderId == null || "".equals(orderId))) {
+				hql = "from KuCunTable where (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
 			}
-			else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (bianma != null && !"".equals(bianma))){
-				hql = "from KuCunTable where userid = "+userid+" and coding = '"+bianma+"'";
+			else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (bianma != null && !"".equals(bianma)) && (orderId == null || "".equals(orderId))){
+				hql = "from KuCunTable where coding = '"+bianma+"'";
 			}
-			else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (bianma != null && !"".equals(bianma))){
-				hql = "from KuCunTable where userid = "+userid+" and coding = '"+bianma+"' and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
+			else if((time != null && !"".equals(time)) && (time1 != null && !"".equals(time1)) && (bianma != null && !"".equals(bianma)) && (orderId == null || "".equals(orderId))){
+				hql = "from KuCunTable where coding = '"+bianma+"' and (convert(varchar(10),time,120) between '"+time+"'and '"+time1+"')";
 			}
-			else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (bianma == null || "".equals(bianma))){
-				hql = "from KuCunTable where userid = "+userid+"";	
+			else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (bianma == null || "".equals(bianma)) && (orderId != null && !"".equals(orderId))){
+				hql = "from KuCunTable where orderId = '"+orderId+"'";
+			}
+			else if((time == null || "".equals(time)) && (time1 == null || "".equals(time1)) && (bianma == null || "".equals(bianma)) && (orderId == null || "".equals(orderId))){
+				hql = "from KuCunTable";	
 			}
 			return hql;
 		}
@@ -67,15 +70,20 @@ public class KuCunDaoImpl extends BaseDaoImpl<KuCunTable, Long> implements KuCun
 			return stu;
 		}
 		//库存订单总金额
-		public List<KuCunTable> getUserId(Long userid){
+		public List<KuCunTable> getUserId(){
 		
-			List<KuCunTable> stu = ht.find("from KuCunTable where userid = "+userid+"");
+			List<KuCunTable> stu = ht.find("from KuCunTable");
 			return stu;
 		}
 		//图片名称和用户编码查询
 		public List<KuCunTable> getThePictureName(String picturename,Long userid){
 			 List<KuCunTable> stu = ht.find("from KuCunTable where uploadFile = '"+picturename+"' and userid = "+userid+"");
 			 return stu;
+		}
+		//库存编号查询
+		public List<KuCunTable> getKuCunId(Long kucunid){
+			List<KuCunTable> ss = ht.find("from KuCunTable where id = "+kucunid+"");
+			return ss;
 		}
 	}
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>	
+	<!-- 登录的配置 -->
+	<package name="theaccount" extends="sysdefault">
+	
+		<!-- 管理员配置 -->
+		<action name="theaccount" class="theAccountAction">
+			<result name="theaccount">/inc/theaccount/theaccount.jsp</result>
+			<result name="spendings">/inc/theaccount/spendings.jsp</result>
+			<result name="income">/inc/theaccount/income.jsp</result>
+			<result name="updateincome">/inc/theaccount/updateincome.jsp</result>
+			<result name="updatespendings">/inc/theaccount/updatespendings.jsp</result>
+		</action>
+	</package>
+</struts>
+

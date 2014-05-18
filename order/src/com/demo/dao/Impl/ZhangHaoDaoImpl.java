@@ -1,9 +1,13 @@
 package com.demo.dao.Impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.demo.dao.PageDao;
@@ -92,4 +96,15 @@ public class ZhangHaoDaoImpl extends BaseDaoImpl<ZhangHao, Long> implements Zhan
         String hql = "from ZhangHao " + queryPart;
         return pageBean.getFenYe(hql, pageSize, page);
     }
+	
+	@SuppressWarnings("unchecked")
+	public List<ZhangHao> getTopnByOrderUpdateTime(final int topn) {
+		final String hql = "from ZhangHao where account_type = 'dh' or account_type = 'ali' order by order_update_time";
+		return ht.executeFind(new HibernateCallback(){
+				public Object doInHibernate(Session s)
+				throws HibernateException, SQLException {			
+				return s.createQuery(hql).setFirstResult(0).setMaxResults(topn).list();  
+			}
+		});
+	}
 }

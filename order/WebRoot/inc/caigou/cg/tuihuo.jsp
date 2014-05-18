@@ -31,18 +31,7 @@
     	<td colspan="13" align="center">
 	  	订单号 <input type="text" name="orderId" id="orderId" value="${param.orderId}"/>
 	  	 国际运输单号：<input type="text" name="danhao" id="danhao" value="${param.danhao}"/>
-	  	是否处理：
-    	<select name="chuli" id="chuli">
-	  		<option value="">-请选择-</option>
-	  		<option value="0"
-	  		${chuli==0?('selected="selected"'):('')}
-	  		>否</option>
-	  		<option value="1"
-	  		${chuli==1?('selected="selected"'):('')}
-	  		>是</option>
-	  	</select>
 	  	<input type="submit" value="查询"/>
-	  		<input type="button" value="修改是否处理 " onclick="updaifahuo()"/>
 	  	<s:hidden name="pageNumber" value="1"></s:hidden>
 		<s:hidden name="pager.offset" id="pager.offset" value="0"></s:hidden>
 		<input type="hidden" value="${tit}" name="tit"> 

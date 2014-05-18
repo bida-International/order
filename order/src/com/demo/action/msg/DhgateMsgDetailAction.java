@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import com.demo.action.BaseAction;
 import com.demo.biz.dhgate.DhMsgApiBiz;
 import com.demo.biz.msg.DhMsgBiz;
-import com.demo.dao.DhMsgTopicDao;
 import com.demo.entity.DhMsgInfo;
 import com.demo.entity.DhMsgTopic;
 import com.demo.utils.Struts2Utils;
@@ -25,8 +24,6 @@ public class DhgateMsgDetailAction extends BaseAction {
 	private DhMsgBiz dhMsgBiz;
 	@Resource
 	private DhMsgApiBiz dhMsgApiBiz;
-	@Resource
-	private DhMsgTopicDao dhMsgTopicDao;
 	
 	private Long topicId;
 	private String replyContent;
@@ -34,14 +31,17 @@ public class DhgateMsgDetailAction extends BaseAction {
 	private DhMsgTopic msgTopic;
 	private List<DhMsgInfo> msgInfos;
 	
+	private String referer;
+	
 	public String execute() {
 		msgTopic = dhMsgBiz.getMsgTopicByTopicId(topicId);
 		msgInfos = dhMsgBiz.getMsgInfosByTopicId(topicId);
 		
 		if (msgTopic.getReadStatus() == 0) {
-			msgTopic.setReadStatus(1);
-			dhMsgTopicDao.merge(msgTopic);
+			dhMsgBiz.updateReaded(topicId.toString());
 		}
+		
+		referer = Struts2Utils.getRequest().getHeader("referer");
 		return SUCCESS;
 	}
 	
@@ -97,5 +97,13 @@ public class DhgateMsgDetailAction extends BaseAction {
 
 	public void setReplyContent(String replyContent) {
 		this.replyContent = replyContent;
+	}
+
+	public String getReferer() {
+		return referer;
+	}
+
+	public void setReferer(String referer) {
+		this.referer = referer;
 	}
 }

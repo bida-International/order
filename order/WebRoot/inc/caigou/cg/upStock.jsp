@@ -5,9 +5,13 @@
 
 </script>
 <m:frame>
-  <form action="caigou!updateStock.do?kucuntable.id=${kuCunIds.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}"  method="post">
+  <form action="caigou!updateStock.do?kucuntable.id=${kuCunIds.id}&pageNumber=${pageNumber}&pager.offset=${pageNumber*10-10}"  enctype ="multipart/form-data"  method="post">
     <table id="myTable">  
 		<tr><td align="center" colspan="2">修改库存</td></tr>
+		  <tr>
+    		<td>图片</td>
+    		 <td><input type="file" name="uploadFile" value="" id="file"/></td>
+   		 </tr> 
          <tr>
             <td width="30px">编码:</td>
         	<td><input type="text" name="kucuntable.coding" id="coding" title="编码" size="9" value="${kuCunIds.coding}"></td>

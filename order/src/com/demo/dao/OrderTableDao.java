@@ -9,7 +9,9 @@ import com.demo.entity.Courier.YunFeiTable;
 import com.demo.entity.order.DhgateAccounts;
 import com.demo.entity.order.OrderTable;
 import com.demo.entity.order.Order_Detail;
+import com.demo.entity.user.YeWu;
 
+import java.util.Date;
 import java.util.List;
 
 // Referenced classes of package com.demo.dao:
@@ -75,7 +77,7 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //客户查询出货订单
     public String  getChuHuoOrder(Long denglu,String orderId,String guoneidanhao);
     //管理员查询全部订单
-    public abstract List<OrderTable> getChaKanOrder(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract List<OrderTable> getChaKanOrder(String orderId,String time,String time1,String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //管理员查看速卖通订单
     public String getSuMaiTong(String orderId,String time,String time1);
     //业务查看要修改入账的订单
@@ -108,7 +110,9 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //货款为空
     public String getHuoKuanAllNum(Long userid,String orderId,String time,String time1);
     //采购查看退货
-    public String getTuiHuo(Long userid,String orderId,String danhao,String chuli);
+    public String getTuiHuo(Long userid,String orderId,String danhao);
+    //采购管理员查看退款
+    public String getPurchasing(Long userid,String orderId,String danhao,Long caigouyuan);
     //管理员查看纠纷个数
     public String getJiuFenNum(Long userid,String orderid,String time,String time1);
     //登录编号查询全部
@@ -120,7 +124,7 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //查看全部分配订单
     public String getWenTiOrder(Long userid,String orderId,Long dhgatezhanghao);
    //查看全部订单
-    public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public List<OrderTable> getAllOrder(String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
     //采购查看全部完成订单
     public List<OrderTable> getAllWanChengOrder(Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma);
     //纠纷总金额
@@ -190,10 +194,53 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //订单号查询全部订单
     public List<OrderTable> getOrderAll(String orderId);
     //采购查看问题订单
-    public String getIssuesOrders(String orderid,Long userid);
+    public String getIssuesOrders(String orderid,Long userid,String time,String time1);
     //查看全部类目为空的订单
     public String getCategory();
     //修改导出订单
     public void updateExportOrders(String dcsj);
+    //业务得到订单
+    public String getBusinessOrders(String orderid,Long userid);
+    //业务处理完毕订单
+    public String getBusinessDisposed(String orderid,Long userid);
+    //管理员下单审核
+    public String getSingleAudit(String orderid,Long userid);
+    //纠纷处理完毕
+    public String getDisputesDealtWith(String orderid,Long userid,String time,String time1);
+    //纠纷未处理完毕
+    public String getDisputependingBefore(String orderid,Long userid,String time,String time1);
+    //查看业务业绩
+    public String getBusinessPerformance(Long yewuid,String orderid,String time,String time1);
+    //管理员查看业务总金额
+    public List<OrderTable> getTheTotalAmount(Long yewuid,String orderid,String time,String time1);
+    //修改订单状态
+    public void updateDisputeStatus(String orderId,String time,Long userid);
+    //订单号修改总退款额
+    public void updateOrderMoney(String orderId,Double tuikuan);
+    //买家投诉到平台
+    public void updateApplication(String orderId,String time,Double tuikuan);
+    //买家取消退款申请
+    public void updateQxtk(String orderId);
+    //买家取消退款申请
+    public void updateDisputes(String orderId);
+    //修改入账
+    public void updateRuZhang(String orderId,String time,Double tuikuan);
+  //修改入账
+    public void updateTuiKuan(String orderId,Double tuikuan);
+    //采购管理员查看未完成订单
+    public String getOutstandingOrders(Long userid,String orderId,Long caigouyuan);
+    //采购管理员速卖通录单
+    public String getIntoaSingle(Long userid,Long caigouyuan,String orderId,String time,String time1);
+    //查询全部订单号
+    public String getAllOrders(Long zhanghaoid,Long leimuid,String time,String time1);
+    //修改利润率
+    public void updateLirunlv(Double lirunlv, Long Id);
+    //请款
+    public void updateReceiving(Long id);
+    //查询60天以前的数据 
+    public List<OrderTable> getDatas();
+    //转移数据
+    public void updateTransfer(Long kefu,Long kefu1);
+
 }
 

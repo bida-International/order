@@ -3,14 +3,14 @@ package com.demo.page;
 public interface PageBiz
 {
 
-    public abstract PageBean selForPage(int pageSize, int page, String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country);
+    public abstract PageBean selForPage(int pageSize, int page, String orderId, String time, String time1, String dhgatezhanghao,String danhao,String sumaitong,String bianma,Long leimu,String country,Double tpm,String guoneidanhao,String gongyunshang);
    
     //采购管理员得到订单
     public abstract PageBean selCaiGouAdminWanChengOrder(int pageSize, int page, Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma,String gongyunshang,String wuping);
     //查看待发货
     public abstract PageBean selCaiGouAdminDaiFaHuo(int pageSize, int page, Long userid, String orderId,String time, String time1,String caigoutime,String caigoutime1,String wuping,String gongyunshang);
     //查看问题订单
-    public abstract PageBean selAllWenTiOrder(int pageSize, int page, String orderId);
+    public abstract PageBean selAllWenTiOrder(int pageSize, int page, String orderId,String time,String time1);
    
     //采购完成订单
     public abstract PageBean selCaiGouWanChengOrder(int pageSize, int page, Long userid, String orderId, String time, String time1,String caigoutime,String caigoutime1,String bianma);
@@ -85,7 +85,9 @@ public interface PageBiz
     //货款为空 
     public PageBean selHuoKuanNull(int pageSize, int page,Long userid,String orderId,String time,String time1);
   //采购查看退货
-    public PageBean selKanTuiHuo(int pageSize, int page,Long userid,String orderId,String danhao,String chuli);
+    public PageBean selKanTuiHuo(int pageSize, int page,Long userid,String orderId,String danhao);
+    //采购管理员查看退货
+    public PageBean selReturnGoods(int pageSize, int page,Long userid,String orderId,String danhao,Long caigouyuan);
   //纠纷订单
     public PageBean selChaKanJiuFenOrder(int pageSize, int page,Long userid,String orderId,String time,String time1);
     //查询全部客户
@@ -147,11 +149,36 @@ public interface PageBiz
     //不能处理订单
     public PageBean selCanNotHandle(int pageSize,int page,String OrderId,Long userid);
     //采购员查看库存订单
-    public PageBean selStockOrder(int pageSize,int page,Long userid,String time,String time1,String bianma);
+    public PageBean selStockOrder(int pageSize,int page,Long userid,String time,String time1,String bianma,String orderId);
   //管理员查看库存订单
     public PageBean selStockOrderAll(int pageSize,int page,String time,String time1);
     //采购查看问题订单
-    public PageBean selIssuesOrders(int pageSize,int page,String orderid,Long userid);
+    public PageBean selIssuesOrders(int pageSize,int page,String orderid,Long userid,String time,String time1);
     //查询全部类目 
     public PageBean getCategory(int pageSize,int page);
+    //业务得到全部订单
+    public PageBean getOrders(int pageSize,int page,String orderid,Long userid);
+    //业务得到已经处理订单
+    public PageBean getBusinessDisposed(int pageSize,int page,String orderid,Long userid);
+    //查看全部采购账号
+    public PageBean getAllCgZh(int pageSize,int page);
+    //采购管理员查询全部审核订单
+    public PageBean getSingleAudit(int pageSize,int page,String orderid,Long userid);
+    //业务查看纠纷处理完毕
+    public PageBean getDisputesDealtWith(int pageSize,int page,String orderid,Long userid,String time,String time1);
+    //业务查看纠纷未处理完毕订单
+    public PageBean getDisputependingBefore(int pageSize,int page,String orderid,Long userid,String time,String time1);
+    //查看业务业绩
+    public PageBean getBusinessPerformance(int pageSize,int page,Long yewuid,String orderid,String time,String time1);
+    //查看全部支出
+    public PageBean getSpending(int pageSize,int page,String time,String time1);
+    //查看全部收入
+    public PageBean getInCome(int pageSize,int page,String time,String time1); 
+    //查看未完成订单
+    public PageBean getOutstandingOrders(int pageSize,int page,Long userid,String orderId,Long caigouyuan); 
+    //速卖通录单
+    public PageBean getIntoaSingle(int pageSize,int page,Long userid,Long caigouyuan,String orderId,String time,String time1);
+    //查看大金额订单
+    public PageBean getLargeOrder(int pageSize,int page,String orderId,String time,String time1);
+ 
 }

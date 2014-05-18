@@ -26,5 +26,6 @@ public interface ZhangHaoDao extends BaseDao<ZhangHao, Long> {
     public abstract List<ZhangHao> getAll(String accountType, Long bdUserId);
     // 分页查询账号列表
     public abstract PageBean getAllByPage(int pageSize, int page, String accountType);
-    
+    // 根据同步时间取前几条记录 
+    public List<ZhangHao> getTopnByOrderUpdateTime(int topn);
 }

@@ -21,7 +21,6 @@ public class OrderTable implements Serializable
     private static final long serialVersionUID = 1L;
     private Long id;//编号
     private java.util.Date time;//上传时间
-
 	private String orderId;//订单号 
     private Double money;//买家付款金额
     private String yunshu;//类目
@@ -41,7 +40,7 @@ public class OrderTable implements Serializable
     private Long denghuixin;
     private Long wancheng;//0.未完成，1.已经完成
     private Long jiufen;//0.未纠纷,1.已经纠纷
-    private Long xiugai;//0.未修改,1.已经修改
+    private Long xiugai;//0.未修改,1.已经修改,2.客服得到问题订单
     private Long fenpei;//0.未分配,1.已经分配,2.问题订单,3客户上传的订单
     private Long shangwang;//0.未上网,1.已经上网
     private Long qianshou;//0.未签收,1.已经签收
@@ -66,7 +65,7 @@ public class OrderTable implements Serializable
     private String bianma;//编码 
     private Long yunfeidaochu;//0.未导出 1.已经导出
     private Long guojiaId;//国家 
-    private Date jiufentime;//纠纷时间
+    private String jiufentime;//纠纷时间
     private Long leimuid;//类目编号
     private Long ArtistsGetOrdersId;//美工编号
     private Long fawan;//是否发完  0.没发完 1.发完,2.问题订单分配
@@ -94,7 +93,86 @@ public class OrderTable implements Serializable
     private Long getordersId;//1.得到订单0.没有得到订单,2库存 
     private Long ArtProcessing;//美工是否处理
     private java.util.Date returnTime;//退货时间
+    private Long businessId;//业务编号
+    private Long sfbusinessId;//业务是否处理
+    private Long singleAuditId;//下单审核 0.未审核 1.审核
+    private String uploadFile;//图片地址
+    private Long yewuId;//业务编号
+    private java.util.Date scTime;//图片上传时间
+    private Long kucunid;//库存编号
+    private String tstime;//投诉时间
+    private Double profitmargin;//利润率
+	public Double getProfitmargin() {
+		return profitmargin;
+	}
 
+	public void setProfitmargin(Double profitmargin) {
+		this.profitmargin = profitmargin;
+	}
+
+	public String getTstime() {
+		return tstime;
+	}
+
+	public void setTstime(String tstime) {
+		this.tstime = tstime;
+	}
+
+	public Long getKucunid() {
+		return kucunid;
+	}
+
+	public void setKucunid(Long kucunid) {
+		this.kucunid = kucunid;
+	}
+
+	public java.util.Date getScTime() {
+		return scTime;
+	}
+
+	public void setScTime(java.util.Date scTime) {
+		this.scTime = scTime;
+	}
+
+	public Long getYewuId() {
+		return yewuId;
+	}
+
+	public void setYewuId(Long yewuId) {
+		this.yewuId = yewuId;
+	}
+
+	public String getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(String uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public Long getSingleAuditId() {
+		return singleAuditId;
+	}
+
+	public void setSingleAuditId(Long singleAuditId) {
+		this.singleAuditId = singleAuditId;
+	}
+
+	public Long getSfbusinessId() {
+		return sfbusinessId;
+	}
+
+	public void setSfbusinessId(Long sfbusinessId) {
+		this.sfbusinessId = sfbusinessId;
+	}
+
+	public Long getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(Long businessId) {
+		this.businessId = businessId;
+	}
 	public java.util.Date getReturnTime() {
 		return returnTime;
 	}
@@ -335,11 +413,11 @@ public class OrderTable implements Serializable
 		this.leimuid = leimuid;
 	}
 
-	public Date getJiufentime() {
+	public String getJiufentime() {
 		return jiufentime;
 	}
 
-	public void setJiufentime(Date jiufentime) {
+	public void setJiufentime(String jiufentime) {
 		this.jiufentime = jiufentime;
 	}
 

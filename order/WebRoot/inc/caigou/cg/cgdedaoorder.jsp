@@ -3,6 +3,7 @@
 <%@ taglib prefix="m" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="pg" uri="http://jsptags.com/tags/navigation/pager" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <script type="text/javascript"  src="My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="./inc/js/bianhao.js"></script>
 <script type="text/javascript">
@@ -61,11 +62,11 @@ function as(){
     		var pageNumber = document.getElementById("pageNumber").value;
     		location.href = "caigou!getCaiGouOrder.do?pager.offset="+(pageNumber*10-10)+"&pageNumber="+pageNumber;
      }
-       function getPayment(){
+       function singleaudit(){
     	 var zhanghaoId = document.getElementById("zhanghaoId").value;
     	  var category = document.getElementById("category").value;
 		var items=document.getElementsByTagName("input"); 
-	     var lujing = "caigou!getPayment.do?category="+category+"&zhanghaoId="+zhanghaoId+"&pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
+	     var lujing = "caigou!singleaudit.do?category="+category+"&zhanghaoId="+zhanghaoId+"&pageNumber="+${pageNumber}+"&pager.offset="+${pageNumber*10-10};
 	     bianhao(items,lujing);
      
      }
@@ -91,14 +92,14 @@ function as(){
 			<td>
 				 <input type="button" style="cursor:pointer" onclick="daochu()" value="选择导出订单"/>
 			</td>
-			<td><span style="color:red">传给财务:</span></td>
-			<td> <input type="button" style="cursor:pointer" onclick="getPayment()" value="给财务付款订单"/></td>
+			<td><span style="color:red">下单审核:</span></td>
+			<td> <input type="button" style="cursor:pointer" onclick="singleaudit()" value="下单审核"/></td>
 			</tr>
 			<tr>
 			<td><span style="color:red">速卖通下单:</span></td>
 			<td> <input type="button" style="cursor:pointer" value="速卖通下单审核" onclick="mysumaitong()"/></td>
 			</tr>
-		
+			
 	</table>
 	
   <table border="1"  width="1180" cellspacing="0" style="float:left" >
@@ -189,8 +190,8 @@ function as(){
 	         	<s:property value="getSelLeiMu(#sd.leimuid)"/>
 	         </s:if>
 	         </td>
-	   		 <td>${sd.huokuan}</td>	  
-	   		 <td>${sd.money}</td>
+	   		 <td><fmt:formatNumber value="${sd.huokuan}"  pattern="0.00"></fmt:formatNumber></td>	  
+	   		 <td><fmt:formatNumber value="${sd.money}"  pattern="0.00"></fmt:formatNumber></td>
 	   		<td><textarea rows="5" cols="10">${sd.gongyunshang}</textarea></td>     
 	   		 <td><textarea rows="5" cols="10">${sd.remark}</textarea></td> 
 	   		  <td><textarea rows="5">${sd.wuping}</textarea></td>
