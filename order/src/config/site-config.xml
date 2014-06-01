@@ -5,14 +5,17 @@
 	<dhgateAppKey>NJkPGfFsLCchu4HEC7do</dhgateAppKey>
 	<dhgateAppSecret>ePTEbmRmts6CYNUSxCrob6D8n4Jjk0pG</dhgateAppSecret>
 	<dhgateGetTokenUrl>https://secure.dhgate.com/dop/oauth2/access_token</dhgateGetTokenUrl>
+	<!-- 
 	<dhgateApiUrl>http://api.dhgate.com/dop/router</dhgateApiUrl>
+	 -->
+	<dhgateApiUrl>http://sandbox.api.dhgate.com/dop/router</dhgateApiUrl>
 	
 	<!-- 速卖通 -->
 	<aliRedirectUri>http://qiantingdi.gicp.net:49644/order/aliAuth.do</aliRedirectUri>
 	<aliApiUrl>https://gw.api.alibaba.com/openapi/</aliApiUrl>
 
 	<!-- 17track -->
-	<trackApiUrl>http://www.a.com/Rest/HandlerTrack.ashx</trackApiUrl>
+	<trackApiUrl>http://api-r.17track.net:8088/Rest/HandlerTrack.ashx</trackApiUrl>
 	
 	<!-- 产品状态同步功能配置 -->
 	<autoSynchProductStatus>0</autoSynchProductStatus>

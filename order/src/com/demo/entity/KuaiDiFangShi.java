@@ -18,6 +18,8 @@ public class KuaiDiFangShi implements Serializable
 	private static final long serialVersionUID = 1L;
     private Long id;//编号
     private String name;//姓名
+    private String trackNum; // 17Track对应的编码
+    
     @Id
     @GeneratedValue
     public Long getId()
@@ -39,6 +41,14 @@ public class KuaiDiFangShi implements Serializable
     {
         this.name = name;
     }
+
+	public String getTrackNum() {
+		return trackNum;
+	}
+
+	public void setTrackNum(String trackNum) {
+		this.trackNum = trackNum;
+	}
 
    
 }

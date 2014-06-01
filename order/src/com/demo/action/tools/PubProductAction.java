@@ -164,7 +164,7 @@ public class PubProductAction extends BaseAction {
 			HSSFCell cell = null;
 			HSSFSheet st = wb.getSheetAt(0);
 			int maxReadCount = 1000;
-			for (int rowIndex = 1; rowIndex <= maxReadCount; rowIndex++) {
+			for (int rowIndex = 0; rowIndex < maxReadCount; rowIndex++) {
 				HSSFRow row = st.getRow(rowIndex);
 				cell = row.getCell(0);
 				String aliUrl = cell.getStringCellValue();

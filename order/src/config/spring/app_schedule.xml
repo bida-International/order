@@ -77,6 +77,19 @@
 	</bean>
 	<bean id="productStatusCheckJob" class="com.demo.schedule.ProductStatusCheckJob" lazy-init="false"></bean>
 	
+	<!-- 定时查询订单物流状态 -->
+	<bean id="queryTrackJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="queryTrackJobDetail" />
+		<!-- 每15分钟执行一次 -->
+		<property name="cronExpression" value="0 0/15 * * * ?"/>
+	</bean>
+	<bean id="queryTrackJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="queryTrackJob" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="queryTrackJob" class="com.demo.schedule.QueryTrackJob" lazy-init="false"></bean>
+	
 </beans>
 
 

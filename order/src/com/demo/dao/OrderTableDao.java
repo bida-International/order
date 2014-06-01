@@ -242,5 +242,7 @@ public interface OrderTableDao extends BaseDao<OrderTable,Long>
     //转移数据
     public void updateTransfer(Long kefu,Long kefu1);
 
+    // 查询前topn个等待查询(17track)物流状态的订单
+    public List<OrderTable> getTopnWaitQueryTrackOrders(final int topn, Long queryBeforeTime);
 }
 

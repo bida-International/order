@@ -8,9 +8,13 @@ import com.demo.entity.order.OrderTable;
 import com.demo.entity.order.Order_Detail;
 
 import java.io.PrintStream;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -1959,5 +1963,21 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     public void updateTuiKuan(String orderId,Double tuikuan){
     	System.out.println("+++退款 +++"+tuikuan+"++订单号+++"+orderId);
     	ht.bulkUpdate("update OrderTable set tuikuan="+tuikuan+" where orderId='"+orderId+"'");
+    }
+    
+    // 查询前topn个等待查询(17track)物流状态的订单
+    public List<OrderTable> getTopnWaitQueryTrackOrders(final int topn, Long queryBeforeTime) {
+    	final String hql = "from OrderTable where danhao is not null and danhao <> '' "
+    			+ "and (qianshou is null or qianshou = 0) "
+    			+ "and (wancheng is null or wancheng = 0) and wanchengtime is null "
+    			+ "and time is not null and kuaidifangshiId <> 5 "
+    			+ "and danhaoFillTime is not null and danhaoFillTime < " + queryBeforeTime + " "
+    			+ "order by lastQueryTrackTime asc";
+		return ht.executeFind(new HibernateCallback(){
+				public Object doInHibernate(Session s)
+				throws HibernateException, SQLException {			
+				return s.createQuery(hql).setFirstResult(0).setMaxResults(topn).list();  
+			}
+		});
     }
 }

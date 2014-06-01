@@ -45,15 +45,15 @@ public class SynchDataJob implements InitializingBean {
 			for (ZhangHao zhangHao : zhangHaos) {
 				if (zhangHao.getAccount_type().equals(DhCommonApiBiz.ACCOUNT_TYPE)) { // 敦煌账号
 					// 同步订单数据
-					String result = dhOrderApiBiz.autoFetchOrders(zhangHao);
-					System.out.println("账号" + zhangHao.getAccount() + "订单数据同步结果: " + result);
+//					String result = dhOrderApiBiz.autoFetchOrders(zhangHao);
+//					System.out.println("账号" + zhangHao.getAccount() + "订单数据同步结果: " + result);
 					// 同步站内信数据
-					result = dhMsgApiBiz.autoFetchMsg(zhangHao);
+					String result = dhMsgApiBiz.autoFetchMsg(zhangHao);
 					System.out.println("账号" + zhangHao.getAccount() + "站内信数据同步结果: " + result);
 				} else if (zhangHao.getAccount_type().equals(AliCommonApiBiz.ACCOUNT_TYPE)) { // 速卖通账号
 					// 同步订单数据
-					String result = aliOrderApiBiz.autoFetchOrders(zhangHao);
-					System.out.println("账号" + zhangHao.getAccount() + "订单数据同步结果: " + result);
+//					String result = aliOrderApiBiz.autoFetchOrders(zhangHao);
+//					System.out.println("账号" + zhangHao.getAccount() + "订单数据同步结果: " + result);
 				}
 			}
 			

@@ -54,17 +54,17 @@ public class DhMsgApiBiz {
 	 */
 	public String autoFetchMsg(ZhangHao dhAccount) {
 		String msgType = "";
-		Integer beforeDay =1;
+		Integer beforeDay = 5;
 		
 		Long msgUpdateTime = dhAccount.getMsg_update_time();
 		Date curTime = new Date();
 		if (msgUpdateTime != null) {
 			Integer intervalDays = DateUtils.getIntervalDays(new Date(msgUpdateTime), curTime);
-			if (intervalDays > 1) {
+			if (intervalDays > 5) {
 				beforeDay = intervalDays;
 			}
 		} else {
-			beforeDay = 1; // 初始从5天前的数据开始取
+			beforeDay = 5; // 初始从5天前的数据开始取
 		}
 		
 		String result = this.fetchMsg(dhAccount, msgType, beforeDay);
@@ -554,5 +554,58 @@ public class DhMsgApiBiz {
 			}
 		}
 		return "发生错误：" + DhCommonApiBiz.CONN_ERR;
+	}
+	
+	/**
+	 * 发送站内信
+	 * @param topicId
+	 * @param content
+	 * @return
+	 */
+	public String sendMsg(String title, String content, String recieverId, 
+			ZhangHao dhAccount) {
+		try {
+			String senderId = dhAccount.getDh_user_id();
+			if (senderId == null) {
+				return "发生错误：敦煌用户id为空";
+			}
+			
+			String apiUrl = (String) ApplicationUtils.get("dhgateApiUrl");
+			Map<String, String> paramMap = new HashMap<String, String>();
+			if (!dhCommonApiBiz.putSystemParamsToParamMap(paramMap, dhAccount,
+					"dh.message.info.send")) {
+				return "发生错误：" + DhCommonApiBiz.ERR_TOKEN;
+			}
+			paramMap.put("content", content);
+			paramMap.put("msgtype", "2");
+			paramMap.put("senderid", senderId);
+			paramMap.put("title", title);
+			paramMap.put("toSysuserbaseid", recieverId);
+	
+			JSONObject respJson = HttpClientUtils.doPost(apiUrl, paramMap);
+			if (respJson != null) {
+				if (respJson.containsKey("code")) {
+					if (respJson.getString("code").equals("2") || 
+						respJson.getString("code").equals("40")) {
+						dhCommonApiBiz.clearAccessToken(dhAccount);
+						return "发生错误：" + DhCommonApiBiz.ERR_TOKEN;
+					} else if (!respJson.getString("code").equals("0")) {
+						return "发生错误：" + respJson.getString("message");
+					}
+				}
+				
+				JSONObject statusObj = respJson.getJSONObject("status");
+				if (Integer.parseInt(statusObj.getString("code")) == 0) {
+					return "success";
+				} else {
+					return "发生错误：" + statusObj.getString("message");
+				}
+			} else {
+				return "发生错误：" + DhCommonApiBiz.CONN_ERR;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "发生错误：未知异常";
+		}
 	}
 }

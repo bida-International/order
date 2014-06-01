@@ -514,7 +514,7 @@ public class ProductHtmlReader {
 	
 	/** 设置产品sku, 自定义规格和批发价格 */
 	private OptResult setProdSkusSpecAndSaleRanges(String html, Product product) {
-		String regx = "var skuProducts=(.*?);";
+		String regx = "var skuProducts=(.*?);\n";
 		Pattern p = Pattern.compile(regx);
 		Matcher macher = p.matcher(html);
 		String skuStr = "";

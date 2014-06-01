@@ -112,6 +112,10 @@ public class DhOrderBiz {
 			Double money = totalPriceOfProduct + shipcost - commissionAmount;  // 实收金额
 			money = Double.parseDouble(new DecimalFormat("#.00").format(money));
 			order.setMoney(money);
+			
+			String buyerId = rfxDto.getString("buyerid"); // 买家id
+			order.setBuyerId(buyerId);
+					
 			// 取订单物品
 			JSONObject orderProduct = this.getOrderProduct(json.getString("rfxid"), dhAccount);
 			JSONArray products = orderProduct.getJSONArray("lstProductDTO");

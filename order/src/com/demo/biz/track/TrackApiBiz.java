@@ -34,13 +34,17 @@ public class TrackApiBiz {
 	 * @param et 渠道类型 0.国际邮政
 	 */
 	public QueryTrackResult doQuery(String danhao, String et) {
-		QueryTrackResult queryResult = new QueryTrackResult();
-		String apiUrl = ApplicationUtils.get("trackApiUrl") + "?num="
+		QueryTrackResult queryResult = null;
+		//String apiUrl = ApplicationUtils.get("trackApiUrl") + "?num="
+		String apiUrl = "http://api-r.17track.net:8088/Rest/HandlerTrack.ashx?num="
 				+ danhao + "&et="
 				+ et + "&pt=0";
+		System.out.println(apiUrl);
 		
 		JSONObject respJson = HttpClientUtils.doGet(apiUrl);
 		if (respJson != null) {
+			System.out.println(respJson);
+			queryResult = new QueryTrackResult();
 			queryResult.setRet(respJson.getInt("ret"));
 			if (!queryResult.getRet().equals(1)) {
 				return queryResult;
@@ -61,7 +65,7 @@ public class TrackApiBiz {
 			JSONObject data) {
 		Integer packageState = null;
 		String latestTrackInfo = null;
-		String allTrackInfo = null;
+		String allTrackInfo = "";
 		if (data.containsKey("f") && !data.getString("f").equals("null")) {
 			packageState = data.getInt("f");
 		}
@@ -69,24 +73,22 @@ public class TrackApiBiz {
 			JSONObject zJson = data.getJSONObject("z");
 			latestTrackInfo = zJson.getString("a") + " " + zJson.getString("b");
 		}
-		if (data.containsKey("y") && !data.getString("y").equals("null")) {
-			allTrackInfo += "收件国家：<br/>";
-			JSONArray yJsonArr = data.getJSONArray("y");
-			for (int i = 0; i < yJsonArr.size(); i++) {
-				allTrackInfo += yJsonArr.getJSONObject(i).getString("a") 
-						+ " " + yJsonArr.getJSONObject(i).getString("b") + "<br/>";
-			}
-			allTrackInfo += "<br/>";
-		}
 		if (data.containsKey("x") && !data.getString("x").equals("null")) {
-			allTrackInfo += "发件国家：<br/>";
+			//allTrackInfo += "发件国家：\r\n";
 			JSONArray xJsonArr = data.getJSONArray("x");
-			for (int i = 0; i < xJsonArr.size(); i++) {
+			for (int i = xJsonArr.size() - 1; i >= 0; i--) {
 				allTrackInfo += xJsonArr.getJSONObject(i).getString("a") 
 						+ " " + xJsonArr.getJSONObject(i).getString("b") + "<br/>";
 			}
-			allTrackInfo += "<br/>";
 		}
+//		if (data.containsKey("y") && !data.getString("y").equals("null")) {
+//			//allTrackInfo += "收件国家：\r\n";
+//			JSONArray yJsonArr = data.getJSONArray("y");
+//			for (int i = yJsonArr.size() - 1; i >= 0 ; i--) {
+//				allTrackInfo += yJsonArr.getJSONObject(i).getString("a") 
+//						+ " " + yJsonArr.getJSONObject(i).getString("b") + "<br/>";
+//			}
+//		}
 
 		queryResult.setPackageState(packageState);
 		queryResult.setLatestTrackInfo(latestTrackInfo);
@@ -97,7 +99,7 @@ public class TrackApiBiz {
 			JSONObject data) {
 		Integer packageState = null;
 		String latestTrackInfo = null;
-		String allTrackInfo = null;
+		String allTrackInfo = "";
 		if (data.containsKey("e") && !data.getString("e").equals("null")) {
 			packageState = data.getInt("e");
 		}
@@ -107,7 +109,7 @@ public class TrackApiBiz {
 		}
 		if (data.containsKey("y") && !data.getString("y").equals("null")) {
 			JSONArray yJsonArr = data.getJSONArray("y");
-			for (int i = 0; i < yJsonArr.size(); i++) {
+			for (int i = yJsonArr.size() - 1; i >= 0 ; i--) {
 				allTrackInfo += yJsonArr.getJSONObject(i).getString("a") 
 						+ " " + yJsonArr.getJSONObject(i).getString("b") + "<br/>";
 			}

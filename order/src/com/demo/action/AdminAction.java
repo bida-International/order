@@ -560,6 +560,12 @@ public class AdminAction extends BaseAction implements ServletRequestAware
          String bianma = ordertable.getBianma(); 
          String time = ordertable.getJiufentime();
          ordertable = (OrderTable)orderDao.get(ordertable.getId());
+         // 更新单号填写时间
+         if (danhao == null || danhao.equals("")) {
+        	 ordertable.setDanhaoFillTime(null);
+         } else if (ordertable.getDanhao() == null || ordertable.getDanhao().equals("")) {
+        	 ordertable.setDanhaoFillTime(new java.util.Date().getTime());
+         }
          ordertable.setCaigouyuan(cai);
          ordertable.setOrderId(order);
          ordertable.setYunshu(yunshu);

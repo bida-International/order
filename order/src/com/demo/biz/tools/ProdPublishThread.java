@@ -65,7 +65,7 @@ public class ProdPublishThread implements Runnable {
 			// 保存发布日志
 			ProdPublishLog log = new ProdPublishLog();
 			log.setAliUrl(aliUrl);
-			log.setLineNum(i + 2);
+			log.setLineNum(i + 1);
 			log.setZhangHaoId(dhAccount.getId());
 			log.setZhangHaoAccount(dhAccount.getAccount());
 			log.setSessionId(sessionId);

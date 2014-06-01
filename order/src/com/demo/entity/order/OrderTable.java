@@ -102,6 +102,10 @@ public class OrderTable implements Serializable
     private Long kucunid;//库存编号
     private String tstime;//投诉时间
     private Double profitmargin;//利润率
+    private Long danhaoFillTime; // 单号填写时间
+    private Long lastQueryTrackTime; // 上次查询物流状态的时间
+    private String buyerId; // 买家id
+    
 	public Double getProfitmargin() {
 		return profitmargin;
 	}
@@ -805,5 +809,28 @@ public class OrderTable implements Serializable
         this.huilv = huilv;
     }
 
+	public Long getLastQueryTrackTime() {
+		return lastQueryTrackTime;
+	}
+
+	public void setLastQueryTrackTime(Long lastQueryTrackTime) {
+		this.lastQueryTrackTime = lastQueryTrackTime;
+	}
+
+	public Long getDanhaoFillTime() {
+		return danhaoFillTime;
+	}
+
+	public void setDanhaoFillTime(Long danhaoFillTime) {
+		this.danhaoFillTime = danhaoFillTime;
+	}
+
+	public String getBuyerId() {
+		return buyerId;
+	}
+
+	public void setBuyerId(String buyerId) {
+		this.buyerId = buyerId;
+	}
 
 }

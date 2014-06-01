@@ -7,12 +7,12 @@
 <m:frame>
 
 	<s:form action="./msg/dhgateMsg.do">
-		<table border="1" cellspacing="0" style="width: 95%; float: left">
+		<table border="1" cellspacing="0" style="width: 90%; float: left">
 			<tr>
-				<th colspan="9" align="center">敦煌站内信</th>
+				<th colspan="8" align="center">敦煌站内信</th>
 			</tr>
 			<tr>
-				<td colspan="9">
+				<td colspan="8">
 					<span>敦煌账号：</span>
 					<s:select name="dhAccount" list="dhAccounts" listKey="account"
 						listValue="account" headerKey="0" headerValue="全部"
@@ -60,30 +60,20 @@
 					</select>
 					<span>&nbsp;&nbsp;</span>
 					<input type="submit" value="查 询" />
-					<span>&nbsp;&nbsp;</span>
-					<input type="button" value="置选中为已读" onclick="updateReadStatus()"/>
-					<span>&nbsp;&nbsp;</span>
-					<input type="button" value="删除选中" onclick="doDelete()"/>
 				</td>
 			</tr>
 			<tr align="center" style="font-weight: bold;">
-				<td width="10">
-					<input type="checkbox" id="cbx_all" onclick="selectAll()"/>
-				</td>
 				<td width="5%">状态</td>
 				<td width="5%">标记</td>
 				<td width="40%">标题</td>
-				<td width="8%">种类</td>
+				<td width="5%">种类</td>
 				<td width="10%">敦煌账号</td>
 				<td width="5%">回复数</td>
-				<td width="16%">最后回复时间</td>
+				<td width="20%">最后回复时间</td>
 				<td width="10%">归属业务用户</td>
 			</tr>
 			<s:iterator value="pageBean.list" var="i">
 				<tr align="center">
-					<td>
-						<input type="checkbox" name="ids" value="${i.topicId}" onclick="updateCbxAll()" />
-					</td>
 					<td><s:if test="readStatus == 1">
 							<span style="color: #999;">已读</span>
 						</s:if> <s:else>
@@ -158,86 +148,3 @@
 		</table>
 	</s:form>
 </m:frame>
-<script type="text/javascript">
-	function selectAll() {
-		var checked = $("#cbx_all").attr("checked");
-		if (checked == null) {
-			checked = false;
-		}
-		$("input[type='checkbox'][name='ids']").attr("checked", checked);
-	}
-	
-	function updateCbxAll() {
-		var cbxNum= $("input[type='checkbox'][name='ids']").length;
-		var checkedNum = 0;
-		$("input[type='checkbox'][name='ids']").each(function() {
-			if ($(this).attr("checked")) {
-				checkedNum = checkedNum + 1;
-			}
-		});
-		if (cbxNum == checkedNum) {
-			$("#cbx_all").attr("checked", "checked");
-		} else {
-			$("#cbx_all").attr("checked", false);
-		}
-	}
-	
-	function doDelete() {
-		if ($("input[type='checkbox'][name='ids']:checked").length == 0) {
-			alert("您还没有选择站内信");
-			return;
-		}	
-		var ids = getCheckedIds();
-		$.ajax({
-			url: "./msg/dhgateMsg!delete.do",
-			type: "post",
-			data: {
-				"ids" : ids
-			},
-			dataType: "json",
-			success: function(resp) {
-				if (resp.success) {
-					location.href = location.href;
-				} else {
-					alert(resp.msg);
-				}
-				
-			}
-		});
-	}
-	
-	function updateReadStatus() {
-		if ($("input[type='checkbox'][name='ids']:checked").length == 0) {
-			alert("您还没有选择站内信");
-			return;
-		}	
-		var ids = getCheckedIds();
-		$.ajax({
-			url: "./msg/dhgateMsg!updateReaded.do",
-			type: "post",
-			data: {
-				"ids" : ids
-			},
-			dataType: "json",
-			success: function(resp) {
-				if (resp.success) {
-					location.href = location.href;
-				} else {
-					alert(resp.msg);
-				}
-				
-			}
-		});
-	}
-	
-	function getCheckedIds() {
-		var ids = "";
-		$("input[type='checkbox'][name='ids']").each(function() {
-			if ($(this).attr('checked')) {
-				ids += $(this).val() + ",";
-			}
-		});
-		ids = ids.substr(0, ids.length - 1);
-		return ids;
-	}
-</script>

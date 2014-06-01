@@ -342,6 +342,12 @@ public class YeWu1Action extends BaseAction implements ServletRequestAware
         	String danhao = ordertable.getDanhao();
         	String remark = ordertable.getRemark();
     	   	ordertable = orderDao.get(ordertable.getId());
+    	   	// 更新单号填写时间
+            if (danhao == null || danhao.equals("")) {
+           	 	ordertable.setDanhaoFillTime(null);
+            } else if (ordertable.getDanhao() == null || ordertable.getDanhao().equals("")) {
+           	 	ordertable.setDanhaoFillTime(new java.util.Date().getTime());
+            }
     	   	ordertable.setDanhao(danhao);
     	   	ordertable.setRemark(remark);
     	   

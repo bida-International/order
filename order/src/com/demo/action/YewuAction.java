@@ -143,6 +143,12 @@ public class YewuAction extends BaseAction implements ServletRequestAware
              ordertable = (OrderTable)orderDao.get(ordertable.getId());
              ZhangHao zh = zhanghaodao.get(ordertable.getZhanghaoId());
              LeiMuTable lm = leiMuDao.get(ordertable.getLeimuid());
+             // 更新单号填写时间
+             if (danhao == null || danhao.equals("")) {
+            	 ordertable.setDanhaoFillTime(null);
+             } else if (ordertable.getDanhao() == null || ordertable.getDanhao().equals("")) {
+            	 ordertable.setDanhaoFillTime(new Date().getTime());
+             }
              ordertable.setCaigouyuan(cai);
              ordertable.setOrderId(order);
              ordertable.setYunshu(yunshu);

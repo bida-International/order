@@ -17,6 +17,9 @@
 			<result name="success">/inc/msg/fenpeiConfig.jsp</result>
 			<result name="reload" type="redirect">/msg/fenpeiConfig.do</result>
 		</action>
+		<action name="dhMsgTemplate" class="msg.dhMsgTemplateAction">
+			<result name="success">/inc/msg/dhMsgTemplate.jsp</result>
+		</action>
 	</package>
 	
 </struts>

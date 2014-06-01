@@ -795,6 +795,12 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
          Double zl = ordertable.getZhongliang();
          String time = ordertable.getJiufentime();
          ordertable = (OrderTable)orderDao.get(ordertable.getId());
+         // 更新单号填写时间
+         if (danhao == null || danhao.equals("")) {
+        	 ordertable.setDanhaoFillTime(null);
+         } else if (ordertable.getDanhao() == null || ordertable.getDanhao().equals("")) {
+        	 ordertable.setDanhaoFillTime(new Date().getTime());
+         }
          ordertable.setOrderId(order);
          ordertable.setYunshu(yunshu);
          ordertable.setYunfei(yunfei);
