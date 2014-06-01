@@ -39,7 +39,7 @@
 			<div style="text-align:center; height:25px; border:solid 1px #999; border-top:0;">
 				<button onclick="synchData()">同步最新数据</button>
 					<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-					<button onclick="history.go(-1)">返 回</button>
+					<button onclick="goBack()">返 回</button>
 			</div>
 		</div>
 		
@@ -118,5 +118,14 @@
 				}
 			}
 		});
+	}
+	
+	function goBack() {
+		var referer = "${referer}";
+		if (referer != "" && referer != location.href) {
+			location.href = referer;
+		} else {
+			location.href = "./msg/dhgateMsg.do";
+		}
 	}
 </script>
