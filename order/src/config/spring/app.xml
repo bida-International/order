@@ -42,10 +42,10 @@
         class="com.mchange.v2.c3p0.ComboPooledDataSource"  
         destroy-method="close">   
         <property name="driverClass">   
-            <value>com.microsoft.sqlserver.jdbc.SQLServerDriver</value>   
+            <value>net.sourceforge.jtds.jdbc.Driver</value>   
         </property>   
         <property name="jdbcUrl">   
-            <value>jdbc:sqlserver://localhost:1433;databasename=order;selectMethod=cursor</value>   
+            <value>jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=order</value>   
         </property>   
         <property name="user">   
             <value>sa</value>   
@@ -129,7 +129,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
 				<prop key="hibernate.connection.release_mode">after_transaction</prop>
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>

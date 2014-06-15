@@ -17,25 +17,28 @@
 			</tr>
 			<tr>
 				<td colspan="3">
-					<span>归属账号：</span>
-					<s:select name="zhangHaoId" list="zhangHaoList" listKey="id" listValue="account" 
-						 headerKey="0" headerValue="全部" value="zhangHaoId"></s:select>
-					<span>敦煌状态：</span>
-					<s:select name="dhStatus" list="#{-1:'全部', 0: '下架', 1: '上架', 2: '获取失败'}"  value="dhStatus"></s:select>
-					<span>速卖通状态：</span>
-					<s:select name="aliStatus" list="#{-1:'全部', 0: '下架', 1: '上架', 2: '获取失败'}"  value="aliStatus"></s:select>
-					<span>两边状态：</span>
-					<s:select name="statusFlag" list="#{-1:'全部', 0: '状态不同步', 1: '状态同步', 2: '获取失败'}"  value="statusFlag"></s:select>
-					<span>产品链接地址关键字：</span>
-					<input type="text" name="urlKeyword" value="${urlKeyword }"/>
-					<span>&nbsp;&nbsp;</span>
-					<input type="submit" value="查 询" />
-					<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-					<a href="./tools/productStatus!add.do">添加产品</a>
-					<span>&nbsp;&nbsp;</span>
-					<a href="./tools/productStatusConfig.do">功能设置</a>
-					<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-					<a href="./tools/pubProduct.do">发布产品</a>
+					<p>
+						<span>归属账号：</span>
+						<s:select name="zhangHaoId" list="zhangHaoList" listKey="id" listValue="account" 
+							 headerKey="0" headerValue="全部" value="zhangHaoId"></s:select>
+						<span>敦煌状态：</span>
+						<s:select name="dhStatus" list="#{-1:'全部', 0: '下架', 1: '上架', 2: '获取失败'}"  value="dhStatus"></s:select>
+						<span>速卖通状态：</span>
+						<s:select name="aliStatus" list="#{-1:'全部', 0: '下架', 1: '上架', 2: '获取失败'}"  value="aliStatus"></s:select>
+						<span>两边状态：</span>
+						<s:select name="statusFlag" list="#{-1:'全部', 0: '状态不同步', 1: '状态同步', 2: '获取失败'}"  value="statusFlag"></s:select>
+						<span>产品链接地址关键字：</span>
+						<input type="text" name="urlKeyword" value="${urlKeyword }"/>
+						<span>&nbsp;&nbsp;</span>
+						<input type="submit" value="查 询" />
+					</p>
+					<p>
+						<a href="./tools/productStatus!add.do">添加已发布产品</a>
+						<span>&nbsp;&nbsp;</span>
+						<a href="./tools/productStatusConfig.do">功能设置</a>
+						<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<a href="./tools/pubProduct.do">发布产品</a>
+					</p>
 				</td>
 			</tr>
 			<tr align="center" style="font-weight: bold;">

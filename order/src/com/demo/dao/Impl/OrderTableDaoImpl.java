@@ -1969,7 +1969,7 @@ public class OrderTableDaoImpl extends BaseDaoImpl<OrderTable , Long> implements
     public List<OrderTable> getTopnWaitQueryTrackOrders(final int topn, Long queryBeforeTime) {
     	final String hql = "from OrderTable where danhao is not null and danhao <> '' "
     			+ "and (qianshou is null or qianshou = 0) "
-    			+ "and (wancheng is null or wancheng = 0) and wanchengtime is null "
+    			+ "and (wancheng is null or wancheng = 0) "
     			+ "and time is not null and kuaidifangshiId <> 5 "
     			+ "and danhaoFillTime is not null and danhaoFillTime < " + queryBeforeTime + " "
     			+ "order by lastQueryTrackTime asc";

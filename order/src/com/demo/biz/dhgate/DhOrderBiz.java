@@ -312,7 +312,8 @@ public class DhOrderBiz {
 
 		JSONObject respJson = HttpClientUtils.doPost(apiUrl, paramMap);
 		if (respJson != null) {
-			if (respJson.containsKey("code") && !respJson.getString("code").equals("0")) {
+			if (respJson.containsKey("code") 
+					&& Integer.parseInt(respJson.getString("code")) != 0) {
 				return null;
 			}
 			
@@ -363,7 +364,8 @@ public class DhOrderBiz {
 
 		JSONObject respJson = HttpClientUtils.doPost(apiUrl, paramMap);
 		if (respJson != null) {
-			if (respJson.containsKey("code") && !respJson.getString("code").equals("0")) {
+			if (respJson.containsKey("code") 
+					&& Integer.parseInt(respJson.getString("code")) != 0) {
 				return null;
 			}
 			

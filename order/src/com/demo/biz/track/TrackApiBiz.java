@@ -35,8 +35,8 @@ public class TrackApiBiz {
 	 */
 	public QueryTrackResult doQuery(String danhao, String et) {
 		QueryTrackResult queryResult = null;
-		//String apiUrl = ApplicationUtils.get("trackApiUrl") + "?num="
 		String apiUrl = "http://api-r.17track.net:8088/Rest/HandlerTrack.ashx?num="
+//		String apiUrl = ApplicationUtils.get("trackApiUrl") + "?num="
 				+ danhao + "&et="
 				+ et + "&pt=0";
 		System.out.println(apiUrl);

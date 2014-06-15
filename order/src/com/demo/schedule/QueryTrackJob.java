@@ -61,7 +61,7 @@ public class QueryTrackJob implements InitializingBean {
 		List<DhMsgTemplate> msgTemplateList = dhMsgTemplateDao.getEnableTempateList();
 		
 		// 取topn个订单进行物流状态查询
-		int topn = 50;
+		int topn = 16;
 		Long queryBeforeTime = DateUtils.getAfterDaysDate(new Date(), -7).getTime(); // 查询填写时间距当前大于7天的订单
 		List<OrderTable> orderList = orderTableDao.getTopnWaitQueryTrackOrders(topn, queryBeforeTime);
 		for (OrderTable order : orderList) {
@@ -77,6 +77,7 @@ public class QueryTrackJob implements InitializingBean {
 			int queryCount = 0;
 			int qianshouCount = 0;
 			for (String danhao : danhaoArr) {
+				danhao = danhao.trim();
 				if (danhao.equals("")) {
 					continue;
 				}
@@ -131,6 +132,7 @@ public class QueryTrackJob implements InitializingBean {
 					danhaoTrack.setAllTrackInfo(queryResult.getAllTrackInfo());
 					danhaoTrack.setQueryTime(new Date());
 					danhaoTrack.setOrderId(order.getOrderId());
+					danhaoTrack.setDanhao(danhao);
 					danhaoTrackDao.merge(danhaoTrack);
 					
 					// 站内信通知客户
@@ -148,8 +150,10 @@ public class QueryTrackJob implements InitializingBean {
 							String recieverId = getOrderBuyerId(order, dhAccount);
 							if (recieverId != null) {
 								String sendResult = dhMsgApiBiz.sendMsg(msgTitle, msgContent, recieverId, dhAccount);
-								if (sendResult.equals("success")) {
-									logger.debug("物流状态通知站内信发送异常 -- " + sendResult);
+								if (!sendResult.equals("success")) {
+									logger.debug("订单号:" + order.getOrderId() + ", 物流状态通知站内信发送异常 -- " + sendResult);
+								} else {
+									logger.debug("订单号:" + order.getOrderId() + ", 物流状态通知站内信发送成功");
 								}
 							}
 						}
@@ -164,6 +168,9 @@ public class QueryTrackJob implements InitializingBean {
 				JSONObject json = dhOrderApiExtBiz.moneyGet(order);
 				if (json != null) {
 					order.setQianshou(1l);
+					logger.debug("自动调用请款api成功,订单号:" + order.getOrderId());
+				} else {
+					logger.debug("自动调用请款api失败,订单号:" + order.getOrderId());
 				}
 			}
 			

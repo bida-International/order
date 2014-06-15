@@ -9,6 +9,8 @@
 th, td { height: 30px; vertical-align: middle;}
 </style>
 <script src="./JS/jquery.form.js" type="text/javascript"></script>
+<script charset="utf-8" src="./JS/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="./JS/kindeditor/lang/zh_CN.js"></script>
 	
  <table id="step1" border="1" cellspacing="0" style="width: 1000px; float: left">
 	<tr>
@@ -85,6 +87,72 @@ th, td { height: 30px; vertical-align: middle;}
 			<td align="right">速卖通产品页面地址：</td>
 			<td><input type="text" id="aliUrl" name="aliUrl"  style="width:800px" /></td>
 		</tr>
+		<tr>
+			<td align="right">自定义设置：</td>
+			<td>
+				<table style="width:100%">
+					<tr>
+						<td width="100" align="right">产品名称：</td>
+						<td>
+							<p>
+								增加<span>&nbsp;&nbsp;</span>
+								前缀<input type="text" name="pubConfig.prodNamePrefix"/>
+								后缀<input type="text" name="pubConfig.prodNameSuffix" />
+							</p>
+							<p>
+								替换<span>&nbsp;&nbsp;</span>
+								将<input type="text" name="pubConfig.prodNameOrgin"/>
+								替换为<input type="text" name="pubConfig.prodNameReplaced"/>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>详细描述：</td>
+						<td>
+							<div style="width:99%; height:150px;">
+								<span style="float:left;">增加&nbsp;&nbsp;</span>
+								<div style="float:left;width:300px;height:150px;">
+									<span>首部</span>
+									<textarea name="pubConfig.prodDescPrefix" style="width:300px;height:100px;font-size:12px;"></textarea>
+									<br/>
+									<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									<button type="button" onclick="openHtmlEditor('pubConfig.prodDescPrefix')">使用html编辑器</button>
+								</div>
+								<div style="float:left;width:300px;height:150px;margin-left:10px;">
+									<span>尾部</span>
+									<textarea name="pubConfig.prodDescSuffix" style="width:300px;height:100px;font-size:12px;"></textarea>
+									<br/>
+									<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									<button type="button" onclick="openHtmlEditor('pubConfig.prodDescSuffix')">使用html编辑器</button>
+								</div>
+							</div>
+							<div style="width:99%; height:150px;">
+								<span style="float:left;">替换&nbsp;&nbsp;</span>
+								<div style="float:left;width:300px;height:150px;">
+									<span>将</span>
+									<textarea name="pubConfig.prodDescOrgin" style="width:300px;height:100px;font-size:12px;"></textarea>
+									<br/>
+								</div>
+								<div style="float:left;width:300px;height:150px;margin-left:10px;">
+									<span>替换为</span>
+									<textarea name="pubConfig.prodDescReplaced" style="width:300px;height:100px;font-size:12px;"></textarea>
+									<br/>
+									<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									<button type="button" onclick="openHtmlEditor('pubConfig.prodDescReplaced')">使用html编辑器</button>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>批发价设置：</td>
+						<td>
+							<p>一行一条批发价，每个批发价的表现形式是“3,4”，其中3表示购买，4表示降低，它们之间用英文逗号隔开，在网页后台表示购买3件及以上时，在零售价的基础上降低4%，即9.60折。</p>
+							<textarea name="pubConfig.prodBulkPriceSet" style="width:300px;height:100px;font-size:12px;"></textarea>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 		<tr align="center" style="font-weight: bold;">
 			<td colspan="2">
 				<input type="button" value=" 上一步 " onclick="prev()" />
@@ -124,6 +192,10 @@ th, td { height: 30px; vertical-align: middle;}
 	
 	</div>
 	<p id="errmsg" style="color:#ff0000;"></p>
+	
+	<div id="dialog" style="display:none;">
+		<textarea id="editor" style="width:650px;height:350px;"></textarea>
+	</div>
 	
 </m:frame>
 <script type="text/javascript">
@@ -395,5 +467,48 @@ th, td { height: 30px; vertical-align: middle;}
 	
 	if ($(".errorMessage").length > 0) {
 		alert($(".errorMessage").find("span").html());
+	}
+	
+	var srcTextareaName = null;
+	var editor = null;
+	/*KindEditor.ready(function(K) {
+        editor = K.create('#editor', {
+        	items: ['source', 'selectall', 'quickformat', '|', 'fontname', 'fontsize', '|', 'undo', 'redo', 'cut', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'lineheight', '|', 'justifyleft', 'justifycenter', 'justifyright', '|', 'link']
+        });
+	});*/
+	function openHtmlEditor(_srcTextareaName) {
+		openDialog();
+		if (editor != null) {
+			editor.remove();
+		}
+		editor = KindEditor.create('#editor', {
+        	items: ['source', 'selectall', 'quickformat', '|', 'fontname', 'fontsize', '|', 'undo', 'redo', 'cut', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'lineheight', '|', 'justifyleft', 'justifycenter', 'justifyright', '|', 'link']
+        });
+		srcTextareaName = _srcTextareaName;
+		var srcHtml = $("textarea[name='" + srcTextareaName + "']").val();
+		//$("#editor").val(srcHtml);
+		//editor.sync();
+		editor.html(srcHtml);
+	}
+	
+	function openDialog() {
+		var $dialog = $("#dialog");
+		$dialog.dialog({
+			width: 700,
+			height: 450,
+			modal: true,
+			title: "html编辑器",
+			buttons: {
+				'确定': function() {
+					var html = editor.html();
+					$("textarea[name='" + srcTextareaName + "']").val(html);
+					$(this).dialog("close");
+				},
+				'取消': function() {
+					editor.remove();
+					$(this).dialog("close");
+				}
+			}
+		});
 	}
 </script>

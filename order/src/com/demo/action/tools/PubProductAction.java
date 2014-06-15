@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 
 import com.demo.action.BaseAction;
 import com.demo.bean.OptResult;
+import com.demo.bean.pubprod.PubConfig;
 import com.demo.biz.dhgate.DhCategoryApiBiz;
 import com.demo.biz.dhgate.DhCommonApiBiz;
 import com.demo.biz.dhgate.DhProductApiBiz;
@@ -62,6 +63,7 @@ public class PubProductAction extends BaseAction {
 	private File excel;
 	private String excelFileName;
 	private String excelContentType;
+	private PubConfig pubConfig;
 	
 	public String execute() {
 		setZhangHaoList(zhangHaoDao.getAll(DhCommonApiBiz.ACCOUNT_TYPE, null));
@@ -111,18 +113,19 @@ public class PubProductAction extends BaseAction {
 		String pubCateId = Struts2Utils.getParameter("pubCateId");
 		String shippingTemplateId = Struts2Utils.getParameter("shippingTemplateId");
 		String productGroupId = Struts2Utils.getParameter("productGroupId");
-		List<String> aliUrlList = readAliUrlsFromExcel();
 		String pubMode = Struts2Utils.getParameter("pubMode");
 		
 		if (pubMode.equals("1")) { // 发布单个产品
 			OptResult optResult = prodPublishBiz.doPublish(aliUrl, pubCateId, 
-				shippingTemplateId, productGroupId, dhAccount);
+				shippingTemplateId, productGroupId, dhAccount, pubConfig);
 			boolean success = true;
 			if (optResult.getResult() == 0) {
 				success = false;
 			}
+			
 			Struts2Utils.renderJson(optResult.getMsg(), success);
 		} else if (pubMode.equals("2")) { // 批量发布产品
+			List<String> aliUrlList = readAliUrlsFromExcel();
 			if (aliUrlList == null || aliUrlList.isEmpty()) {
 				Struts2Utils.renderJson("读取文件失败,请确认文件格式是否正确", false);
 				return null;
@@ -132,7 +135,7 @@ public class PubProductAction extends BaseAction {
 			Long startTime = new Date().getTime();
 			ProdPublishThread publishThread = new ProdPublishThread(aliUrlList, pubCateId, 
 					shippingTemplateId, productGroupId, dhAccount, sessionId, 
-					prodPublishBiz, prodPublishLogDao);
+					prodPublishBiz, prodPublishLogDao, pubConfig);
 			new Thread(publishThread).start();
 			Struts2Utils.renderJson(startTime.toString(), true);
 		} else {
@@ -247,5 +250,13 @@ public class PubProductAction extends BaseAction {
 
 	public void setExcelContentType(String excelContentType) {
 		this.excelContentType = excelContentType;
+	}
+
+	public PubConfig getPubConfig() {
+		return pubConfig;
+	}
+
+	public void setPubConfig(PubConfig pubConfig) {
+		this.pubConfig = pubConfig;
 	}
 }

@@ -8,7 +8,7 @@ public class MyHttpRequestListner implements ServletRequestListener {
 
 	public void requestDestroyed(ServletRequestEvent arg0) {
 		HttpServletRequest request = (HttpServletRequest)arg0.getServletRequest();
-		System.out.println("请求:" + request.getRequestURL() + "被销毁.");
+//		System.out.println("请求:" + request.getRequestURL() + "被销毁.");
 	}
 
 	public void requestInitialized(ServletRequestEvent arg0) {
@@ -16,7 +16,7 @@ public class MyHttpRequestListner implements ServletRequestListener {
 		String logstr = "IP:" + request.getRemoteAddr() + "在" 
 		+ new java.sql.Timestamp(System.currentTimeMillis()) 
 		+ "请求：" + request.getRequestURL();
-		System.out.println(logstr);
+//		System.out.println(logstr);
 	}
 
 }

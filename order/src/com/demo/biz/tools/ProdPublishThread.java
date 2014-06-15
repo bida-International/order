@@ -4,7 +4,11 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.demo.bean.OptResult;
+import com.demo.bean.pubprod.PubConfig;
 import com.demo.dao.tools.ProdPublishLogDao;
 import com.demo.entity.ZhangHao;
 import com.demo.entity.tools.ProdPublishLog;
@@ -12,6 +16,7 @@ import com.demo.utils.ApplicationUtils;
 
 public class ProdPublishThread implements Runnable {
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	private ProdPublishBiz prodPublishBiz;
 	private ProdPublishLogDao prodPublishLogDao;
 	
@@ -21,6 +26,7 @@ public class ProdPublishThread implements Runnable {
 	private String productGroupId;
 	private ZhangHao dhAccount;
 	private String sessionId;
+	private PubConfig pubConfig;
 	
 	private Integer doneNum = 0;
 	private Integer totalNum;
@@ -29,7 +35,8 @@ public class ProdPublishThread implements Runnable {
 	
 	public ProdPublishThread(List<String> aliUrlList, String pubCateId, String shippingTemplateId, 
 			String productGroupId, ZhangHao dhAccount, String sessionId, 
-			ProdPublishBiz prodPublishBiz, ProdPublishLogDao prodPublishLogDao) {
+			ProdPublishBiz prodPublishBiz, ProdPublishLogDao prodPublishLogDao,
+			PubConfig pubConfig) {
 		this.aliUrlList = aliUrlList;
 		this.pubCateId = pubCateId;
 		this.shippingTemplateId = shippingTemplateId;
@@ -38,6 +45,7 @@ public class ProdPublishThread implements Runnable {
 		this.sessionId = sessionId;
 		this.prodPublishBiz = prodPublishBiz;
 		this.prodPublishLogDao = prodPublishLogDao;
+		this.pubConfig = pubConfig;
 	}
 	
 	@Override
@@ -53,7 +61,7 @@ public class ProdPublishThread implements Runnable {
 			}
 			String aliUrl = aliUrlList.get(i);
 			OptResult optResult = prodPublishBiz.doPublish(aliUrl, pubCateId, 
-					shippingTemplateId, productGroupId, dhAccount);
+					shippingTemplateId, productGroupId, dhAccount, pubConfig);
 			if (optResult.getResult() == 1) {
 				okNum++;
 			} else {
@@ -76,7 +84,6 @@ public class ProdPublishThread implements Runnable {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

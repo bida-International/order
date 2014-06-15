@@ -7,9 +7,12 @@ import javax.annotation.Resource;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.demo.bean.OptResult;
+import com.demo.bean.pubprod.PubConfig;
 import com.demo.biz.dhgate.DhProductApiBiz;
 import com.demo.dao.tools.ProductStatusDao;
 import com.demo.entity.ZhangHao;
@@ -20,6 +23,8 @@ import com.demo.vo.dhgate.Product;
 @Service
 public class ProdPublishBiz {
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Resource
 	private ProductStatusDao productStatusDao;
 	@Resource
@@ -30,7 +35,17 @@ public class ProdPublishBiz {
 	private ProductStatusBiz productStatusBiz;
 	
 	public OptResult doPublish(String aliUrl, String pubCateId,
-			String shippingTemplateId, String productGroupId, ZhangHao dhAccount) {
+			String shippingTemplateId, String productGroupId, 
+			ZhangHao dhAccount, PubConfig pubConfig) {
+		OptResult optResult = this.doPublishTask(aliUrl, pubCateId, 
+				shippingTemplateId, productGroupId, dhAccount, pubConfig);
+		logger.debug("发布产品结果:" + optResult.getMsg());
+		return optResult;
+	}
+	
+	private OptResult doPublishTask(String aliUrl, String pubCateId,
+			String shippingTemplateId, String productGroupId, 
+			ZhangHao dhAccount, PubConfig pubConfig) {
 		try {
 			if (productStatusDao.isExist(aliUrl)) {
 				return new OptResult(0, "该产品已在产品库中");
@@ -45,16 +60,21 @@ public class ProdPublishBiz {
 			}
 			
 			// 采集产品信息
-			OptResult optResult =  productHtmlReader.read(aliUrl, product, dhAccount);
+			OptResult optResult =  productHtmlReader.read(aliUrl, product, 
+					dhAccount, pubConfig);
 			if (optResult.getResult() == 0) {
 				return optResult;
 			}
-			
-			System.out.println(JSONObject.fromObject(product).toString());
+			logger.debug("正在发布产品:" + aliUrl);
+			logger.debug("生成的产品信息:" + JSONObject.fromObject(product).toString());
 			// 发布产品
 			JSONObject respJson = dhProductApiBiz.add(product, dhAccount);
 			if (respJson == null) {
 				return new OptResult(0, "调用发布接口时出错，请检查授权信息是否可用或者网络通信是否正常");
+			}
+			if (respJson.containsKey("code")
+					&& !respJson.getString("code").equals("0")) {
+				return new OptResult(0, respJson.getString("message"));
 			}
 			
 			String errMsg = null;
@@ -86,7 +106,6 @@ public class ProdPublishBiz {
 				dhStatus = productDetail.getJSONObject("product").getInt("istate");
 			}
 			// 入库
-			productStatusBiz.addProdcut(dhProductUrl, aliUrl, dhAccount);
 			ProductStatus productStatus = new ProductStatus();
 			productStatus.setDhId(itemCode);
 			productStatus.setDhUrl(dhProductUrl);
@@ -109,7 +128,7 @@ public class ProdPublishBiz {
 			productStatusDao.merge(productStatus);
 			return new OptResult(1, "发布产品成功");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e.fillInStackTrace());
 			return new OptResult(0, "发生异常:" + e.getMessage());
 		}
 	}

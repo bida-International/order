@@ -12,9 +12,10 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.slf4j.LoggerFactory;
 
 public class HttpClientUtils {
-
+	
 	public static Integer dhApiReqCount = 0; // 敦煌api请求数
 	public static Integer aliApiReqCount = 0; // 速卖通api请求数
 	public static String lastReqCountUpdateDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date()); // 请求数更新日期 yyyy-MM-dd
@@ -57,7 +58,7 @@ public class HttpClientUtils {
 			String responseStr = httpMethod.getResponseBodyAsString();
 			returnJson = JSONObject.fromObject(responseStr);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LoggerFactory.getLogger(HttpClientUtils.class).error(e.toString(), e.fillInStackTrace());
 		} finally {
 			httpMethod.releaseConnection();
 			updateApiReqCount(url); // 更新记数器
@@ -79,7 +80,7 @@ public class HttpClientUtils {
 			String responseStr = httpMethod.getResponseBodyAsString();
 			returnJson = JSONObject.fromObject(responseStr);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LoggerFactory.getLogger(HttpClientUtils.class).error(e.toString(), e.fillInStackTrace());
 		} finally {
 			httpMethod.releaseConnection();
 		}
@@ -99,7 +100,7 @@ public class HttpClientUtils {
 			client.executeMethod(httpMethod);
 			htmlStr = httpMethod.getResponseBodyAsString();
 		} catch (Exception e) {
-			e.printStackTrace();
+			LoggerFactory.getLogger(HttpClientUtils.class).error(e.toString(), e.fillInStackTrace());
 		} finally {
 			httpMethod.releaseConnection();
 		}

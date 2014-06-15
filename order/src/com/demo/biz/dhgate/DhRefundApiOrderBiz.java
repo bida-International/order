@@ -86,7 +86,7 @@ public class DhRefundApiOrderBiz {
 							respJson.getString("code").equals("40")) {
 						dhCommonApiBiz.clearAccessToken(dhAccount);
 						return "发生错误：" + DhCommonApiBiz.ERR_TOKEN;
-					} else if (!respJson.getString("code").equals("0")) {
+					} else if (Integer.parseInt(respJson.getString("code")) != 0) {
 						return "发生错误：" + respJson.getString("message");
 					}
 				}
@@ -175,7 +175,8 @@ public class DhRefundApiOrderBiz {
 
 		JSONObject respJson = HttpClientUtils.doPost(apiUrl, paramMap);
 		if (respJson != null) {
-			if (respJson.containsKey("code") && !respJson.getString("code").equals("0")) {
+			if (respJson.containsKey("code") 
+					&& Integer.parseInt(respJson.getString("code")) != 0) {
 				return null;
 			}
 			

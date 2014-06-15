@@ -959,7 +959,15 @@ public class CaiWuAction extends BaseAction implements ServletRequestAware
                  	List<YunFeiTableE> yunfei = yunFeieDao.getGuoJia(y.getGuojia());
                  	
                  	if (kuai.size() != 0 && order.size() != 0 && (u.getDanhao() != null && !"".equals(u.getDanhao())) && (u.getZhongliang() != null && !"".equals(u.getZhongliang()))){
-                 	//航空小包运费
+                 	
+                 		// 更新单号填写时间
+                        if (u.getDanhao() == null || u.getDanhao().equals("")) {
+                       	 	order.get(0).setDanhaoFillTime(null);
+                        } else if (order.get(0).getDanhao() == null || order.get(0).getDanhao().equals("")) {
+                        	order.get(0).setDanhaoFillTime(new java.util.Date().getTime());
+                        }
+                 		
+                 		//航空小包运费
 						if(kuai.get(0).getId() == 1l){
 							if(yun.size() != 0){
 								if((u.getDanhao()!=null && !"".equals(u.getDanhao())) && (u.getZhongliang() != null && !"".equals(u.getZhongliang())) && (u.getZhongliang() <=2 && u.getZhongliang()>0)){

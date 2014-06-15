@@ -97,7 +97,7 @@ public class DhOrderApiBiz {
 							respJson.getString("code").equals("40")) {
 						dhCommonApiBiz.clearAccessToken(dhAccount);
 						return "发生错误：" + DhCommonApiBiz.ERR_TOKEN;
-					} else if (!respJson.getString("code").equals("0")) {
+					} else if (Integer.parseInt(respJson.getString("code")) != 0) {
 						return "发生错误：" + respJson.getString("message");
 					}
 				}

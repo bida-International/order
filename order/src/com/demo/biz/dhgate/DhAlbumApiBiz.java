@@ -57,7 +57,8 @@ public class DhAlbumApiBiz {
 				return null;
 			}
 			paramMap.put("funType", "albu");
-			paramMap.put("imageBannerName", dhAccount.getAccount());
+//			paramMap.put("imageBannerName", dhAccount.getAccount());
+			paramMap.put("imageBannerName", "");
 			paramMap.put("imageBase64", imageBase64);
 			paramMap.put("imageName", fileName);
 			
@@ -68,7 +69,7 @@ public class DhAlbumApiBiz {
 							respJson.getString("code").equals("40")) {
 						dhCommonApiBiz.clearAccessToken(dhAccount);
 						return null;
-					} else if (!respJson.getString("code").equals("0")) {
+					} else if (Integer.parseInt(respJson.getString("code")) != 0) {
 						return null;
 					}
 				}

@@ -103,7 +103,8 @@ public class DhProductApiBiz {
 		paramMap.put("withdrawaltype", "1");
 		JSONObject respJson = HttpClientUtils.doPost(apiUrl, paramMap);
 		if (respJson != null) {
-			if (respJson.containsKey("code") && !respJson.getString("code").equals("0")) {
+			if (respJson.containsKey("code") 
+					&& Integer.parseInt(respJson.getString("code")) != 0) {
 				return false;
 			}
 			
@@ -131,7 +132,8 @@ public class DhProductApiBiz {
 		paramMap.put("itemcodeList", JSONArray.fromObject(itemcodeList).toString());
 		JSONObject respJson = HttpClientUtils.doPost(apiUrl, paramMap);
 		if (respJson != null) {
-			if (respJson.containsKey("code") && !respJson.getString("code").equals("0")) {
+			if (respJson.containsKey("code") 
+					&& Integer.parseInt(respJson.getString("code")) != 0) {
 				return false;
 			}
 			
